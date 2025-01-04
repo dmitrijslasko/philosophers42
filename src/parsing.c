@@ -6,15 +6,27 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/04 16:37:59 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/04 21:21:52 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "assert.h"
 
+int	ft_strlen(char *str)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
 int contains_only_digits(char *str)
 {
+	if (ft_strlen(str) == 0)
+		return (0);
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
@@ -34,14 +46,26 @@ int is_valid_single_argument(char *str)
 	return (is_valid_single_argument);
 }
 
-int is_valid_input(char **argv)
+int is_valid_input(char **argv, int argc)
 {
-	while (*argv)
+	int	i;
+
+	if (argc < 4 || argc > 5)
+    {
+        printf("Please provide 4-5 arguments.\n");
+        return (0);
+    }
+	i = 0;
+	if (int_atoi(argv[i++]) > MAX_PHILOS)
+    {
+        printf("Too many philosophers, let's keep the count under 200.\n");
+        return (0);
+    }
+	while (argv[i])
 	{
-		printf("CHECKING ARGUMENT: %s\n", *argv);
-		if (is_valid_single_argument(*argv) == 0)
+		if (is_valid_single_argument(argv[i]) == 0)
 			return (0);
-		argv++;
+		i++;
 	}
 	return (1);
 }

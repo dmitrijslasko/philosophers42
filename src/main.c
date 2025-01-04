@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/04 15:41:30 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/04 21:01:48 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,8 @@
 
 int main(int argc, char **argv)
 {
-    if (argc - 1 < 4 || argc - 1 > 5)
-    {
-        printf("Please provide 4-5 arguments.\n");
-        return (EXIT_FAILURE);
-    }
     argv++;
-    if (is_valid_input(argv) == 0)
+    if (is_valid_input(argc, argv) == 0)
     {
         printf("Your input contains non-digit characters.\n");
         return (EXIT_FAILURE);
