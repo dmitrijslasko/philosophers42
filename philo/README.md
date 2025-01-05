@@ -1,7 +1,9 @@
-# philosphers42
+# philosophers42
 
 
 ### ALLOWED FUNCTIONS:
+
+
 (1) memset
 memset(void *b, int c, size_t len);
 fill a byte string with a byte value
