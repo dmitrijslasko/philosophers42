@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/04 21:01:48 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/05 02:53:17 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 int main(int argc, char **argv)
 {
     argv++;
-    if (is_valid_input(argc, argv) == 0)
+    if (is_valid_input(argv, argc) == 0)
     {
         printf("Your input contains non-digit characters.\n");
         return (EXIT_FAILURE);

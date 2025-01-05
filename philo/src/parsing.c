@@ -6,14 +6,14 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/04 21:21:52 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/05 19:14:56 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "assert.h"
 
-int	ft_strlen(char *str)
+int	ft_strlen(const char *str)
 {
 	unsigned int	i;
 
@@ -23,7 +23,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int contains_only_digits(char *str)
+int contains_only_digits(const char *str)
 {
 	if (ft_strlen(str) == 0)
 		return (0);
@@ -36,7 +36,7 @@ int contains_only_digits(char *str)
 	return (1);
 }
 
-int is_valid_single_argument(char *str)
+int is_valid_single_argument(const char *str)
 {
 	int is_valid_single_argument;
 
@@ -46,7 +46,7 @@ int is_valid_single_argument(char *str)
 	return (is_valid_single_argument);
 }
 
-int is_valid_input(char **argv, int argc)
+int is_valid_input(const char **argv, int argc)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ int is_valid_input(char **argv, int argc)
 	return (1);
 }
 
-int int_atoi(char *str)
+int int_atoi(const char *str)
 {
 	unsigned int    nb;
 

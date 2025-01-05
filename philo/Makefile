@@ -12,7 +12,10 @@ all:
 PHONY: all clean fclean re
 
 unit_tests:
-	@cc src/tests_parsing.c src/parsing.c -I $(INC) && ./a.out
+	@echo "\n---------------------------------------------------------------"
+	@echo "|                          UNIT TESTS                         |"
+	@echo "---------------------------------------------------------------"
+	@cc tests/tests_parsing.c src/parsing.c -I $(INC) && ./a.out
 
 TEST_ARGS_1 = 1 2 3 4 5
 test_1: all
