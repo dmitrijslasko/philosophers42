@@ -28,6 +28,7 @@ int
 gettimeofday(struct timeval *restrict tp, void *restrict tzp);
 
 (8) pthread_create
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
 
 
 (9) pthread_detach

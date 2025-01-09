@@ -6,17 +6,11 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/05 18:11:07 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/08 17:02:19 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <assert.h>
 #include "philo.h"
-
-int contains_only_digits(const char *str);
-int is_valid_single_argument(const char *str);
-int is_valid_input(const char **argv, int argc);
-int int_atoi(const char *str);
 
 void print_test_header(const char *test_name)
 {
@@ -73,14 +67,14 @@ void test_is_valid_input(void)
 	int	i;
 	print_test_header(__func__);
 	i = 1;
-	check_test(i++, 1, is_valid_input((const char *[]){"1", "2", "3", "4", NULL}, 4));
-	check_test(i++, 1, is_valid_input((const char *[]){"1", "2", "3", "4", "5", NULL}, 5));
-	check_test(i++, 0, is_valid_input((const char *[]){"1", "2a", "3", "4", NULL}, 4));
-	check_test(i++, 0, is_valid_input((const char *[]){"1", "2", "-3", "4", "5", NULL}, 5));
-	check_test(i++, 0, is_valid_input((const char *[]){"1", "2", "3", "4", "5", "6", NULL}, 6));
-	check_test(i++, 0, is_valid_input((const char *[]){"1", "2", NULL}, 2));
-	check_test(i++, 0, is_valid_input((const char *[]){"1", "2", "3", NULL}, 3));
-	check_test(i++, 0, is_valid_input((const char *[]){"1", "2", "a3a", NULL}, 3));
+	check_test(i++, 1, is_valid_input((char *[]){"1", "2", "3", "4", NULL}, 4));
+	check_test(i++, 1, is_valid_input((char *[]){"1", "2", "3", "4", "5", NULL}, 5));
+	check_test(i++, 0, is_valid_input((char *[]){"1", "2a", "3", "4", NULL}, 4));
+	check_test(i++, 0, is_valid_input((char *[]){"1", "2", "-3", "4", "5", NULL}, 5));
+	check_test(i++, 0, is_valid_input((char *[]){"1", "2", "3", "4", "5", "6", NULL}, 6));
+	check_test(i++, 0, is_valid_input((char *[]){"1", "2", NULL}, 2));
+	check_test(i++, 0, is_valid_input((char *[]){"1", "2", "3", NULL}, 3));
+	check_test(i++, 0, is_valid_input((char *[]){"1", "2", "a3a", NULL}, 3));
 }
 
 void test_int_atoi(void)
@@ -93,10 +87,23 @@ void test_int_atoi(void)
 	check_test(i++, 0, int_atoi("0"));
 }
 
+void test_ft_strlen(void)
+{
+	int	i;
+	print_test_header(__func__);
+	i = 1;
+	check_test(i++, 3, ft_strlen("123"));
+	check_test(i++, 0, ft_strlen(""));
+	check_test(i++, 5, ft_strlen("hello"));
+	check_test(i++, 8, ft_strlen("hello123"));
+	check_test(i++, 11, ft_strlen("hello123!!!"));
+}
+
 int main(void)
 {
 	test_contains_only_digits();
 	test_is_valid_single_argument();
 	test_is_valid_input();
 	test_int_atoi();
+	test_ft_strlen();
 }

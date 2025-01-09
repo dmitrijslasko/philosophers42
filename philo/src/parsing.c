@@ -6,79 +6,58 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/05 19:14:56 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/08 16:55:53 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include "assert.h"
-
-int	ft_strlen(const char *str)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int contains_only_digits(const char *str)
 {
 	if (ft_strlen(str) == 0)
-		return (0);
+		return (FALSE);
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
-			return (0);
+			return (FALSE);
 		str++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 int is_valid_single_argument(const char *str)
 {
 	int is_valid_single_argument;
 
-	is_valid_single_argument = 1;
+	is_valid_single_argument = TRUE;
 	if (!contains_only_digits(str))
-		is_valid_single_argument = 0;
+		is_valid_single_argument = FALSE;
 	return (is_valid_single_argument);
 }
 
-int is_valid_input(const char **argv, int argc)
+int is_valid_input(char **argv, int argc)
 {
 	int	i;
 
-	if (argc < 4 || argc > 5)
+	if (argc - 1 < 4 || argc - 1 > 5)
     {
-        printf("Please provide 4-5 arguments.\n");
-        return (0);
+        printf(MSG_WRONG_ARGUMENT_COUNT);
+        return (FALSE);
     }
-	i = 0;
+	i = 1;
 	if (int_atoi(argv[i++]) > MAX_PHILOS)
     {
-        printf("Too many philosophers, let's keep the count under 200.\n");
-        return (0);
+        printf(MSG_TOO_MANY_PHILOS);
+        return (FALSE);
     }
 	while (argv[i])
 	{
-		if (is_valid_single_argument(argv[i]) == 0)
-			return (0);
+		if (is_valid_single_argument(argv[i]) == FALSE)
+		{
+			printf("One or more arguments are wrong.\n");
+			return (FALSE);
+		}
 		i++;
 	}
-	return (1);
-}
-
-int int_atoi(const char *str)
-{
-	unsigned int    nb;
-
-	nb = 0;
-	while (*str)
-	{
-		nb = nb * 10 + (*str - '0');
-		str++;
-	}
-	return (nb);
+	return (TRUE);
 }
