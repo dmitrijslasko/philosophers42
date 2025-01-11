@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 14:25:23 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:50:55 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int init_philos(t_data *data)
 		data->philos[i].data = data;
 		i++;
 	}
-	data->threads = malloc(data->philosophers_len * sizeof(pthread_t));
+	data->philo_threads = malloc(data->philosophers_len * sizeof(pthread_t));
 	
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 14:29:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:19:28 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,11 @@ long	get_current_time_us(void)
 	return (time_value.tv_usec);
 }
 /**
- * get the microseconds part of current epoch time, in milliseconds
- */
-long	get_current_time_ms(void)
-{
-	return(get_current_time_us() / 1000);
-}
-/**
  * get current time in ms
  */
 long long get_current_time()
 {
-	return (get_current_time_s() * 1000 + get_current_time_ms());
+	return (get_current_time_s() * 1000 + get_current_time_us() / 1000);
 }
 
 long long get_runtime(t_data *data)

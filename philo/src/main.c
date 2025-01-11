@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 14:17:29 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 16:42:49 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 // time_to_sleep_ms (in milliseconds): The time a philosopher will spend sleeping.
 
-// number_of_times_each_philosopher_must_eat (optional argument)
+// no_of_meals_required (optional argument)
 
 int main(int argc, char **argv)
 {
@@ -34,13 +34,16 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     printf("Arguments: all checks passed, continuing work...\n");
     init_data(&data, argc, argv);
-    if (data.number_of_times_each_philosopher_must_eat == 0)
+    if (data.no_of_meals_required == 0)
         return (-1);
     init_forks(&data);
     init_philos(&data);
-    start_threads(&data);
-    join_threads(&data);
+    start_philo_threads(&data);
+    start_monitor(&data);
+    join_philo_threads(&data);
+    join_monitor_thread(&data);
     destroy_forks(&data);
-    printf(YELLOW "MS RUN TIME: %lld\n" RESET, get_runtime(&data));
+    if (EXTENDED_OUTPUT)
+        printf(YELLOW "TOTAL RUN TIME: %lld\n" RESET, get_runtime(&data));
     return (EXIT_SUCCESS);
 }

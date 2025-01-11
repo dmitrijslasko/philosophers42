@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:21:32 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 14:30:20 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 15:34:24 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	msleep(unsigned int sleep_time_ms)
 {
-	// unsigned int i;
-	sleep(usleep(sleep_time_ms * 1000));
+	long long	start_time;
+
+	start_time = get_current_time();
+	while (get_current_time() - start_time < sleep_time_ms)
+		usleep(1);
 }

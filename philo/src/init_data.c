@@ -21,15 +21,17 @@
  */
 int	init_data(t_data *data, int argc, char **argv)
 {
+	data->simulation_is_on = 1;
 	data->start_time = get_current_time();
 	data->philosophers_len = int_atoi(argv[1]);
 	data->time_to_die_ms = int_atoi(argv[2]);
 	data->time_to_eat_ms = int_atoi(argv[3]);
 	data->time_to_sleep_ms = int_atoi(argv[4]);
-	data->number_of_times_each_philosopher_must_eat = -1;
+	data->no_of_meals_required = -1;
 	if (argc == 6)
-		data->number_of_times_each_philosopher_must_eat = int_atoi(argv[5]);
+		data->no_of_meals_required = int_atoi(argv[5]);
 	data->philos = NULL;
-	data->threads = NULL;
+	data->philo_threads = NULL;
+	data->monitor_thread = NULL;
 	return (EXIT_SUCCESS);
 }
