@@ -74,7 +74,7 @@ void *monitor_routine(void *arg)
 	data = arg;
 	while (all_philos_are_alive(data) && !all_philos_ate_enough(data))
 	{
-		printf("MONITOR...\n");
+		// printf("MONITOR...\n");
 		usleep(10);
 	}
 	data->simulation_is_on = 0;

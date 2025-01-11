@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   argv_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 13:45:56 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 16:51:04 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,17 @@ int is_valid_input(char **argv, int argc)
         return (FALSE);
     }
 	i = 1;
-	if (int_atoi(argv[i++]) > MAX_PHILOS)
+	if (int_atoi(argv[i]) > MAX_PHILOS)
     {
         printf(MSG_TOO_MANY_PHILOS);
         return (FALSE);
     }
+	else if (int_atoi(argv[i]) == 0)
+    {
+        printf(MSG_ZERO_PHILOS);
+        return (FALSE);
+    }
+	i++;
 	while (argv[i])
 	{
 		if (is_valid_single_argument(argv[i]) == FALSE)

@@ -14,6 +14,7 @@
 // MESSAGES
 #define MSG_WRONG_ARGUMENT_COUNT "Please provide 4-5 arguments.\n"
 #define MSG_TOO_MANY_PHILOS "Too many philosophers, keep the count under " TOSTRING(MAX_PHILOS) ".\n"
+#define MSG_ZERO_PHILOS "0 philos... how do you think this will work?"
 
 // ERROR CODES
 #define MALLOC_FAIL	-1

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:59:09 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 16:42:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 16:59:17 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,16 @@ void *philosopher_routine(void *arg)
 		if (no_of_meals_actual == data->no_of_meals_required)
 			break ;
 		philo_take_left_fork(data, philo);
-		philo_take_right_fork(data, philo);
-		philo_eat(data, philo);
-		philo_sleep(data, philo);
-		philo_think(data, philo);
-		no_of_meals_actual++;
+		if (data->philosophers_len > 1)
+		{
+			philo_take_right_fork(data, philo);
+			philo_eat(data, philo);
+			philo_sleep(data, philo);
+			philo_think(data, philo);
+			no_of_meals_actual++;
+		}
+		else
+			break;
 	}
     return (NULL);
 }
