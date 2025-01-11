@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 14:01:29 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:17:29 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 // philosophers_len: The number of philosophers and also the number
 // of forks.
 
-// time_to_die (inmilliseconds): Ifaphilosopherdidn’tstarteatingtime_to_die
+// time_to_die_ms (inmilliseconds): Ifaphilosopherdidn’tstarteatingtime_to_die_ms
 // milliseconds since the beginning of their last meal or the beginning of the sim-
 // ulation, they die.
 
-// time_to_eat (in milliseconds): The time it takes for a philosopher to eat.
+// time_to_eat_ms (in milliseconds): The time it takes for a philosopher to eat.
 // During that time, they will need to hold two forks.
 
-// time_to_sleep (in milliseconds): The time a philosopher will spend sleeping.
+// time_to_sleep_ms (in milliseconds): The time a philosopher will spend sleeping.
 
 // number_of_times_each_philosopher_must_eat (optional argument)
 

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 12:44:56 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:25:23 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int init_philos(t_data *data)
 		data->philos[i].meals_count = 0;
 		data->philos[i].fork_left = &data->forks[i];
 		data->philos[i].fork_right = &data->forks[(i + 1) % data->philosophers_len];
-		printf("Philosopher %d initialized.\n", data->philos[i].id);
+		if (EXTENDED_OUTPUT)
+			printf(GREEN "Philosopher %d initialized.\n" RESET, data->philos[i].id);
 		data->philos[i].data = data;
 		i++;
 	}

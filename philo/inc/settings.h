@@ -1,7 +1,6 @@
 // SETITNGS AND LIMITS
 #define MAX_PHILOS  	200
 #define EXTENDED_OUTPUT  TRUE
-#define PRECISION		1000
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)

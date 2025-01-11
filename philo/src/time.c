@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 13:57:57 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:29:27 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ long	get_current_time_us(void)
 	gettimeofday(&time_value, NULL);
 	return (time_value.tv_usec);
 }
-
+/**
+ * get the microseconds part of current epoch time, in milliseconds
+ */
 long	get_current_time_ms(void)
 {
 	return(get_current_time_us() / 1000);
@@ -41,12 +43,12 @@ long	get_current_time_ms(void)
 /**
  * get current time in ms
  */
-long long get_current_time(int precision)
+long long get_current_time()
 {
-	return (get_current_time_s() * precision + get_current_time_us() / (1000000 / precision));
+	return (get_current_time_s() * 1000 + get_current_time_ms());
 }
 
 long long get_runtime(t_data *data)
 {
-	return (get_current_time(PRECISION) - data->start_time);
+	return (get_current_time() - data->start_time);
 }

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:59:09 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 13:59:28 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:23:10 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  */
 int check_life(t_data *data, t_philosopher *philo)
 {
-	if (get_runtime(data) - philo->last_meal_time_ms >= data->time_to_die)
+	if (get_runtime(data) - philo->last_meal_time_ms >= data->time_to_die_ms)
 	{
 		philo->is_alive = 0;
 		printf(RED"%lld %d is dead\n"RESET, get_runtime(data), philo->id);
@@ -31,13 +31,13 @@ int check_life(t_data *data, t_philosopher *philo)
  */
 void philo_think(t_data *data, t_philosopher *philo)
 {
-	int	time_to_think;
+	int	time_to_think_ms;
 
-	time_to_think = data->time_to_die - data->time_to_eat - data->time_to_sleep;
-	time_to_think /= 2;
+	time_to_think_ms = data->time_to_die_ms - data->time_to_eat_ms - data->time_to_sleep_ms;
+	time_to_think_ms /= 2;
 	check_life(data, philo);
 	printf("%lld %d is thinking\n", get_runtime(data), philo->id);
-	usleep(time_to_think * 1000);
+	msleep(time_to_think_ms);
 }
 
 /**
@@ -69,7 +69,7 @@ void philo_eat(t_data *data, t_philosopher *philo)
 	check_life(data, philo);
 	philo->last_meal_time_ms = get_runtime(data);
 	printf("%lld %d is eating\n", get_runtime(data), philo->id);
-	usleep(data->time_to_eat * 1000);
+	msleep(data->time_to_eat_ms);
 	philo->meals_count++;
 }
 
@@ -85,7 +85,7 @@ void philo_sleep(t_data *data, t_philosopher *philo)
 		printf("%lld %d is sleeping.\n", get_runtime(data), philo->id);
 	pthread_mutex_unlock(philo->fork_left);
 	pthread_mutex_unlock(philo->fork_right);
-	usleep(data->time_to_sleep * 1000);
+	msleep(data->time_to_sleep_ms);
 }
 
 /**

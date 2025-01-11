@@ -21,11 +21,11 @@
  */
 int	init_data(t_data *data, int argc, char **argv)
 {
-	data->start_time = get_current_time(PRECISION);;
+	data->start_time = get_current_time();
 	data->philosophers_len = int_atoi(argv[1]);
-	data->time_to_die = int_atoi(argv[2]);
-	data->time_to_eat = int_atoi(argv[3]);
-	data->time_to_sleep = int_atoi(argv[4]);
+	data->time_to_die_ms = int_atoi(argv[2]);
+	data->time_to_eat_ms = int_atoi(argv[3]);
+	data->time_to_sleep_ms = int_atoi(argv[4]);
 	data->number_of_times_each_philosopher_must_eat = -1;
 	if (argc == 6)
 		data->number_of_times_each_philosopher_must_eat = int_atoi(argv[5]);

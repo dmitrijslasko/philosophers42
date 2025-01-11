@@ -26,9 +26,9 @@ typedef struct s_philosopher {
 typedef struct s_data {
 	long long	start_time;
 	int philosophers_len;
-	int	time_to_die;
-	int time_to_eat;
-	int time_to_sleep;
+	int	time_to_die_ms;
+	int time_to_eat_ms;
+	int time_to_sleep_ms;
 	int	number_of_times_each_philosopher_must_eat;
 	
 	t_philosopher *philos;
@@ -61,7 +61,7 @@ int	join_threads(t_data *data);
 
 long	get_current_time_s(void);
 long	get_current_time_ms(void);
-long long get_current_time(int precision);
+long long get_current_time(void);
 long long get_runtime(t_data *data);
 
 // init_forks.c
@@ -69,3 +69,4 @@ int	init_forks(t_data *data);
 int	destroy_forks(t_data *data);
 
 void sleep_precisely(long milliseconds);
+void	msleep(unsigned int sleep_time_ms);
