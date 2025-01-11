@@ -1,27 +1,32 @@
 #include <string.h>
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 
-void *my_thread_function2(void *arg) {
-    printf("Hello from thread 2!\n");
-    return (NULL);
+#define MAX_PHILOS  200
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
+#define MSG_WRONG_ARGUMENT_COUNT "Please provide 4-5 arguments.\n"
+#define MSG_TOO_MANY_PHILOS "Too many philosophers, keep the count under " STRINGIFY(VALUE) ".\n"
+
+void ft_putchar(char c)
+{
+	write(1, &c, 1);
 }
 
-void *my_thread_function1(void *arg) {
-    printf("Hello from thread 1!\n");
-    return (NULL);
+void ft_putstr(char *str)
+{
+	while (*str)
+	{
+		ft_putchar(*str);
+		str++;
+	}
 }
 
 int	main(void)
 {
-	pthread_t thread1;
-	pthread_t thread2;
-
-	pthread_create(&thread1, NULL, my_thread_function1, NULL);
-	pthread_create(&thread2, NULL, my_thread_function2, NULL);
-
-	// pthread_join(thread1, NULL);
-	// pthread_join(thread2, NULL);
-
+	printf(MSG_TOO_MANY_PHILOS);
 }
 

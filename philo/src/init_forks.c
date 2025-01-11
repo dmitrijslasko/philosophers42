@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   forks.c                                            :+:      :+:    :+:   */
+/*   init_forks.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/09 14:58:02 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 12:22:30 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,22 @@ int	destroy_forks(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-int assign_forks(t_data *data)
-{
-	int	i;
-	t_philosopher *philos;
+/**
+ * INACTIVE
+ */
+// int assign_forks(t_data *data)
+// {
+// 	int	i;
+// 	t_philosopher *philos;
 	
-	philos = data->philos;
-	i = 0;
-	while (i < data->philosophers_len)
-	{
-		philos[i].fork_right = philos[(i + 1) % data->philosophers_len].fork_left;
-		printf("Left fork of philo %d is now also right fork of philo %d.\n", \
-						(philos[i].id + 1) % data->philosophers_len, philos[i].id);
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
+// 	philos = data->philos;
+// 	i = 0;
+// 	while (i < data->philosophers_len)
+// 	{
+// 		philos[i].fork_right = philos[(i + 1) % data->philosophers_len].fork_left;
+// 		printf("Left fork of philo %d is now also right fork of philo %d.\n", \
+// 						(philos[i].id + 1) % data->philosophers_len, philos[i].id);
+// 		i++;
+// 	}
+// 	return (EXIT_SUCCESS);
+// }

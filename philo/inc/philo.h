@@ -14,13 +14,13 @@ typedef enum {
 } e_boolean;
 
 typedef struct s_philosopher {
-	int id;
-	int is_alive;
-	long last_meal_time_ms;
-	// pthread_t *philosopher_thread;
-	pthread_mutex_t *fork_left;
-	pthread_mutex_t *fork_right;
-	struct s_data *data;
+	int				id;
+	int 			is_alive;
+	long 			last_meal_time_ms;
+	int				meals_count;
+	pthread_mutex_t	*fork_left;
+	pthread_mutex_t	*fork_right;
+	struct s_data	*data;
 }	t_philosopher;
 
 typedef struct s_data {
@@ -61,9 +61,11 @@ int	join_threads(t_data *data);
 
 long	get_current_time_s(void);
 long	get_current_time_ms(void);
-long long	get_current_time(void);
+long long get_current_time(int precision);
 long long get_runtime(t_data *data);
 
 // init_forks.c
 int	init_forks(t_data *data);
 int	destroy_forks(t_data *data);
+
+void sleep_precisely(long milliseconds);

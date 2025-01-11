@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_threads.c                                    :+:      :+:    :+:   */
+/*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:59:09 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/09 17:53:04 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 13:59:28 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
+/**
+ * This function сhecks and announces philo's death if it happens.
+ * @param *data table info
+ * @param *philo philosopher
+ */
 int check_life(t_data *data, t_philosopher *philo)
 {
 	if (get_runtime(data) - philo->last_meal_time_ms >= data->time_to_die)
 	{
+		philo->is_alive = 0;
 		printf(RED"%lld %d is dead\n"RESET, get_runtime(data), philo->id);
 		exit (1);
 	}
 	return (0);
 }
-void think(t_data *data, t_philosopher *philo)
+/**
+ * Part of the philosopher's routine – thinking.
+ */
+void philo_think(t_data *data, t_philosopher *philo)
 {
 	int	time_to_think;
 
@@ -29,40 +37,60 @@ void think(t_data *data, t_philosopher *philo)
 	time_to_think /= 2;
 	check_life(data, philo);
 	printf("%lld %d is thinking\n", get_runtime(data), philo->id);
-	usleep(time_to_think);
+	usleep(time_to_think * 1000);
 }
 
-void take_left_fork(t_data *data, t_philosopher *philo)
+/**
+ * Part of the philosopher's routine – taking the LEFT fork.
+ */
+void philo_take_left_fork(t_data *data, t_philosopher *philo)
 {
 	check_life(data, philo);
-	printf("%lld %d has taken a L fork\n", get_runtime(data), philo->id);
 	pthread_mutex_lock(philo->fork_left);
+	printf("%lld %d has taken a L fork\n", get_runtime(data), philo->id);
 
 }
-void take_right_fork(t_data *data, t_philosopher *philo)
+
+/**
+ * Part of the philosopher's routine – taking the RIGHT fork.
+ */
+void philo_take_right_fork(t_data *data, t_philosopher *philo)
 {
 	check_life(data, philo);
-	printf(YELLOW"%lld %d has taken a R fork\n"RESET, get_runtime(data), philo->id);
 	pthread_mutex_lock(philo->fork_right);
+	printf(YELLOW"%lld %d has taken a R fork\n"RESET, get_runtime(data), philo->id);
+}
+
+/**
+ * Part of the philosopher's routine – eating.
+ */
+void philo_eat(t_data *data, t_philosopher *philo)
+{
+	check_life(data, philo);
 	philo->last_meal_time_ms = get_runtime(data);
-}
-
-void eat(t_data *data, t_philosopher *philo)
-{
-	check_life(data, philo);
 	printf("%lld %d is eating\n", get_runtime(data), philo->id);
-	usleep(data->time_to_eat);
+	usleep(data->time_to_eat * 1000);
+	philo->meals_count++;
 }
 
-void sleep_tight(t_data *data, t_philosopher *philo)
+/**
+ * Part of the philosopher's routine – sleeping.
+ */
+void philo_sleep(t_data *data, t_philosopher *philo)
 {
 	check_life(data, philo);
-	printf("%lld %d is sleeping\n", get_runtime(data), philo->id);
+	if (EXTENDED_OUTPUT)
+		printf(GREEN"%lld %d is sleeping. Meals count: %d\n"RESET, get_runtime(data), philo->id, philo->meals_count);
+	else
+		printf("%lld %d is sleeping.\n", get_runtime(data), philo->id);
 	pthread_mutex_unlock(philo->fork_left);
 	pthread_mutex_unlock(philo->fork_right);
-	usleep(data->time_to_sleep);
+	usleep(data->time_to_sleep * 1000);
 }
 
+/**
+ * A philosopher's routine.
+ */
 void *philosopher_routine(void *arg)
 {
 	t_philosopher *philo;
@@ -77,16 +105,19 @@ void *philosopher_routine(void *arg)
 	{
 		if (round_counter == data->number_of_times_each_philosopher_must_eat)
 			break ;
-		take_left_fork(data, philo);
-		take_right_fork(data, philo);
-		eat(data, philo);
-		sleep_tight(data, philo);
-		think(data, philo);
+		philo_take_left_fork(data, philo);
+		philo_take_right_fork(data, philo);
+		philo_eat(data, philo);
+		philo_sleep(data, philo);
+		philo_think(data, philo);
 		round_counter++;
 	}
     return (NULL);
 }
 
+/**
+ * Wrapper for pthread_join() function.
+ */
 int	join_threads(t_data *data)
 {
 	int	i;
@@ -99,6 +130,10 @@ int	join_threads(t_data *data)
 	}
 	return (EXIT_SUCCESS);
 }
+
+/**
+ * Wrapper for pthread_create() function.
+ */
 int	start_threads(t_data *data)
 {
 	int	i;
@@ -110,7 +145,6 @@ int	start_threads(t_data *data)
 		if (!data->threads[i])
 			return (MALLOC_FAIL);
 		pthread_create(&data->threads[i], NULL, philosopher_routine, (void *)&data->philos[i]);
-		// usleep(100);
 		i++;
 	}
 	return (EXIT_SUCCESS);

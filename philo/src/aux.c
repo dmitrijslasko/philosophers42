@@ -6,12 +6,17 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:10:34 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/08 00:10:57 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/11 12:22:31 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * Function to calculate string length.
+ * @param str string
+ * @return length of the string
+ */
 int	ft_strlen(const char *str)
 {
 	unsigned int	i;
@@ -21,7 +26,12 @@ int	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
-
+/**
+ * Simplified atoi function. Transforms argument to int.
+ * Assumes the incoming str to not have - or +.
+ * @param str string argument
+ * @return integer
+ */
 int int_atoi(const char *str)
 {
 	unsigned int    nb;
