@@ -34,6 +34,7 @@ typedef struct s_data {
 	
 	t_philosopher 	*philos;
 	pthread_t 		*philo_threads;
+	// void			*simulation_is_on;
 	pthread_t 		monitor_thread;
 	pthread_mutex_t	*forks;
  

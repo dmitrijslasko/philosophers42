@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 17:59:09 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 16:59:17 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/12 17:44:50 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void *philosopher_routine(void *arg)
 	no_of_meals_actual = 0;
 	philo = (t_philosopher *)arg;
 	data = philo->data;
-	while (data->simulation_is_on)
+	while (1 == 1)
 	{
 		if (no_of_meals_actual == data->no_of_meals_required)
 			break ;
