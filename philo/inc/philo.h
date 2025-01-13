@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/13 22:21:06 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 23:38:14 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef enum e_boolean
 typedef struct s_fork
 {
 	int				fork_is_taken;
-	pthread_mutex_t	fork;
-}	t_fork;
+	pthread_mutex_t	fork_mutex;
+}					t_fork;
 
 typedef struct s_philosopher 
 {
@@ -44,8 +44,8 @@ typedef struct s_philosopher
 	int 			is_alive;
 	long 			last_meal_time_ms;
 	int				meals_count;
-	pthread_mutex_t	*fork_left;
-	pthread_mutex_t	*fork_right;
+	t_fork			*fork_left;
+	t_fork			*fork_right;
 	t_data			*data;
 }					t_philosopher;
 
@@ -61,8 +61,7 @@ typedef struct s_data
 	t_philosopher 	*philos;
 	pthread_t 		*philo_threads;
 	pthread_t 		monitor_thread;
-	pthread_mutex_t	*forks;
- 
+	t_fork			*forks;
 }					t_data;
 
 // FUNCTIONS

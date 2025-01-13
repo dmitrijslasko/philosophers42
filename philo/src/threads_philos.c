@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 02:14:59 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/13 22:19:12 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 23:40:27 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void philo_think(t_data *data, t_philosopher *philo)
 	if(!data->simulation_is_on)
 		return ;
 	time_to_think_ms = data->time_to_die_ms - data->time_to_eat_ms - data->time_to_sleep_ms;
-	time_to_think_ms /= 2;
 	printf("%lld %d is thinking\n", get_runtime(data), philo->id);
 	msleep(time_to_think_ms);
 }
@@ -32,10 +31,12 @@ void philo_think(t_data *data, t_philosopher *philo)
  */
 void philo_take_left_fork(t_data *data, t_philosopher *philo)
 {
+	while (philo->fork_left->fork_is_taken && data->simulation_is_on)
+		continue ;
 	if(!data->simulation_is_on)
 		return ;
-	while (pthread_mutex_lock(philo->fork_left) != 0)
-		printf("THE LEFT FORK IS LOCKED!!!\n");
+	pthread_mutex_lock(&philo->fork_left->fork_mutex);
+	philo->fork_left->fork_is_taken = 1;
 	printf("%lld %d has taken a L fork\n", get_runtime(data), philo->id);
 }
 /**
@@ -43,10 +44,12 @@ void philo_take_left_fork(t_data *data, t_philosopher *philo)
  */
 void philo_take_right_fork(t_data *data, t_philosopher *philo)
 {
+	while (philo->fork_right->fork_is_taken && data->simulation_is_on)
+		continue ;
 	if(!data->simulation_is_on)
 		return ;
-	while (pthread_mutex_lock(philo->fork_right) != 0)
-		printf("THE RIGHT FORK IS LOCKED!!!\n");
+	pthread_mutex_lock(&philo->fork_right->fork_mutex);
+	philo->fork_right->fork_is_taken = 1;
 	printf(YELLOW"%lld %d has taken a R fork\n"RESET, get_runtime(data), philo->id);
 }
 
@@ -74,8 +77,10 @@ void philo_sleep(t_data *data, t_philosopher *philo)
 		printf(GREEN"%lld %d is sleeping. Meals count: %d\n"RESET, get_runtime(data), philo->id, philo->meals_count);
 	else
 		printf("%lld %d is sleeping.\n", get_runtime(data), philo->id);
-	pthread_mutex_unlock(philo->fork_left);
-	pthread_mutex_unlock(philo->fork_right);
+	pthread_mutex_unlock(&philo->fork_left->fork_mutex);
+	philo->fork_left->fork_is_taken = 0;
+	pthread_mutex_unlock(&philo->fork_right->fork_mutex);
+	philo->fork_right->fork_is_taken = 0;
 	msleep(data->time_to_sleep_ms);
 }
 
@@ -137,8 +142,8 @@ int	start_philo_threads(t_data *data)
 		if (!data->philo_threads[i])
 			return (MALLOC_FAIL);
 		pthread_create(&data->philo_threads[i], NULL, philosopher_routine, (void *)&data->philos[i]);
+		printf("Thread started!\n");
 		i++;
-		// usleep(10);
 	}
 	return (EXIT_SUCCESS);
 }
