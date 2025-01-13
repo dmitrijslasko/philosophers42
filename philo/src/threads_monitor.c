@@ -19,7 +19,7 @@
  */
 int philo_is_alive(t_data *data, t_philosopher *philo)
 {
-	if (get_runtime(data) - philo->last_meal_time_ms >= data->time_to_die_ms)
+	if (get_runtime_ms(data) - philo->last_meal_time_ms >= data->time_to_die_ms)
 	{
 		philo->is_alive = 0;
 		return (FALSE);
@@ -29,7 +29,7 @@ int philo_is_alive(t_data *data, t_philosopher *philo)
 
 void join_monitor_thread(t_data *data)
 {
-	pthread_join(data->monitor_thread, &data->simulation_is_on);
+	pthread_join(data->monitor_thread, (void *)&data->simulation_is_on);
 }
 
 int all_philos_are_alive(t_data *data)
@@ -41,7 +41,7 @@ int all_philos_are_alive(t_data *data)
 	{
 		if (philo_is_alive(data, &data->philos[i]) == 0)
 		{
-			printf(RED "%lld %d died\n" RESET, get_runtime(data), data->philos[i].id);
+			printf(RED "%lld %d died\n" RESET, get_runtime_ms(data), data->philos[i].id);
 			data->simulation_is_on = 0;
 			return (FALSE);
 		}
@@ -68,16 +68,9 @@ int all_philos_ate_enough(t_data *data)
  * A monitor's routine.
  */
 void *monitor_routine(void *arg)
-{
-	t_data *data;
-	
-	data = arg;
-	while (all_philos_are_alive(data) && !all_philos_ate_enough(data))
-	{
-		// printf("MONITOR...\n");
+{	
+	while (all_philos_are_alive(arg) && !all_philos_ate_enough(arg))
 		usleep(10);
-	}
-	data->simulation_is_on = 0;
 	return (void *)EXIT_SUCCESS;
 }
 

@@ -6,16 +6,16 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 15:19:28 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 00:56:18 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * get current time value in seconds (epoch seconds)
+ * get the seconds part of current epoch time
  */
-long	get_current_time_s(void)
+long	get_epoch_time_s(void)
 {
 	struct timeval time_value;
 
@@ -26,7 +26,7 @@ long	get_current_time_s(void)
 /**
  * get the microseconds part of current epoch time
  */
-long	get_current_time_us(void)
+long	get_epoch_time_us(void)
 {
 	struct timeval time_value;
 
@@ -36,12 +36,12 @@ long	get_current_time_us(void)
 /**
  * get current time in ms
  */
-long long get_current_time()
+long long get_current_time_ms()
 {
-	return (get_current_time_s() * 1000 + get_current_time_us() / 1000);
+	return (get_epoch_time_s() * 1000 + get_epoch_time_us() / 1000);
 }
 
-long long get_runtime(t_data *data)
+long long get_runtime_ms(t_data *data)
 {
-	return (get_current_time() - data->start_time);
+	return (get_current_time_ms() - data->start_time_ms);
 }

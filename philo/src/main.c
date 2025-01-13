@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 16:42:49 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 01:31:19 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int main(int argc, char **argv)
     join_monitor_thread(&data);
     destroy_forks(&data);
     if (EXTENDED_OUTPUT)
-        printf(YELLOW "TOTAL RUN TIME: %lld\n" RESET, get_runtime(&data));
+        printf(YELLOW "TOTAL RUN TIME: %lld\n" RESET, get_runtime_ms(&data));
     return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 17:00:20 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 01:36:36 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	destroy_forks(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
-	data->forks = data->forks;
 	return (EXIT_SUCCESS);
 }
 
