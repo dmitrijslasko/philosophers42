@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   argv_check.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 16:51:04 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 22:19:37 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static inline int is_digit(char c)
+{
+	return (c >= '0' && c <= '9');
+}
 
 int contains_only_digits(const char *str)
 {
@@ -18,7 +23,7 @@ int contains_only_digits(const char *str)
 		return (FALSE);
 	while (*str)
 	{
-		if (*str < '0' || *str > '9')
+		if (!is_digit(*str))
 			return (FALSE);
 		str++;
 	}
@@ -27,12 +32,11 @@ int contains_only_digits(const char *str)
 
 int is_valid_single_argument(const char *str)
 {
-	int is_valid_single_argument;
-
-	is_valid_single_argument = TRUE;
+	if (ft_strlen(str) > MAX_ARGUMENT_LEN)
+		return (FALSE);
 	if (!contains_only_digits(str))
-		is_valid_single_argument = FALSE;
-	return (is_valid_single_argument);
+		return (FALSE);
+	return (TRUE);
 }
 
 int is_valid_input(char **argv, int argc)

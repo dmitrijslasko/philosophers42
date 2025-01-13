@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 15:19:28 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 22:13:08 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ long	get_current_time_us(void)
  */
 long long get_current_time()
 {
-	return (get_current_time_s() * 1000 + get_current_time_us() / 1000);
+	return (get_current_time_s() * 1e3 + get_current_time_us() / 1e3);
 }
 
 long long get_runtime(t_data *data)
 {
-	return (get_current_time() - data->start_time);
+	return (get_current_time() - data->simulation_start_time);
 }

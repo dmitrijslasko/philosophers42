@@ -1,5 +1,7 @@
 # philosophers42
 
+<!-- TODO -->
+# transform all incoming inputs to long, to only allow <= INT_MAX values
 
 ### ALLOWED FUNCTIONS:
 

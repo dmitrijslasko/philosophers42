@@ -6,13 +6,13 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 16:42:49 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/13 12:43:28 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
 
-// philosophers_len: The number of philosophers and also the number
+// no_of_philosophers: The number of philosophers and also the number
 // of forks.
 
 // time_to_die_ms (inmilliseconds): Ifaphilosopherdidn’tstarteatingtime_to_die_ms

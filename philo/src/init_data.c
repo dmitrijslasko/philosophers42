@@ -22,8 +22,8 @@
 int	init_data(t_data *data, int argc, char **argv)
 {
 	data->simulation_is_on = 1;
-	data->start_time = get_current_time();
-	data->philosophers_len = int_atoi(argv[1]);
+	data->simulation_start_time = get_current_time();
+	data->no_of_philosophers = int_atoi(argv[1]);
 	data->time_to_die_ms = int_atoi(argv[2]);
 	data->time_to_eat_ms = int_atoi(argv[3]);
 	data->time_to_sleep_ms = int_atoi(argv[4]);

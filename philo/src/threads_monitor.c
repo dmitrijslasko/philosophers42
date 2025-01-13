@@ -29,7 +29,7 @@ int philo_is_alive(t_data *data, t_philosopher *philo)
 
 void join_monitor_thread(t_data *data)
 {
-	pthread_join(data->monitor_thread, &data->simulation_is_on);
+	pthread_join(data->monitor_thread, NULL);
 }
 
 int all_philos_are_alive(t_data *data)
@@ -37,11 +37,11 @@ int all_philos_are_alive(t_data *data)
 	int i;
 	
 	i = 0;
-	while (i < data->philosophers_len)
+	while (i < data->no_of_philosophers)
 	{
 		if (philo_is_alive(data, &data->philos[i]) == 0)
 		{
-			printf(RED "%lld %d died\n" RESET, get_runtime(data), data->philos[i].id);
+			printf(RED "%lld %d is dead\n" RESET, get_runtime(data), data->philos[i].id);
 			data->simulation_is_on = 0;
 			return (FALSE);
 		}
@@ -55,7 +55,7 @@ int all_philos_ate_enough(t_data *data)
 	int	no_of_meals_actual;
 
 	i = 0;
-	while (i < data->philosophers_len)
+	while (i < data->no_of_philosophers)
 	{
 		no_of_meals_actual = data->philos[i].meals_count;
 		if (no_of_meals_actual < data->no_of_meals_required)
@@ -78,7 +78,7 @@ void *monitor_routine(void *arg)
 		usleep(10);
 	}
 	data->simulation_is_on = 0;
-	return (void *)EXIT_SUCCESS;
+    return (NULL);
 }
 
 /**
