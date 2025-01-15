@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/13 18:32:57 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/15 14:16:33 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define MAX_MEAL_COUNT		2000
 # define MAX_ARGUMENT_LEN	8
 
-# define EXTENDED_OUTPUT  	TRUE
+# define DEBUG  			0
+# define MONITOR_FREQ_US	10
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
@@ -34,11 +35,14 @@
 # define YELLOW	"\033[0;33m"
 
 // MESSAGES
-# define MSG_WRONG_ARGUMENT_COUNT	"Please provide 4-5 arguments.\n"
+# define MSG_WRONG_ARGUMENT_COUNT		"Please provide 4-5 arguments.\n"
 # define MSG_TOO_MANY_PHILOS			"Too many philosophers, keep the count under 200.\n"
 # define MSG_ZERO_PHILOS				"0 philos... how do you think this will work?"
+# define MSG_ONE_OR_MORE_ARGS_WRONG 	"One or more arguments are wrong.\n"
 
 // ERROR CODES
-# define MALLOC_FAIL	-1
+# define MALLOC_FAIL			1
+# define INVALID_INPUT			2
+# define MEALS_REQUIRED_ZERO	3
 
 #endif

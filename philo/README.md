@@ -3,6 +3,10 @@
 <!-- TODO -->
 # transform all incoming inputs to long, to only allow <= INT_MAX values
 
+# add the function to sync threads
+
+# function for one philo case
+
 ### ALLOWED FUNCTIONS:
 
 

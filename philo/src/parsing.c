@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/13 22:19:37 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/15 13:50:48 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,18 @@ int is_valid_input(char **argv, int argc)
 
 	if (argc - 1 < 4 || argc - 1 > 5)
     {
-        printf(MSG_WRONG_ARGUMENT_COUNT);
+        print_error(MSG_WRONG_ARGUMENT_COUNT);
         return (FALSE);
     }
 	i = 1;
 	if (int_atoi(argv[i]) > MAX_PHILOS)
     {
-        printf(MSG_TOO_MANY_PHILOS);
+        print_error(MSG_TOO_MANY_PHILOS);
         return (FALSE);
     }
 	else if (int_atoi(argv[i]) == 0)
     {
-        printf(MSG_ZERO_PHILOS);
+        print_error(MSG_ZERO_PHILOS);
         return (FALSE);
     }
 	i++;
@@ -64,10 +64,12 @@ int is_valid_input(char **argv, int argc)
 	{
 		if (is_valid_single_argument(argv[i]) == FALSE)
 		{
-			printf("One or more arguments are wrong.\n");
+			print_error(MSG_ONE_OR_MORE_ARGS_WRONG);
 			return (FALSE);
 		}
 		i++;
 	}
+	if (DEBUG)
+		printf("Arguments: all checks passed, continuing work...\n");
 	return (TRUE);
 }

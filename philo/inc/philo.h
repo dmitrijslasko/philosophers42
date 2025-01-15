@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/13 23:38:14 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/15 15:24:10 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 // STRUCTS
 typedef struct s_data t_data;
+typedef pthread_mutex_t p_mtx;
 
 typedef enum e_boolean
 {
@@ -32,16 +33,35 @@ typedef enum e_boolean
 	TRUE,
 } 	t_boolean;
 
+typedef	enum e_opcode
+{
+	INIT,
+	DESTROY,
+	LOCK,
+	UNLOCK,
+}	t_opcode;
+
+typedef	enum e_status
+{
+	TAKEN_LEFT_FORK,
+	TAKEN_RIGHT_FORK,
+	EATING,
+	SLEEPING,
+	THINKING
+}	t_status;
+
+
 typedef struct s_fork
 {
 	int				fork_is_taken;
-	pthread_mutex_t	fork_mutex;
+	p_mtx			fork_mutex;
 }					t_fork;
 
 typedef struct s_philosopher 
 {
 	int				id;
 	int 			is_alive;
+	int				is_full;
 	long 			last_meal_time_ms;
 	int				meals_count;
 	t_fork			*fork_left;
@@ -51,17 +71,20 @@ typedef struct s_philosopher
 
 typedef struct s_data 
 {
-	long long		simulation_start_time;
-	int				simulation_is_on;
 	int 			no_of_philosophers;
 	int				time_to_die_ms;
 	int 			time_to_eat_ms;
 	int 			time_to_sleep_ms;
 	int				no_of_meals_required;
+	long long		simulation_start_time;
+	int				simulation_is_on;
+	int				all_threads_created;
+	t_fork			*forks;
 	t_philosopher 	*philos;
 	pthread_t 		*philo_threads;
 	pthread_t 		monitor_thread;
-	t_fork			*forks;
+	p_mtx			status_write_mutex;
+	p_mtx			data_access_mutex;
 }					t_data;
 
 // FUNCTIONS
@@ -82,8 +105,8 @@ int init_philos(t_data *data);
 
 int assign_forks(t_data *data);
 
-// start_philo_threads.c
-int	start_philo_threads(t_data *data);
+// create_philo_threads.c
+int	create_philo_threads(t_data *data);
 int	join_philo_threads(t_data *data);
 
 long	get_current_time_s(void);
@@ -91,7 +114,7 @@ long	get_current_time_ms(void);
 long long get_current_time(void);
 long long get_runtime(t_data *data);
 
-int		start_monitor(t_data *data);
+int		create_monitor(t_data *data);
 void	join_monitor_thread(t_data *data);
 
 // init_forks.c
@@ -102,5 +125,12 @@ void	sleep_precisely(long milliseconds);
 void	msleep(unsigned int sleep_time_ms);
 
 int philo_is_alive(t_data *data, t_philosopher *philo);
+
+void	print_error(char *str);
+
+void	*safe_malloc(int size_bytes);
+void	safe_mutex_operation(p_mtx	*mutex, t_opcode opcode);
+
+void wait_for_all_threads(t_data *data);
 
 #endif

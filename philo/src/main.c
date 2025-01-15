@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/13 23:38:10 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/15 15:24:12 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,23 @@ int main(int argc, char **argv)
     t_data data;
     
     if (is_valid_input(argv, argc) == FALSE)
+        return (INVALID_INPUT);
+    if (init_data(&data, argc, argv))
         return (EXIT_FAILURE);
-    printf("Arguments: all checks passed, continuing work...\n");
-    init_data(&data, argc, argv);
     if (data.no_of_meals_required == 0)
-        return (-1);
-    init_forks(&data);
-    init_philos(&data);
-    start_philo_threads(&data);
-    start_monitor(&data);
+        return (MEALS_REQUIRED_ZERO);
+    if (init_forks(&data))
+        return (EXIT_FAILURE);
+    if (init_philos(&data))
+        return (EXIT_FAILURE);
+    create_philo_threads(&data);
+    create_monitor(&data);
     join_philo_threads(&data);
     join_monitor_thread(&data);
     destroy_forks(&data);
-    if (EXTENDED_OUTPUT)
-        printf(YELLOW "TOTAL RUN TIME: %lld\n" RESET, get_runtime(&data));
+    safe_mutex_operation(&data.data_access_mutex, DESTROY);
+    safe_mutex_operation(&data.status_write_mutex, DESTROY);
+    if (DEBUG)
+        printf(YELLOW "TOTAL RUN TIME: %lld ms.\n" RESET, get_runtime(&data));
     return (EXIT_SUCCESS);
 }
