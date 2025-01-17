@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/15 15:24:10 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/17 00:04:57 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ typedef	enum e_status
 	TAKEN_RIGHT_FORK,
 	EATING,
 	SLEEPING,
-	THINKING
+	THINKING,
+	DIED
 }	t_status;
 
 
 typedef struct s_fork
 {
-	int				fork_is_taken;
+	int				fork_taken;
 	p_mtx			fork_mutex;
 }					t_fork;
 
@@ -122,15 +123,20 @@ int	init_forks(t_data *data);
 int	destroy_forks(t_data *data);
 
 void	sleep_precisely(long milliseconds);
-void	msleep(unsigned int sleep_time_ms);
+void	msleep(t_data *data, unsigned int sleep_time_ms);
 
 int philo_is_alive(t_data *data, t_philosopher *philo);
 
 void	print_error(char *str);
 
 void	*safe_malloc(int size_bytes);
-void	safe_mutex_operation(p_mtx	*mutex, t_opcode opcode);
+void	mutex_operation(p_mtx	*mutex, t_opcode opcode);
 
 void wait_for_all_threads(t_data *data);
+
+void	fork_mutex_operation(t_fork *fork, t_opcode opcode);
+
+void	write_status(t_data *data, t_philosopher *philo, t_status status);
+void	write_status_debug(t_data *data, t_philosopher *philo, t_status status);
 
 #endif

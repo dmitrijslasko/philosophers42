@@ -34,7 +34,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->philos = NULL;
 	data->philo_threads = NULL;
 	data->monitor_thread = NULL;
-	safe_mutex_operation(&data->data_access_mutex, INIT);
-	safe_mutex_operation(&data->status_write_mutex, INIT);
+	mutex_operation(&data->data_access_mutex, INIT);
+	mutex_operation(&data->status_write_mutex, INIT);
 	return (EXIT_SUCCESS);
 }

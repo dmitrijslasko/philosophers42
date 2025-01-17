@@ -27,6 +27,11 @@ void ft_putstr(char *str)
 
 int	main(void)
 {
-	printf(MSG_TOO_MANY_PHILOS);
+	while (1)
+	{
+		printf("Hello world!\n");
+		sleep(2);
+	}
+	// printf(MSG_TOO_MANY_PHILOS);
 }
 

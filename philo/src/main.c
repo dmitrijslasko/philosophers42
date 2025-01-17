@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/15 15:24:12 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/17 00:51:41 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,16 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     if (init_philos(&data))
         return (EXIT_FAILURE);
+
     create_philo_threads(&data);
     create_monitor(&data);
+    
     join_philo_threads(&data);
     join_monitor_thread(&data);
+
     destroy_forks(&data);
-    safe_mutex_operation(&data.data_access_mutex, DESTROY);
-    safe_mutex_operation(&data.status_write_mutex, DESTROY);
+    mutex_operation(&data.data_access_mutex, DESTROY);
+    mutex_operation(&data.status_write_mutex, DESTROY);
     if (DEBUG)
         printf(YELLOW "TOTAL RUN TIME: %lld ms.\n" RESET, get_runtime(&data));
     return (EXIT_SUCCESS);
