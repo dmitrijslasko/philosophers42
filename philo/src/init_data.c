@@ -33,7 +33,11 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->all_threads_created = 0;
 	data->philos = NULL;
 	data->philo_threads = NULL;
+<<<<<<< HEAD
 	//data->monitor_thread = NULL;
+=======
+	// data->monitor_thread = NULL;
+>>>>>>> refs/remotes/origin/main
 	mutex_operation(&data->data_access_mutex, INIT);
 	mutex_operation(&data->status_write_mutex, INIT);
 	return (EXIT_SUCCESS);
