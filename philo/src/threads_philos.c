@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 02:14:59 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/17 02:46:13 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/17 20:09:54 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void philo_think(t_data *data, t_philosopher *philo)
 {
 	int	time_to_think_ms;
-	
+
 	time_to_think_ms = data->time_to_die_ms - data->time_to_eat_ms - data->time_to_sleep_ms;
 	if (time_to_think_ms < 0)
 		time_to_think_ms *= -1;
@@ -51,7 +51,7 @@ void philo_take_right_fork(t_data *data, t_philosopher *philo)
  * Part of the philosopher's routine – eating.
  */
 void philo_eat(t_data *data, t_philosopher *philo)
-{	
+{
 	philo->last_meal_time_ms = get_runtime(data);
 	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
@@ -91,7 +91,7 @@ void *philosopher_routine(void *arg)
 {
 	t_philosopher *philo;
 	t_data	*data;
-	
+
 	philo = (t_philosopher *)arg;
 	data = philo->data;
 	wait_for_all_threads(data);
@@ -141,7 +141,7 @@ int	create_philo_threads(t_data *data)
 	i = 0;
 	while (i < data->no_of_philosophers)
 	{
-		data->philo_threads[i] = safe_malloc(sizeof(pthread_t));
+		data->philo_threads[i] = (pthread_t)safe_malloc(sizeof(pthread_t));
 		if (!data->philo_threads[i])
 			return (MALLOC_FAIL);
 		pthread_create(&data->philo_threads[i], NULL, philosopher_routine, (void *)&data->philos[i]);

@@ -36,7 +36,7 @@ int philo_is_alive(t_data *data, t_philosopher *philo)
 int all_philos_are_alive(t_data *data)
 {
 	int i;
-	
+
 	i = 0;
 	while (i < data->no_of_philosophers)
 	{
@@ -52,7 +52,7 @@ int all_philos_are_alive(t_data *data)
 	}
 	return (TRUE);
 }
-int	inline philo_is_full(t_data *data, t_philosopher *philo)
+inline int	philo_is_full(t_data *data, t_philosopher *philo)
 {
 	return (philo->meals_count >= data->no_of_meals_required);
 }
@@ -77,7 +77,7 @@ int all_philos_are_full(t_data *data)
 void *monitor_routine(void *arg)
 {
 	t_data *data;
-	
+
 	data = arg;
 	wait_for_all_threads(data);
 	while (all_philos_are_alive(data) && (!all_philos_are_full(data) || data->no_of_meals_required < 0))
