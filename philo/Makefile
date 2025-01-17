@@ -2,11 +2,7 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-<<<<<<< HEAD
 #-fsanitize=thread
-=======
-# -fsanitize=thread
->>>>>>> refs/remotes/origin/main
 INC = ./inc
 
 SRC = src/*.c
