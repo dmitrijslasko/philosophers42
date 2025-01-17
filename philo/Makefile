@@ -2,6 +2,7 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
+#-fsanitize=thread
 INC = ./inc
 
 SRC = src/*.c
