@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/19 18:02:04 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/19 19:43:46 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void *philosopher_routine(void *arg)
 	data->simulation_start_time = get_current_time();
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	if (philo->id % 2 == 0)
-		usleep(800);
+		usleep(THREAD_DELAY_US);
 	while (data->simulation_is_on)
 	{
 		philo_take_forks(data, philo);

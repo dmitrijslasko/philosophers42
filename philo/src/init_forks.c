@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/17 00:25:42 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/19 19:38:42 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	init_forks(t_data *data)
 {
 	int	i;
-	
+
 	data->forks = safe_malloc(data->no_of_philosophers * sizeof(t_fork));
 	if (!data->forks)
 		return (MALLOC_FAIL);
@@ -45,7 +45,7 @@ int free_forks(t_data *data)
 			printf(YELLOW"Fork %d unlocked\n"RESET, i + 1);
 		}
 		i++;
-		
+
 	}
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	return (EXIT_SUCCESS);
@@ -54,14 +54,11 @@ int free_forks(t_data *data)
 int	destroy_forks(t_data *data)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < data->no_of_philosophers)
-	{
-		pthread_mutex_destroy(&data->forks[i].fork_mutex);
-		if (DEBUG)
-			printf(YELLOW"Fork [%d] destroyed\n"RESET, i + 1);
-		i++;
-	}
+		pthread_mutex_destroy(&data->forks[i++].fork_mutex);
+	if (DEBUG)
+		printf(B_MAGENTA">>>>>>>>>>>>> Forks destroyed\n"RESET);
 	return (EXIT_SUCCESS);
 }

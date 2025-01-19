@@ -6,11 +6,11 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/15 02:08:37 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/19 19:32:39 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../inc/philo.h"
 
 void print_test_header(const char *test_name)
 {
@@ -51,7 +51,7 @@ void test_is_valid_single_argument(void)
 	print_test_header(__func__);
 	i = 1;
 	check_test(i++, 1, is_valid_single_argument("1"));
-	check_test(i++, 1, is_valid_single_argument("11232132134512323"));
+	check_test(i++, 0, is_valid_single_argument("11232132134512323"));
 	check_test(i++, 1, is_valid_single_argument("123"));
 	check_test(i++, 1, is_valid_single_argument("0"));
 	check_test(i++, 0, is_valid_single_argument("0 0"));

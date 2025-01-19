@@ -80,7 +80,8 @@ void *monitor_routine(void *arg)
 
 	data = arg;
 	wait_for_all_threads(data);
-	while (all_philos_are_alive(data) && (!all_philos_are_full(data) || data->no_of_meals_required < 0))
+	while (all_philos_are_alive(data) && (!all_philos_are_full(data)
+		|| data->no_of_meals_required < 0))
 		usleep(MONITOR_FREQ_US);
 	mutex_operation(&data->data_access_mutex, LOCK);
 	data->simulation_is_on = 0;

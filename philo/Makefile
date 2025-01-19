@@ -2,24 +2,36 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
-#-fsanitize=thread
+SANITIZE = -fsanitize=thread
 INC = ./inc
+DEBUGFLAGS = -D DEBUG=1
 
 SRC = src/*.c
 
 all:
 	$(CC) $(CFLAGS) -I $(INC) $(SRC) -o $(NAME)
 
+clean:
+
+fclean:
+
+re:
+
 PHONY: all clean fclean re
 
+# special modes
+sanitize:
+	$(CC) $(CFLAGS) $(SANITIZE) -I $(INC) $(SRC) -o $(NAME)
+
 debug:
-	$(CC) $(CFLAGS) -D DEBUG=1 -I $(INC) $(SRC) -o $(NAME)
+	$(CC) $(CFLAGS) $(DEBUGFLAGS) -I $(INC) $(SRC) -o $(NAME)
 
 unit_tests:
-	@echo "\n---------------------------------------------------------------"
-	@echo "\n|                          UNIT TESTS                           |"
-	@echo "\n-----------------------------------------------------------------"
-	@cc tests/tests_parsing.c src/parsing.c -I $(INC) && ./a.out
+	@echo "---------------------------------------------------------------"
+	@echo "*                          UNIT TESTS                         *"
+	@echo "---------------------------------------------------------------"
+	@cc tests/tests_parsing.c $(shell find src -name '*.c' ! -name 'main.c') -I $(INC) && ./a.out
+
 
 TEST_ARGS_1 = 1 2 3 4 5
 test_1: all
