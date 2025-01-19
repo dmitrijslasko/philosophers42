@@ -12,6 +12,9 @@ all:
 
 PHONY: all clean fclean re
 
+debug:
+	$(CC) $(CFLAGS) -D DEBUG=1 -I $(INC) $(SRC) -o $(NAME)
+
 unit_tests:
 	@echo "\n---------------------------------------------------------------"
 	@echo "\n|                          UNIT TESTS                           |"

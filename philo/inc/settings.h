@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/17 21:39:04 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/17 23:25:14 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # define MAX_MEAL_COUNT		2000
 # define MAX_ARGUMENT_LEN	8
 
-# define DEBUG  			0
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
 # define MONITOR_FREQ_US	10
 
 // macros functions are forbidden in this case

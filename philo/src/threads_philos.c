@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/17 21:50:22 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/19 18:02:04 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,20 @@ void philo_think(t_data *data, t_philosopher *philo)
 /**
  * Part of the philosopher's routine – taking the LEFT fork.
  */
-void philo_take_left_fork(t_data *data, t_philosopher *philo)
+void philo_take_forks(t_data *data, t_philosopher *philo)
 {
 	write_status(data, philo, THINKING);
 	while (philo->fork_left->fork_taken == 1)
-		continue ;
+		usleep(100);
 	mutex_operation(&philo->fork_left->fork_mutex, LOCK);
 	write_status(data, philo, TAKEN_LEFT_FORK);
+	philo->fork_left->fork_taken = 1;
 	mutex_operation(&philo->fork_left->fork_mutex, UNLOCK);
-}
-/**
- * Part of the philosopher's routine – taking the RIGHT fork.
- */
-void philo_take_right_fork(t_data *data, t_philosopher *philo)
-{
 	while (philo->fork_right->fork_taken == 1)
-		continue ;
+		usleep(100);
 	mutex_operation(&philo->fork_right->fork_mutex, LOCK);
 	write_status(data, philo, TAKEN_RIGHT_FORK);
+	philo->fork_right->fork_taken = 1;
 	mutex_operation(&philo->fork_right->fork_mutex, UNLOCK);
 }
 
@@ -110,18 +106,13 @@ void *philosopher_routine(void *arg)
 	mutex_operation(&data->data_access_mutex, LOCK);
 	data->simulation_start_time = get_current_time();
 	mutex_operation(&data->data_access_mutex, UNLOCK);
+	if (philo->id % 2 == 0)
+		usleep(800);
 	while (data->simulation_is_on)
 	{
-		if (philo->meals_count == data->no_of_meals_required)
-			break ;
-		if (philo->id % 2 != 0)
-			usleep(60);
-		philo_take_left_fork(data, philo);
-		philo_take_right_fork(data, philo);
+		philo_take_forks(data, philo);
 		philo_eat(data, philo);
 		philo_sleep(data, philo);
-		//if (philo->id % 2 == 0)
-		//	philo_think(data, philo);
 	}
     return (NULL);
 }

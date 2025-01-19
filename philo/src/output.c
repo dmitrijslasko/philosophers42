@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/17 01:34:29 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/18 00:06:20 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void write_status(t_data *data, t_philosopher *philo, t_status status)
     }
     mutex_operation(&data->data_access_mutex, UNLOCK);
 
-    mutex_operation(&data->status_write_mutex, LOCK);
+    // mutex_operation(&data->status_write_mutex, LOCK);
     if (!data->simulation_is_on) // Double-check here
     {
         mutex_operation(&data->status_write_mutex, UNLOCK);
@@ -74,5 +74,5 @@ void write_status(t_data *data, t_philosopher *philo, t_status status)
         else
             print_error("Status not recognized...\n");
     }
-    mutex_operation(&data->status_write_mutex, UNLOCK);
+    // mutex_operation(&data->status_write_mutex, UNLOCK);
 }
