@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 12:37:03 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 13:35:23 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ typedef struct s_data
 	int 			time_to_eat_ms;
 	int 			time_to_sleep_ms;
 	int				no_of_meals_required;
-	long long		simulation_start_time;
-	int				simulation_runtime;
+	long long		simulation_start_time_ms;
+	long long		simulation_runtime_ms;
 	int				simulation_is_on;
 	int				all_threads_created;
 	t_fork			*forks;
@@ -113,7 +113,8 @@ int	join_philo_threads(t_data *data);
 long	get_epoch_time_s(void);
 long	get_epoch_time_ms(void);
 long long get_epoch_time(void);
-long long get_simulation_runtime_ms(t_data *data);
+long long get_epoch_time2(void);
+long long get_simulation_runtime_ms_ms(t_data *data);
 
 int		create_monitor(t_data *data);
 void	join_monitor_thread(t_data *data);
