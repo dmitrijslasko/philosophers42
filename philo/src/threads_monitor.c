@@ -24,7 +24,7 @@ int philo_is_alive(t_data *data, t_philosopher *philo)
 	int	ms_time;
 
 	ms_time = philo->last_meal_time_ms;
-	if (get_simulation_runtime_ms_ms(data) - ms_time >= data->time_to_die_ms)
+	if (get_simulation_runtime_ms(data) - ms_time >= data->time_to_die_ms)
 	{
 		return (FALSE);
 	}
@@ -89,7 +89,7 @@ void *monitor_routine(void *arg)
 	while (all_philos_are_alive(data) && (!all_philos_are_full(data)
 		|| data->no_of_meals_required < 0))
 		{
-		data->simulation_runtime_ms = get_simulation_runtime_ms_ms(data);
+		data->simulation_runtime_ms = get_simulation_runtime_ms(data);
 		usleep(MONITOR_FREQ_US);
 		}
 	mutex_operation(&data->data_access_mutex, LOCK);

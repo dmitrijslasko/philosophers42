@@ -6,12 +6,16 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 11:44:43 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 17:49:29 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SETTINGS_H
 #define SETTINGS_H
+
+# ifndef DEBUG
+#  define DEBUG 0
+# endif
 
 // SETITNGS AND LIMITS
 # define MAX_PHILOS			200
@@ -21,13 +25,10 @@
 # define MAX_MEAL_COUNT		5000
 # define MAX_ARGUMENT_LEN	8
 
-# ifndef DEBUG
-#  define DEBUG 0
-# endif
 # define MONITOR_FREQ_US	    10
 # define THREAD_START_DELAY_US	600
-# define FORK_HUNT_DELAY_US	    100
-# define CUSTOM_SLEEP_PERIOD_US 500
+# define FORK_HUNT_DELAY_US	    10
+# define CUSTOM_SLEEP_PERIOD_US 10
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
