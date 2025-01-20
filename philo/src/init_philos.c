@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/17 02:34:28 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 01:17:33 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int init_philos(t_data *data)
 	while (i < data->no_of_philosophers)
 	{
 		data->philos[i].id = i + 1;
-		data->philos[i].is_alive = 1;
 		data->philos[i].last_meal_time_ms = 0;
 		data->philos[i].meals_count = 0;
 		data->philos[i].fork_left = &data->forks[i];

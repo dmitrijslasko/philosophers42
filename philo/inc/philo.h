@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/17 00:04:57 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 01:17:34 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_fork
 typedef struct s_philosopher 
 {
 	int				id;
-	int 			is_alive;
 	int				is_full;
 	long 			last_meal_time_ms;
 	int				meals_count;

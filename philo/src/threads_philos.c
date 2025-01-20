@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/19 19:43:46 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 01:33:32 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,24 @@ void philo_think(t_data *data, t_philosopher *philo)
  */
 void philo_take_forks(t_data *data, t_philosopher *philo)
 {
+	if (data->no_of_philosophers == 1 && philo->fork_left->fork_taken)
+		return ;
 	write_status(data, philo, THINKING);
 	while (philo->fork_left->fork_taken == 1)
-		usleep(100);
+		usleep(FORK_HUNT_DELAY_US);
 	mutex_operation(&philo->fork_left->fork_mutex, LOCK);
-	write_status(data, philo, TAKEN_LEFT_FORK);
 	philo->fork_left->fork_taken = 1;
 	mutex_operation(&philo->fork_left->fork_mutex, UNLOCK);
+	write_status(data, philo, TAKEN_LEFT_FORK);
+	if (data->no_of_philosophers == 1)
+		return ;
 	while (philo->fork_right->fork_taken == 1)
-		usleep(100);
+		usleep(FORK_HUNT_DELAY_US);
 	mutex_operation(&philo->fork_right->fork_mutex, LOCK);
-	write_status(data, philo, TAKEN_RIGHT_FORK);
 	philo->fork_right->fork_taken = 1;
 	mutex_operation(&philo->fork_right->fork_mutex, UNLOCK);
+	write_status(data, philo, TAKEN_RIGHT_FORK);
+
 }
 
 /**
@@ -55,6 +60,8 @@ void philo_take_forks(t_data *data, t_philosopher *philo)
  */
 void philo_eat(t_data *data, t_philosopher *philo)
 {
+	if (data->no_of_philosophers == 1)
+		return ;
 	philo->last_meal_time_ms = get_runtime(data);
 	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
@@ -66,6 +73,8 @@ void philo_eat(t_data *data, t_philosopher *philo)
  */
 void philo_sleep(t_data *data, t_philosopher *philo)
 {
+	if (data->no_of_philosophers == 1)
+		return ;
 	mutex_operation(&philo->fork_left->fork_mutex, LOCK);
 	philo->fork_left->fork_taken = 0;
 	mutex_operation(&philo->fork_left->fork_mutex, UNLOCK);
@@ -78,14 +87,14 @@ void philo_sleep(t_data *data, t_philosopher *philo)
 
 void wait_for_all_threads(t_data *data)
 {
-	while (1)
+	int	wait_is_on;
+	
+	wait_is_on = 1;
+	while (wait_is_on)
 	{
 		mutex_operation(&data->data_access_mutex, LOCK);
 		if(data->all_threads_created)
-		{
-			mutex_operation(&data->data_access_mutex, UNLOCK);
-			break ;
-		}
+			wait_is_on = 0;
 		mutex_operation(&data->data_access_mutex, UNLOCK);
 		usleep(10);
 	}
@@ -107,7 +116,7 @@ void *philosopher_routine(void *arg)
 	data->simulation_start_time = get_current_time();
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	if (philo->id % 2 == 0)
-		usleep(THREAD_DELAY_US);
+		usleep(THREAD_START_DELAY_US);
 	while (data->simulation_is_on)
 	{
 		philo_take_forks(data, philo);

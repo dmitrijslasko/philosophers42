@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/19 19:34:46 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 00:58:44 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,20 @@
 
 // no_of_meals_required (optional argument)
 
+void    print_meal_count(t_data *data)
+{
+    int i;
+    t_philosopher *philo;
+
+    philo = data->philos;
+    i = 0;
+    while (i < data->no_of_philosophers)
+    {
+        printf(B_MAGENTA"Philosopher [%d]: %d\n"RESET, philo[i].id, philo[i].meals_count);
+        i++;
+    }
+
+}
 int main(int argc, char **argv)
 {
     t_data data;
@@ -48,6 +62,9 @@ int main(int argc, char **argv)
     mutex_operation(&data.data_access_mutex, DESTROY);
     mutex_operation(&data.status_write_mutex, DESTROY);
     if (DEBUG)
+    {
         printf(YELLOW "TOTAL RUN TIME: %lld ms.\n" RESET, get_runtime(&data));
+        print_meal_count(&data);
+    }
     return (EXIT_SUCCESS);
 }

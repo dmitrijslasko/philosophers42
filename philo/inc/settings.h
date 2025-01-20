@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/19 19:40:58 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 01:23:13 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 #  define DEBUG 0
 # endif
 # define MONITOR_FREQ_US	10
-# define THREAD_DELAY_US	600
+# define THREAD_START_DELAY_US	600
+# define FORK_HUNT_DELAY_US	100
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
