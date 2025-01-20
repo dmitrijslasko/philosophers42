@@ -29,7 +29,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	if (argc == 6)
 		data->no_of_meals_required = int_atoi(argv[5]);
 	data->simulation_is_on = 1;
-	data->simulation_start_time = get_current_time();
+	data->simulation_start_time = get_epoch_time();
 	data->all_threads_created = 0;
 	data->philos = NULL;
 	data->philo_threads = NULL;

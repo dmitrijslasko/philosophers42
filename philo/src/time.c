@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/16 02:11:25 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 12:19:12 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * get current time value in seconds (epoch seconds)
  */
-long	get_current_time_s(void)
+long	get_epoch_time_s(void)
 {
 	struct timeval time_value;
 
@@ -26,7 +26,7 @@ long	get_current_time_s(void)
 /**
  * get the microseconds part of current epoch time
  */
-long	get_current_time_us(void)
+long	get_epoch_time_us(void)
 {
 	struct timeval time_value;
 
@@ -36,12 +36,18 @@ long	get_current_time_us(void)
 /**
  * get current time in ms
  */
-long long get_current_time()
+long long get_epoch_time()
 {
-	return (get_current_time_s() * 1e3 + get_current_time_us() / 1e3);
+	return (get_epoch_time_s() * (1e3) + get_epoch_time_us() / (1e3));
 }
 
-long long get_runtime(t_data *data)
+long long get_simulation_runtime_ms(t_data *data)
 {
-	return (get_current_time() - data->simulation_start_time);
+	long long runtime_ms;
+
+	runtime_ms = 0;
+	mutex_operation(&data->data_access_mutex, LOCK);
+	runtime_ms = get_epoch_time() - data->simulation_start_time;
+	mutex_operation(&data->data_access_mutex, UNLOCK);
+	return (runtime_ms);
 }

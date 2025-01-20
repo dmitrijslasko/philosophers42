@@ -6,13 +6,13 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 01:17:34 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 12:37:03 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 #define PHILO_H
-	
+
 // LIBRARIES
 # include <stdio.h>
 # include <stdlib.h>
@@ -58,7 +58,7 @@ typedef struct s_fork
 	p_mtx			fork_mutex;
 }					t_fork;
 
-typedef struct s_philosopher 
+typedef struct s_philosopher
 {
 	int				id;
 	int				is_full;
@@ -69,7 +69,7 @@ typedef struct s_philosopher
 	t_data			*data;
 }					t_philosopher;
 
-typedef struct s_data 
+typedef struct s_data
 {
 	int 			no_of_philosophers;
 	int				time_to_die_ms;
@@ -77,6 +77,7 @@ typedef struct s_data
 	int 			time_to_sleep_ms;
 	int				no_of_meals_required;
 	long long		simulation_start_time;
+	int				simulation_runtime;
 	int				simulation_is_on;
 	int				all_threads_created;
 	t_fork			*forks;
@@ -109,10 +110,10 @@ int assign_forks(t_data *data);
 int	create_philo_threads(t_data *data);
 int	join_philo_threads(t_data *data);
 
-long	get_current_time_s(void);
-long	get_current_time_ms(void);
-long long get_current_time(void);
-long long get_runtime(t_data *data);
+long	get_epoch_time_s(void);
+long	get_epoch_time_ms(void);
+long long get_epoch_time(void);
+long long get_simulation_runtime_ms(t_data *data);
 
 int		create_monitor(t_data *data);
 void	join_monitor_thread(t_data *data);
@@ -131,11 +132,15 @@ void	print_error(char *str);
 void	*safe_malloc(int size_bytes);
 void	mutex_operation(p_mtx	*mutex, t_opcode opcode);
 
-void wait_for_all_threads(t_data *data);
+void 	wait_for_all_threads(t_data *data);
 
 void	fork_mutex_operation(t_fork *fork, t_opcode opcode);
 
 void	write_status(t_data *data, t_philosopher *philo, t_status status);
 void	write_status_debug(t_data *data, t_philosopher *philo, t_status status);
+
+
+// stats.c
+void    print_meal_count(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 01:33:32 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 11:52:48 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,13 @@ void philo_eat(t_data *data, t_philosopher *philo)
 {
 	if (data->no_of_philosophers == 1)
 		return ;
-	philo->last_meal_time_ms = get_runtime(data);
+	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
 	write_status(data, philo, EATING);
+	// printf("Philo [%d] will now eat for %d ms.\n", philo->id, data->time_to_eat_ms);
 	msleep(data, data->time_to_eat_ms);
+	mutex_operation(&data->data_access_mutex, LOCK);
 	philo->meals_count++;
+	mutex_operation(&data->data_access_mutex, UNLOCK);
 }
 
 /**
@@ -88,7 +91,7 @@ void philo_sleep(t_data *data, t_philosopher *philo)
 void wait_for_all_threads(t_data *data)
 {
 	int	wait_is_on;
-	
+
 	wait_is_on = 1;
 	while (wait_is_on)
 	{
@@ -111,9 +114,9 @@ void *philosopher_routine(void *arg)
 	philo = (t_philosopher *)arg;
 	data = philo->data;
 	wait_for_all_threads(data);
-	philo->last_meal_time_ms = get_runtime(data);
+	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
 	mutex_operation(&data->data_access_mutex, LOCK);
-	data->simulation_start_time = get_current_time();
+	data->simulation_start_time = get_epoch_time();
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	if (philo->id % 2 == 0)
 		usleep(THREAD_START_DELAY_US);

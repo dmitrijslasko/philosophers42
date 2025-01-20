@@ -24,7 +24,7 @@ int philo_is_alive(t_data *data, t_philosopher *philo)
 	int	ms_time;
 
 	ms_time = philo->last_meal_time_ms;
-	if (get_runtime(data) - ms_time >= data->time_to_die_ms)
+	if (get_simulation_runtime_ms(data) - ms_time >= data->time_to_die_ms)
 	{
 		return (FALSE);
 	}
@@ -51,9 +51,16 @@ int all_philos_are_alive(t_data *data)
 	}
 	return (TRUE);
 }
-inline int	philo_is_full(t_data *data, t_philosopher *philo)
+int	philo_is_full(t_data *data, t_philosopher *philo)
 {
-	return (philo->meals_count >= data->no_of_meals_required);
+	int	philo_is_full;
+
+	philo_is_full = 0;
+	mutex_operation(&data->data_access_mutex, LOCK);
+	if (philo->meals_count >= data->no_of_meals_required)
+		philo_is_full = 1;
+	mutex_operation(&data->data_access_mutex, UNLOCK);
+	return (philo_is_full);
 }
 
 int all_philos_are_full(t_data *data)
