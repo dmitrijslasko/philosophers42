@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 14:24:40 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 18:30:35 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,5 +145,6 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status);
 
 // stats.c
 void    print_meal_count(t_data *data);
+void print_stats(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 14:24:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 18:31:58 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ int main(int argc, char **argv)
     mutex_operation(&data.data_access_mutex, DESTROY);
     mutex_operation(&data.status_write_mutex, DESTROY);
     if (DEBUG)
-    {
-        printf(YELLOW "TOTAL RUN TIME: %lld ms.\n" RESET, get_simulation_runtime_ms(&data));
-        print_meal_count(&data);
-    }
+        print_stats(&data);
     return (EXIT_SUCCESS);
 }

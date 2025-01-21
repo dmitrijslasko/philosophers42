@@ -41,10 +41,13 @@ int all_philos_are_alive(t_data *data)
 	{
 		if (philo_is_alive(data, &data->philos[i]) == 0)
 		{
+			mutex_operation(&data->status_write_mutex, LOCK);
+			usleep(500);
 			write_status(data, &data->philos[i], DIED);
 			mutex_operation(&data->data_access_mutex, LOCK);
 			data->simulation_is_on = 0;
 			mutex_operation(&data->data_access_mutex, UNLOCK);
+			mutex_operation(&data->status_write_mutex, UNLOCK);
 			return (FALSE);
 		}
 		i++;
