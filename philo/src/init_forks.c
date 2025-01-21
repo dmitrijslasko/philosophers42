@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 19:47:26 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 00:33:09 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	init_forks(t_data *data)
 {
 	int	i;
 
-	data->forks = safe_malloc(data->no_of_philosophers * sizeof(t_fork));
+	data->forks = malloc(data->no_of_philosophers * sizeof(t_fork));
 	if (!data->forks)
 		return (MALLOC_FAIL);
 	i = 0;

@@ -6,13 +6,13 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:21:32 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 16:39:20 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 00:18:07 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void custom_usleep(t_data *data, unsigned int sleep_time_ms) 
+void msleep(t_data *data, unsigned int sleep_time_ms) 
 {
 	(void)data;
     long long sleep_start_time_ms = get_epoch_time_ms();

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 18:30:35 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 00:18:07 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	init_forks(t_data *data);
 int	destroy_forks(t_data *data);
 
 void	sleep_precisely(long milliseconds);
-void	custom_usleep(t_data *data, unsigned int sleep_time_ms);
+void	msleep(t_data *data, unsigned int sleep_time_ms);
 
 int philo_is_alive(t_data *data, t_philosopher *philo);
 

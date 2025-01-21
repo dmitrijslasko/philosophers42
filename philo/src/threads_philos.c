@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 16:40:34 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 00:22:53 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void philo_think(t_data *data, t_philosopher *philo)
 	else
 		time_to_think_ms /= 2;
 	write_status(data, philo, THINKING);
-	custom_usleep(data, time_to_think_ms);
+	msleep(data, time_to_think_ms);
 }
 
 /**
@@ -71,7 +71,7 @@ void philo_eat(t_data *data, t_philosopher *philo)
 		mutex_operation(&data->status_write_mutex, LOCK);
 	write_status(data, philo, EATING);
 	mutex_operation(&data->status_write_mutex, UNLOCK);
-	custom_usleep(data, data->time_to_eat_ms);
+	msleep(data, data->time_to_eat_ms);
 	mutex_operation(&data->data_access_mutex, LOCK);
 	philo->meals_count++;
 	mutex_operation(&data->data_access_mutex, UNLOCK);
@@ -93,7 +93,7 @@ void philo_sleep(t_data *data, t_philosopher *philo)
 	mutex_operation(&data->status_write_mutex, LOCK);
 	write_status(data, philo, SLEEPING);
 	mutex_operation(&data->status_write_mutex, UNLOCK);
-	custom_usleep(data, data->time_to_sleep_ms);
+	msleep(data, data->time_to_sleep_ms);
 }
 
 void wait_for_all_threads(t_data *data)
@@ -131,7 +131,7 @@ void *philosopher_routine(void *arg)
 	data = philo->data;
 	wait_for_all_threads(data);
 	if (philo->id % 2 == 0)
-		usleep(THREAD_START_DELAY_US);
+		msleep(data, THREAD_START_DELAY_MS);
 	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
 	while (data->simulation_is_on)
 	{

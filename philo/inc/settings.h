@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 20:45:35 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 00:17:55 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define MAX_ARGUMENT_LEN	8
 
 # define MONITOR_FREQ_US	    1
-# define THREAD_START_DELAY_US	500
+# define THREAD_START_DELAY_MS	60
 # define FORK_HUNT_DELAY_US	    1
 # define CUSTOM_SLEEP_PERIOD_US 10
 
