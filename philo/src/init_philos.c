@@ -6,11 +6,11 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 01:17:33 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/20 19:49:12 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philo.h>
+#include "philo.h"
 
 /**
  * Initializes philosophers.
@@ -18,6 +18,7 @@
 int init_philos(t_data *data)
 {
 	int	i;
+	
 	data->philos = safe_malloc(data->no_of_philosophers * sizeof(t_philosopher));
 	if (data->philos == NULL)
 		return (MALLOC_FAIL);
@@ -36,7 +37,6 @@ int init_philos(t_data *data)
 	}
 	data->philo_threads = safe_malloc(data->no_of_philosophers * sizeof(pthread_t));
 	if (!data->philo_threads)
-		return (EXIT_FAILURE);
-	
+		return (MALLOC_FAIL);
 	return (EXIT_SUCCESS);
 }

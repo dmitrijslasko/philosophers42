@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 17:35:44 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 01:59:08 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * get current time value in seconds (epoch seconds)
  */
-long	get_epoch_time_s(void)
+long	get_epoch_time_s_part(void)
 {
 	struct timeval time_value;
 
@@ -26,7 +26,7 @@ long	get_epoch_time_s(void)
 /**
  * get the microseconds part of current epoch time
  */
-long	get_epoch_time_us(void)
+long	get_epoch_time_us_part(void)
 {
 	struct timeval time_value;
 
@@ -36,9 +36,14 @@ long	get_epoch_time_us(void)
 /**
  * get current time in ms
  */
-long long get_epoch_time(void)
+long long get_epoch_time_ms(void)
 {
-	return (get_epoch_time_s() * 1e3 + get_epoch_time_us() / 1e3);
+	return (get_epoch_time_s_part() * 1e3 + get_epoch_time_us_part() / 1e3);
+}
+
+long long get_epoch_time_us(void)
+{
+	return (get_epoch_time_s_part() * 1e6 + get_epoch_time_us_part());
 }
 
 long long get_simulation_runtime_ms(t_data *data)
@@ -47,7 +52,18 @@ long long get_simulation_runtime_ms(t_data *data)
 
 	runtime_ms = 0;
 	mutex_operation(&data->data_access_mutex, LOCK);
-	runtime_ms = get_epoch_time() - data->simulation_start_time_ms;
+	runtime_ms = get_epoch_time_ms() - data->simulation_start_time_ms;
+	mutex_operation(&data->data_access_mutex, UNLOCK);
+	return (runtime_ms);
+}
+
+long long get_simulation_runtime_us(t_data *data)
+{
+	long long runtime_ms;
+
+	runtime_ms = 0;
+	mutex_operation(&data->data_access_mutex, LOCK);
+	runtime_ms = get_epoch_time_us() - data->simulation_start_time_us;
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	return (runtime_ms);
 }

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 17:35:44 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 16:45:55 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,29 @@ void	print_error(char *str)
 
 void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 {
+	long long runtime_us;
+	long long runtime_ms;
+
+	runtime_us = get_simulation_runtime_us(data);
+	runtime_ms = runtime_us / 1e3;
 	if (!data->simulation_is_on)
 		return ;
 	if (TAKEN_LEFT_FORK == status)
-		printf("%lld %d has taken a L fork\n", get_simulation_runtime_ms(data), philo->id);
+		printf("%lld >> %lld [%d] has taken a L fork\n", runtime_us, runtime_ms, philo->id);
 	else if (TAKEN_RIGHT_FORK == status)
-		printf("%lld %d has taken a R fork\n", get_simulation_runtime_ms(data), philo->id);
+		printf("%lld >> %lld [%d] has taken a R fork\n", runtime_us, runtime_ms, philo->id);
 	else if (EATING == status)
-		printf("%lld %d is eating\n", get_simulation_runtime_ms(data), philo->id);
+		printf("%lld >> %lld [%d] is eating\n", runtime_us, runtime_ms, philo->id);
 	else if (SLEEPING == status)
-		printf(GREEN"%lld %d is sleeping\tMeals count: %d\n"RESET, get_simulation_runtime_ms(data), philo->id, philo->meals_count);
+		printf(GREEN"%lld >> %lld [%d] is sleeping\t\tMeals count: %d\n"RESET, runtime_us, runtime_ms, philo->id, philo->meals_count);
 	else if (THINKING == status)
-		printf(YELLOW"%lld %d is thinking\n"RESET, get_simulation_runtime_ms(data), philo->id);
+		printf(YELLOW"%lld >> %lld [%d] is thinking\n"RESET, runtime_us, runtime_ms, philo->id);
 		else if (DIED == status)
 		{
 			mutex_operation(&data->data_access_mutex, LOCK);
 			data->simulation_is_on = 0;
 			mutex_operation(&data->data_access_mutex, UNLOCK);
-			printf(RED"%lld %d died\n"RESET, get_simulation_runtime_ms(data), philo->id);
+			printf(RED"%lld >> %lld [%d] died\n"RESET, runtime_us, runtime_ms, philo->id);
 		}
 	else
 		print_error("Status not recognized...\n");
@@ -44,29 +49,26 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 
 void write_status(t_data *data, t_philosopher *philo, t_status status)
 {
+	long long runtime;
+
+	runtime = get_simulation_runtime_us(data) / 1e3;
+	if (data->simulation_is_on == 0)
+		return ;
 	if (DEBUG)
-		write_status_debug(data, philo, status);
-	mutex_operation(&data->status_write_mutex, LOCK);
-	if (!data->simulation_is_on)
 	{
-		mutex_operation(&data->status_write_mutex, UNLOCK);
+		write_status_debug(data, philo, status);
 		return ;
 	}
 	if (TAKEN_LEFT_FORK == status || TAKEN_RIGHT_FORK == status)
-		printf("%lld %d has taken a fork\n", get_simulation_runtime_ms(data), philo->id);
+		printf("%lld %d has taken a fork\n", runtime, philo->id);
 	else if (EATING == status)
-		printf("%lld %d is eating\n", get_simulation_runtime_ms(data), philo->id);
+		printf("%lld %d is eating\n", runtime, philo->id);
 	else if (SLEEPING == status)
-		printf("%lld %d is sleeping\n", get_simulation_runtime_ms(data), philo->id);
+		printf("%lld %d is sleeping\n", runtime, philo->id);
 	else if (THINKING == status)
-		printf("%lld %d is thinking\n", get_simulation_runtime_ms(data), philo->id);
+		printf("%lld %d is thinking\n", runtime, philo->id);
 	else if (DIED == status)
-	{
-		mutex_operation(&data->data_access_mutex, LOCK);
-		data->simulation_is_on = 0;
-		mutex_operation(&data->data_access_mutex, UNLOCK);
-		printf("%lld %d died\n", get_simulation_runtime_ms(data), philo->id);
-	}
+		printf("%lld %d died\n", runtime, philo->id);
 	else
 		print_error("Status not recognized...\n");
 	mutex_operation(&data->status_write_mutex, UNLOCK);

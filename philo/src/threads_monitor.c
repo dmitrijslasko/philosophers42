@@ -86,12 +86,9 @@ void *monitor_routine(void *arg)
 
 	data = arg;
 	wait_for_all_threads(data);
-	while (all_philos_are_alive(data) && (!all_philos_are_full(data)
-		|| data->no_of_meals_required < 0))
-		{
-		data->simulation_runtime_ms = get_simulation_runtime_ms(data);
+	while (	all_philos_are_alive(data) 
+			&& (!all_philos_are_full(data) || data->no_of_meals_required < 0))
 		usleep(MONITOR_FREQ_US);
-		}
 	mutex_operation(&data->data_access_mutex, LOCK);
 	data->simulation_is_on = 0;
 	mutex_operation(&data->data_access_mutex, UNLOCK);
@@ -105,7 +102,12 @@ int	create_monitor(t_data *data)
 {
 	pthread_create(&data->monitor_thread, NULL, monitor_routine, (void *)data);
 	mutex_operation(&data->data_access_mutex, LOCK);
+	if (DEBUG)
+		printf(B_MAGENTA">>>>>>>>>>>>>> MONITOR THREAD CREATED\n"RESET);
 	data->all_threads_created = 1;
+	data->simulation_is_on = 1;
+	data->simulation_start_time_us = get_epoch_time_us();
+	data->simulation_start_time_ms = get_epoch_time_ms();
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	return (EXIT_SUCCESS);
 }

@@ -12,6 +12,9 @@ SRC_DIR = ./src
 SRC = $(SRC_DIR)/*.c
 OBJ_DIR = obj
 
+debug:
+	$(CC) $(CFLAGS) $(DEBUGFLAGS) -I $(INC) $(SRC) -o $(NAME)
+
 all:
 	$(CC) $(CFLAGS) -I $(INC) $(SRC) -o $(NAME)
 
@@ -26,9 +29,6 @@ PHONY: all clean fclean re
 # special modes
 sanitize:
 	$(CC) $(CFLAGS) $(SANITIZE) -I $(INC) $(SRC) -o $(NAME)
-
-debug:
-	$(CC) $(CFLAGS) $(DEBUGFLAGS) -I $(INC) $(SRC) -o $(NAME)
 
 unit_tests:
 	@echo "---------------------------------------------------------------"

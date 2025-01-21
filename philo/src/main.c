@@ -6,11 +6,11 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 17:35:44 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:24:27 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philo.h>
+#include "philo.h"
 
 int main(int argc, char **argv)
 {
@@ -28,6 +28,10 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
     create_philo_threads(&data);
     create_monitor(&data);
+    if (DEBUG)
+    {
+        printf(YELLOW "RUN TIME: %lld ms.\n" RESET, get_simulation_runtime_ms(&data));
+    }
     join_philo_threads(&data);
     join_monitor_thread(&data);
     destroy_forks(&data);

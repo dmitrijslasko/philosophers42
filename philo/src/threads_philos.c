@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 17:35:44 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 16:40:34 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void philo_think(t_data *data, t_philosopher *philo)
 	else
 		time_to_think_ms /= 2;
 	write_status(data, philo, THINKING);
-	msleep(data, time_to_think_ms);
+	custom_usleep(data, time_to_think_ms);
 }
 
 /**
@@ -37,13 +37,17 @@ void philo_take_forks(t_data *data, t_philosopher *philo)
 {
 	if (data->no_of_philosophers == 1 && philo->fork_left->fork_taken)
 		return ;
+	mutex_operation(&data->status_write_mutex, LOCK);
 	write_status(data, philo, THINKING);
+	mutex_operation(&data->status_write_mutex, UNLOCK);
 	while (philo->fork_left->fork_taken == 1)
 		usleep(FORK_HUNT_DELAY_US);
 	mutex_operation(&philo->fork_left->fork_mutex, LOCK);
 	philo->fork_left->fork_taken = 1;
 	mutex_operation(&philo->fork_left->fork_mutex, UNLOCK);
+	mutex_operation(&data->status_write_mutex, LOCK);
 	write_status(data, philo, TAKEN_LEFT_FORK);
+	mutex_operation(&data->status_write_mutex, UNLOCK);
 	if (data->no_of_philosophers == 1)
 		return ;
 	while (philo->fork_right->fork_taken == 1)
@@ -51,8 +55,9 @@ void philo_take_forks(t_data *data, t_philosopher *philo)
 	mutex_operation(&philo->fork_right->fork_mutex, LOCK);
 	philo->fork_right->fork_taken = 1;
 	mutex_operation(&philo->fork_right->fork_mutex, UNLOCK);
+	mutex_operation(&data->status_write_mutex, LOCK);
 	write_status(data, philo, TAKEN_RIGHT_FORK);
-
+	mutex_operation(&data->status_write_mutex, UNLOCK);
 }
 
 /**
@@ -63,8 +68,10 @@ void philo_eat(t_data *data, t_philosopher *philo)
 	if (data->no_of_philosophers == 1)
 		return ;
 	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
+		mutex_operation(&data->status_write_mutex, LOCK);
 	write_status(data, philo, EATING);
-	msleep(data, data->time_to_eat_ms);
+	mutex_operation(&data->status_write_mutex, UNLOCK);
+	custom_usleep(data, data->time_to_eat_ms);
 	mutex_operation(&data->data_access_mutex, LOCK);
 	philo->meals_count++;
 	mutex_operation(&data->data_access_mutex, UNLOCK);
@@ -83,23 +90,33 @@ void philo_sleep(t_data *data, t_philosopher *philo)
 	mutex_operation(&philo->fork_right->fork_mutex, LOCK);
 	philo->fork_right->fork_taken = 0;
 	mutex_operation(&philo->fork_right->fork_mutex, UNLOCK);
+	mutex_operation(&data->status_write_mutex, LOCK);
 	write_status(data, philo, SLEEPING);
-	msleep(data, data->time_to_sleep_ms);
+	mutex_operation(&data->status_write_mutex, UNLOCK);
+	custom_usleep(data, data->time_to_sleep_ms);
 }
 
 void wait_for_all_threads(t_data *data)
 {
-	int	wait_is_on;
-
-	wait_is_on = 1;
-	while (wait_is_on)
+	while (1)
 	{
-		mutex_operation(&data->data_access_mutex, LOCK);
 		if(data->all_threads_created)
-			wait_is_on = 0;
-		mutex_operation(&data->data_access_mutex, UNLOCK);
+		{
+			mutex_operation(&data->data_access_mutex, LOCK);
+			data->simulation_start_time_us = get_epoch_time_us();
+			data->simulation_start_time_ms = get_epoch_time_ms();
+			mutex_operation(&data->data_access_mutex, UNLOCK);
+			break ;
+		}
 		usleep(10);
 	}
+	// if (data->simulation_is_on == 0)
+	// {
+	// 	mutex_operation(&data->data_access_mutex, LOCK);
+	// 	data->simulation_start_time_ms = get_epoch_time_ms();
+	// 	data->simulation_start_time_us = get_epoch_time_us();
+	// 	mutex_operation(&data->data_access_mutex, UNLOCK);
+	// }
 }
 
 /**
@@ -113,12 +130,9 @@ void *philosopher_routine(void *arg)
 	philo = (t_philosopher *)arg;
 	data = philo->data;
 	wait_for_all_threads(data);
-	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
-	mutex_operation(&data->data_access_mutex, LOCK);
-	data->simulation_start_time_ms = get_epoch_time();
-	mutex_operation(&data->data_access_mutex, UNLOCK);
 	if (philo->id % 2 == 0)
 		usleep(THREAD_START_DELAY_US);
+	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
 	while (data->simulation_is_on)
 	{
 		philo_take_forks(data, philo);
@@ -159,7 +173,7 @@ int	create_philo_threads(t_data *data)
 			return (MALLOC_FAIL);
 		pthread_create(&data->philo_threads[i], NULL, philosopher_routine, (void *)&data->philos[i]);
 		if (DEBUG)
-			printf("Philo thread [%d] created!\n", i);
+			printf("Philo thread [%d] created!\n", data->philos[i].id);
 		i++;
 	}
 	return (EXIT_SUCCESS);

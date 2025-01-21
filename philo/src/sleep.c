@@ -6,25 +6,22 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:21:32 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 16:37:06 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 16:39:20 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	msleep(t_data *data, unsigned int sleep_time_ms)
+void custom_usleep(t_data *data, unsigned int sleep_time_ms) 
 {
 	(void)data;
-	long long	sleep_start_time_ms;
+    long long sleep_start_time_ms = get_epoch_time_ms();
+    long long remaining_time;
 
-	sleep_start_time_ms = get_epoch_time();
-	while (get_epoch_time() - sleep_start_time_ms < sleep_time_ms)
-	{
-		usleep(CUSTOM_SLEEP_PERIOD_US);
-		// total_sleep_timer += CUSTOM_SLEEP_PERIOD_US;
-		// printf(YELLOW"%lld - %lld = %lld < %d \n"RESET, get_epoch_time2(), sleep_start_time_ms, get_epoch_time2() - sleep_start_time_ms, sleep_time_ms);
-
-	}
-	// printf(YELLOW"%lld - %lld = %lld < %d \n"RESET, get_epoch_time(), sleep_start_time_ms, get_epoch_time() - sleep_start_time_ms, sleep_time_ms);
-	// printf(YELLOW"TOTAL SLEEP TIMER: %d\n"RESET, total_sleep_timer);
+    while ((remaining_time = sleep_time_ms - (get_epoch_time_ms() - sleep_start_time_ms)) > 0) {
+        if (remaining_time > 10)
+            usleep(1000); // Sleep for 1 ms if plenty of time remains
+        else
+            usleep(20);   // Use finer granularity for short remaining times
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/20 17:35:44 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/21 14:24:40 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_data
 	int 			time_to_sleep_ms;
 	int				no_of_meals_required;
 	long long		simulation_start_time_ms;
+	long long		simulation_start_time_us;
 	long long		simulation_runtime_ms;
 	int				simulation_is_on;
 	int				all_threads_created;
@@ -110,11 +111,12 @@ int assign_forks(t_data *data);
 int	create_philo_threads(t_data *data);
 int	join_philo_threads(t_data *data);
 
-long	get_epoch_time_s(void);
-long	get_epoch_time_ms(void);
-long long get_epoch_time(void);
-long long get_epoch_time2(void);
+long	get_epoch_time_s_part(void);
+long	get_epoch_time_us_part(void);
+long long get_epoch_time_ms(void);
+long long get_epoch_time_us(void);
 long long get_simulation_runtime_ms(t_data *data);
+long long get_simulation_runtime_us(t_data *data);
 
 int		create_monitor(t_data *data);
 void	join_monitor_thread(t_data *data);
@@ -124,7 +126,7 @@ int	init_forks(t_data *data);
 int	destroy_forks(t_data *data);
 
 void	sleep_precisely(long milliseconds);
-void	msleep(t_data *data, unsigned int sleep_time_ms);
+void	custom_usleep(t_data *data, unsigned int sleep_time_ms);
 
 int philo_is_alive(t_data *data, t_philosopher *philo);
 
