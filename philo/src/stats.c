@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 11:45:51 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 18:32:47 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 01:57:16 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ void print_total_runtime(t_data *data)
 
 void print_stats(t_data *data)
 {
-    // print_meal_count(data);
+    print_meal_count(data);
     print_total_runtime(data);
 }
