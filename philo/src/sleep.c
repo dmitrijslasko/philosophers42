@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:21:32 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 01:37:54 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 19:46:19 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void msleep(t_data *data, unsigned int sleep_time_ms)
         if (data->simulation_is_on == 0)
             break ;
         if (remaining_time > 10)
-            usleep(1000); // Sleep for 1 ms if plenty of time remains
+            usleep(1000);
         else
-            usleep(20);   // Use finer granularity for short remaining times
+            usleep(20);
     }
 }
