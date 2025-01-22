@@ -24,6 +24,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->no_of_philosophers = int_atoi(argv[1]);
 	data->time_to_die_ms = int_atoi(argv[2]);
 	data->time_to_eat_ms = int_atoi(argv[3]);
+	data->thread_start_delay_ms = data->time_to_eat_ms / 4;
 	data->time_to_sleep_ms = int_atoi(argv[4]);
 	data->no_of_meals_required = -1;
 	if (argc == 6)
@@ -32,9 +33,10 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->simulation_start_time_ms = get_epoch_time_ms();
 	data->simulation_start_time_us = get_epoch_time_us();
 	data->all_threads_created = 0;
+	data->forks = NULL;
 	data->philos = NULL;
 	data->philo_threads = NULL;
 	mutex_operation(&data->data_access_mutex, INIT);
-	mutex_operation(&data->status_write_mutex, INIT);
+	// mutex_operation(&data->status_write_mutex, INIT);
 	return (EXIT_SUCCESS);
 }

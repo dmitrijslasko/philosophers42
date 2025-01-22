@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 00:18:07 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 01:46:50 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,14 @@ typedef	enum e_status
 	DIED
 }	t_status;
 
-
-typedef struct s_fork
-{
-	int				fork_taken;
-	p_mtx			fork_mutex;
-}					t_fork;
-
 typedef struct s_philosopher
 {
 	int				id;
 	int				is_full;
 	long 			last_meal_time_ms;
 	int				meals_count;
-	t_fork			*fork_left;
-	t_fork			*fork_right;
+	p_mtx			*fork_left;
+	p_mtx			*fork_right;
 	t_data			*data;
 }					t_philosopher;
 
@@ -76,16 +69,16 @@ typedef struct s_data
 	int 			time_to_eat_ms;
 	int 			time_to_sleep_ms;
 	int				no_of_meals_required;
+	int				thread_start_delay_ms;
 	long long		simulation_start_time_ms;
 	long long		simulation_start_time_us;
 	long long		simulation_runtime_ms;
 	int				simulation_is_on;
 	int				all_threads_created;
-	t_fork			*forks;
+	p_mtx			*forks;
 	t_philosopher 	*philos;
 	pthread_t 		*philo_threads;
 	pthread_t 		monitor_thread;
-	p_mtx			status_write_mutex;
 	p_mtx			data_access_mutex;
 }					t_data;
 
@@ -137,7 +130,7 @@ void	mutex_operation(p_mtx	*mutex, t_opcode opcode);
 
 void 	wait_for_all_threads(t_data *data);
 
-void	fork_mutex_operation(t_fork *fork, t_opcode opcode);
+void	fork_mutex_operation(p_mtx *fork, t_opcode opcode);
 
 void	write_status(t_data *data, t_philosopher *philo, t_status status);
 void	write_status_debug(t_data *data, t_philosopher *philo, t_status status);

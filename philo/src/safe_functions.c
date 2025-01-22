@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 00:45:35 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/16 22:01:36 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/22 01:47:40 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,19 @@ void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
 		print_error("Mutex operational code not recognized...\n");
 }
 
-void	fork_mutex_operation(t_fork *fork, t_opcode opcode)
+void	fork_mutex_operation(p_mtx *fork, t_opcode opcode)
 {
 	if (opcode == INIT)
-		pthread_mutex_init(&fork->fork_mutex, NULL);
+		pthread_mutex_init(fork, NULL);
 	else if (opcode == DESTROY)
-		pthread_mutex_destroy(&fork->fork_mutex);
+		pthread_mutex_destroy(fork);
 	else if (opcode == LOCK)
 	{
-		pthread_mutex_lock(&fork->fork_mutex);
-		fork->fork_taken = 1;
+		pthread_mutex_lock(fork);
 	}
 	else if (opcode == UNLOCK)
 	{
-		pthread_mutex_unlock(&fork->fork_mutex);
-		fork->fork_taken = 0;
+		pthread_mutex_unlock(fork);
 	}
 	else
 		print_error("Mutex operational code not recognized...\n");
