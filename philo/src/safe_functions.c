@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 00:45:35 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/23 02:48:00 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/23 22:24:07 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,7 @@ void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
 	else if (opcode == DESTROY)
 		pthread_mutex_destroy(mutex);
 	else if (opcode == LOCK)
-	{	
-		if (pthread_mutex_trylock(mutex) == 0)
-			pthread_mutex_unlock(mutex);
-		else
-			printf("Mutex already locked!\n");
-	pthread_mutex_lock(mutex);
-	}
+		pthread_mutex_lock(mutex);
 	else if (opcode == UNLOCK)
 		pthread_mutex_unlock(mutex);
 	else
