@@ -20,13 +20,15 @@
 int philo_is_alive(t_data *data, t_philosopher *philo)
 {
 	int	last_meal_ms;
+	int response;
 
+	response = 1;
 	mutex_operation(&data->data_access_mutex, LOCK);
 	last_meal_ms = philo->last_meal_time_ms;
-	mutex_operation(&data->data_access_mutex, UNLOCK);
 	if (get_simulation_runtime_ms(data) - last_meal_ms > data->time_to_die_ms)
-		return (FALSE);
-	return (TRUE);
+		response = 0;
+	mutex_operation(&data->data_access_mutex, UNLOCK);
+	return (response);
 }
 
 
@@ -51,11 +53,14 @@ int all_philos_are_alive(t_data *data)
 }
 int	philo_is_full(t_data *data, t_philosopher *philo)
 {
-	// mutex_operation(&data->data_access_mutex, LOCK);
+	int response;
+
+	response = 0;
+	mutex_operation(&philo->philo_data_access_mutex, LOCK);
 	if (philo->meals_count >= data->no_of_meals_required)
-		return (TRUE);
-	// mutex_operation(&data->data_access_mutex, UNLOCK);
-	return (FALSE);
+		response = 1;
+	mutex_operation(&philo->philo_data_access_mutex, UNLOCK);
+	return (response);
 }
 
 int all_philos_are_full(t_data *data)
@@ -95,8 +100,8 @@ void *monitor_routine(void *arg)
  */
 int	create_monitor(t_data *data)
 {
-	pthread_create(&data->monitor_thread, NULL, monitor_routine, (void *)data);
 	mutex_operation(&data->data_access_mutex, LOCK);
+	pthread_create(&data->monitor_thread, NULL, monitor_routine, (void *)data);
 	if (DEBUG)
 		printf(B_MAGENTA">>>>>>>>>>>>>> MONITOR THREAD CREATED\n"RESET);
 	data->all_threads_created = 1;

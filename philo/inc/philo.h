@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/23 21:36:54 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/23 22:39:20 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_philosopher
 	p_mtx			*fork_left;
 	p_mtx			*fork_right;
 	t_data			*data;
+	p_mtx			philo_data_access_mutex;
 }					t_philosopher;
 
 typedef struct s_data
@@ -69,7 +70,6 @@ typedef struct s_data
 	int 			time_to_eat_ms;
 	int 			time_to_sleep_ms;
 	int				no_of_meals_required;
-	int				no_of_meals_min;
 	int				thread_start_delay_ms;
 	long long		simulation_start_time_ms;
 	long long		simulation_start_time_us;
@@ -81,7 +81,6 @@ typedef struct s_data
 	pthread_t 		*philo_threads;
 	pthread_t 		monitor_thread;
 	p_mtx			data_access_mutex;
-	p_mtx			no_of_meals_min_mutex;
 }					t_data;
 
 // FUNCTIONS
@@ -137,6 +136,8 @@ void	fork_mutex_operation(p_mtx *fork, t_opcode opcode);
 void	write_status(t_data *data, t_philosopher *philo, t_status status);
 void	write_status_debug(t_data *data, t_philosopher *philo, t_status status);
 
+
+int		destroy_philo_mutexes(t_data *data);
 
 // stats.c
 void    print_meal_count(t_data *data);
