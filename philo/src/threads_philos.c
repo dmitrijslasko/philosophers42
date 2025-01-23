@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 21:18:05 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/23 18:25:48 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Part of the philosopher's routine – taking the LEFT fork.
  */
-int philo_take_forks(t_data *data, t_philosopher *philo)
+int	philo_take_forks(t_data *data, t_philosopher *philo)
 {
 	write_status(data, philo, THINKING);
 	mutex_operation(philo->fork_left, LOCK);
@@ -30,10 +30,12 @@ int philo_take_forks(t_data *data, t_philosopher *philo)
 /**
  * Part of the philosopher's routine – eating.
  */
-void philo_eat(t_data *data, t_philosopher *philo)
+void	philo_eat(t_data *data, t_philosopher *philo)
 {
 	write_status(data, philo, EATING);
+	mutex_operation(&data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
+	mutex_operation(&data->data_access_mutex, UNLOCK);
 	msleep(data, data->time_to_eat_ms);
 	philo->meals_count++;
 	mutex_operation(philo->fork_left, UNLOCK);
@@ -43,17 +45,17 @@ void philo_eat(t_data *data, t_philosopher *philo)
 /**
  * Part of the philosopher's routine – sleeping.
  */
-void philo_sleep(t_data *data, t_philosopher *philo)
+void	philo_sleep(t_data *data, t_philosopher *philo)
 {
 	write_status(data, philo, SLEEPING);
 	msleep(data, data->time_to_sleep_ms);
 }
 
-void wait_for_all_threads(t_data *data)
+void	wait_for_all_threads(t_data *data)
 {
 	while (1)
 	{
-		if(data->all_threads_created)
+		if (data->all_threads_created)
 		{
 			mutex_operation(&data->data_access_mutex, LOCK);
 			data->simulation_start_time_us = get_epoch_time_us();
@@ -68,14 +70,16 @@ void wait_for_all_threads(t_data *data)
 /**
  * A philosopher's routine.
  */
-void *philosopher_routine(void *arg)
+void	*philosopher_routine(void *arg)
 {
-	t_philosopher *philo;
-	t_data	*data;
+	t_philosopher	*philo;
+	t_data			*data;
 
 	philo = (t_philosopher *)arg;
 	data = philo->data;
+	// mutex_operation(&data->data_access_mutex, LOCK);
 	wait_for_all_threads(data);
+	// mutex_operation(&data->data_access_mutex, UNLOCK);
 	if (philo->id % 2 == 0)
 		msleep(data, data->thread_start_delay_ms);
 	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
@@ -86,7 +90,7 @@ void *philosopher_routine(void *arg)
 		philo_eat(data, philo);
 		philo_sleep(data, philo);
 	}
-    return (NULL);
+	return (NULL);
 }
 
 /**
@@ -113,11 +117,11 @@ int	create_philo_threads(t_data *data)
 	int	i;
 
 	i = 0;
+	data->philo_threads = malloc(sizeof(pthread_t) * data->no_of_philosophers);
+	if (!data->philo_threads)
+		return (MALLOC_FAIL);
 	while (i < data->no_of_philosophers)
 	{
-		data->philo_threads[i] = (pthread_t)safe_malloc(sizeof(pthread_t));
-		if (!data->philo_threads[i])
-			return (MALLOC_FAIL);
 		pthread_create(&data->philo_threads[i], NULL, philosopher_routine, (void *)&data->philos[i]);
 		if (DEBUG)
 			printf("Philo thread [%d] created!\n", data->philos[i].id);

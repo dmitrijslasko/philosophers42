@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 21:12:45 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/23 18:22:19 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void write_status(t_data *data, t_philosopher *philo, t_status status)
 	long long runtime;
 
 	runtime = get_simulation_runtime_ms(data);
-	mutex_operation(&data->data_access_mutex, LOCK);
+	// mutex_operation(&data->data_access_mutex, LOCK);
 	if (!data->simulation_is_on)
 	{
-		mutex_operation(&data->data_access_mutex, UNLOCK);
+		// mutex_operation(&data->data_access_mutex, UNLOCK);
 		return ;
 	}
-	mutex_operation(&data->data_access_mutex, UNLOCK);
+	// mutex_operation(&data->data_access_mutex, UNLOCK);
 	if (DEBUG)
 	{
 		write_status_debug(data, philo, status);
@@ -74,9 +74,9 @@ void write_status(t_data *data, t_philosopher *philo, t_status status)
 		printf("%lld %d is thinking\n", runtime, philo->id);
 	else if (DIED == status)
 		{
-			mutex_operation(&data->data_access_mutex, LOCK);
+			// mutex_operation(&data->data_access_mutex, LOCK);
 			data->simulation_is_on = 0;
-			mutex_operation(&data->data_access_mutex, UNLOCK);
+			// mutex_operation(&data->data_access_mutex, UNLOCK);
 			usleep(5000);
 			printf("%lld %d died\n", runtime, philo->id);
 		}

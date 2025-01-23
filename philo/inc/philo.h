@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 01:46:50 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/23 21:36:54 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_data
 	int 			time_to_eat_ms;
 	int 			time_to_sleep_ms;
 	int				no_of_meals_required;
+	int				no_of_meals_min;
 	int				thread_start_delay_ms;
 	long long		simulation_start_time_ms;
 	long long		simulation_start_time_us;
@@ -80,6 +81,7 @@ typedef struct s_data
 	pthread_t 		*philo_threads;
 	pthread_t 		monitor_thread;
 	p_mtx			data_access_mutex;
+	p_mtx			no_of_meals_min_mutex;
 }					t_data;
 
 // FUNCTIONS
