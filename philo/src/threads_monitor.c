@@ -24,7 +24,7 @@ int philo_is_alive(t_data *data, t_philosopher *philo)
 	int	ms_time;
 
 	ms_time = philo->last_meal_time_ms;
-	if (get_simulation_runtime_ms(data) - ms_time >= data->time_to_die_ms)
+	if (get_simulation_runtime_ms(data) - ms_time > data->time_to_die_ms)
 	{
 		return (FALSE);
 	}

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 01:56:09 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/23 22:18:26 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void write_status(t_data *data, t_philosopher *philo, t_status status)
 			mutex_operation(&data->data_access_mutex, LOCK);
 			data->simulation_is_on = 0;
 			mutex_operation(&data->data_access_mutex, UNLOCK);
-			msleep(data, 2);
+			usleep(2000);
 			printf("%lld %d died\n", runtime, philo->id);
 		}
 	else
