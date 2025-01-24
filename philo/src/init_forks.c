@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 01:44:50 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 00:14:51 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	init_forks(t_data *data)
 	while (i < data->no_of_philosophers)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
-		// data->forks[i].fork_taken = 0;
 		if (DEBUG)
 			printf(YELLOW"Fork %d initialized\n"RESET, i + 1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/23 22:39:20 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 00:15:37 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ int		destroy_philo_mutexes(t_data *data);
 
 // stats.c
 void    print_meal_count(t_data *data);
-void print_stats(t_data *data);
+void	print_stats(t_data *data);
+
+int		free_data(t_data *data);
 
 #endif

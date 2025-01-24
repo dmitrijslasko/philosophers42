@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 00:30:24 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 00:16:13 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int main(int argc, char **argv)
 		printf(YELLOW "RUN TIME: %lld ms.\n" RESET, get_simulation_runtime_ms(&data));
 	join_philo_threads(&data);
 	join_monitor_thread(&data);
-	destroy_forks(&data);
-	destroy_philo_mutexes(&data);
-	mutex_operation(&data.data_access_mutex, DESTROY);
+	free_data(&data);
 	if (DEBUG)
 		print_stats(&data);
 	return (EXIT_SUCCESS);

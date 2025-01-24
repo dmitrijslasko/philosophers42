@@ -12,6 +12,14 @@
 
 #include "philo.h"
 
+int free_data(t_data *data)
+{
+	mutex_operation(&data->data_access_mutex, DESTROY);
+	free(data->forks);
+	free(data->philos);
+	free(data->philo_threads);
+	return (EXIT_SUCCESS);
+}
 /**
  * initialise program data (data struct)
  * @param data struct to hold the program's data
