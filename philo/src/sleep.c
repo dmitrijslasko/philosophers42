@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:21:32 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 02:44:59 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/25 00:35:40 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void msleep(t_data *data, unsigned int sleep_time_ms)
 		if (remaining_time > 10)
 			usleep(1000);
 		else
-			usleep(100);
+			usleep(10);
 	}
 }

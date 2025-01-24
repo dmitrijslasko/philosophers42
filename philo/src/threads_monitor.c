@@ -102,11 +102,11 @@ int	create_monitor(t_data *data)
 {
 	mutex_operation(&data->data_access_mutex, LOCK);
 	pthread_create(&data->monitor_thread, NULL, monitor_routine, (void *)data);
+	data->simulation_start_time_us = get_epoch_time_us();
+	data->simulation_start_time_ms = get_epoch_time_ms();
 	if (DEBUG)
 		printf(B_MAGENTA">>>>>>>>>>>>>> MONITOR THREAD CREATED\n"RST);
 	data->all_threads_created = 1;
-	data->simulation_start_time_us = get_epoch_time_us();
-	data->simulation_start_time_ms = get_epoch_time_ms();
 	data->simulation_is_on = 1;
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	return (EXIT_SUCCESS);
