@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 01:50:09 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 02:13:40 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
  */
 int	philo_take_forks(t_data *data, t_philosopher *philo)
 {
+	mutex_operation(&data->output_mutex, LOCK);
 	write_status(data, philo, THINKING);
+	mutex_operation(&data->output_mutex, UNLOCK);
 	mutex_operation(philo->fork_left, LOCK);
 	write_status(data, philo, TAKEN_LEFT_FORK);
 	if (data->no_of_philos == 1)

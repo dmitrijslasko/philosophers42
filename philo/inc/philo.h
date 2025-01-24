@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 01:49:35 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 02:13:45 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_data
 	pthread_t 		*philo_threads;
 	pthread_t 		monitor_thread;
 	p_mtx			data_access_mutex;
+	p_mtx			output_mutex;
 }					t_data;
 
 // FUNCTIONS
