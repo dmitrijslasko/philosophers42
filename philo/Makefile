@@ -1,6 +1,6 @@
 GREEN = \033[0;32m
 RED = \033[0;31m
-RESET = \033[0m
+RST = \033[0m
 
 NAME = philo
 
@@ -24,22 +24,22 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-	@echo "\n$(GREEN)$(NAME) got successfully compiled.$(RESET)"
+	@echo "\n$(GREEN)$(NAME) got successfully compiled.$(RST)"
 
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -I $(INC) -c $< -o $@
-	@echo "$(GREEN)%%%%$(RESET)\c"
+	@echo "$(GREEN)%%%%$(RST)\c"
 
 clean:
 	@rm -f $(OBJ_DIR)**/*.o
 	@rm -rf $(OBJ_DIR)
-	@echo "$(GREEN)clean complete\n$(RESET)\c"
+	@echo "$(GREEN)clean complete\n$(RST)\c"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(GREEN)fclean complete\n$(RESET)\c"
+	@echo "$(GREEN)fclean complete\n$(RST)\c"
 
 re: fclean all
 

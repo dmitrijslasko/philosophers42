@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/19 19:32:39 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 01:21:23 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void print_test_header(const char *test_name)
 {
-	printf("\n%s%s%s\n", YELLOW, test_name, RESET);
+	printf("\n%s%s%s\n", YELLOW, test_name, RST);
 	printf("-------------------------------------------------\n");
 }
 
 void check_test(int test_no, int expected, int actual)
 {
 	if (expected != actual)
-		printf("%sTest failed: test %d (expected %d, got %d)\n%s", RED, test_no, expected, actual, RESET);
+		printf("%sTest failed: test %d (expected %d, got %d)\n%s", RED, test_no, expected, actual, RST);
 	else
-		printf("%sTest passed: test %d (expected %d, got %d)\n%s", GREEN, test_no, expected, actual, RESET);
+		printf("%sTest passed: test %d (expected %d, got %d)\n%s", GREEN, test_no, expected, actual, RST);
 
 }
 

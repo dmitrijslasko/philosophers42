@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 00:15:37 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 01:49:35 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_philosopher
 
 typedef struct s_data
 {
-	int 			no_of_philosophers;
+	int 			no_of_philos;
 	int				time_to_die_ms;
 	int 			time_to_eat_ms;
 	int 			time_to_sleep_ms;
@@ -109,8 +109,8 @@ long	get_epoch_time_s_part(void);
 long	get_epoch_time_us_part(void);
 long long get_epoch_time_ms(void);
 long long get_epoch_time_us(void);
-long long get_simulation_runtime_ms(t_data *data);
-long long get_simulation_runtime_us(t_data *data);
+long long get_sim_runtime_ms(t_data *data);
+long long get_sim_runtime_us(t_data *data);
 
 int		create_monitor(t_data *data);
 void	join_monitor_thread(t_data *data);
@@ -124,7 +124,7 @@ void	msleep(t_data *data, unsigned int sleep_time_ms);
 
 int philo_is_alive(t_data *data, t_philosopher *philo);
 
-void	print_error(char *str);
+int		print_error(char *str, int error_code);
 
 void	*safe_malloc(int size_bytes);
 void	mutex_operation(p_mtx	*mutex, t_opcode opcode);

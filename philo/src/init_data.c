@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int free_data(t_data *data)
+int	free_data(t_data *data)
 {
 	mutex_operation(&data->data_access_mutex, DESTROY);
 	free(data->forks);
@@ -20,6 +20,7 @@ int free_data(t_data *data)
 	free(data->philo_threads);
 	return (EXIT_SUCCESS);
 }
+
 /**
  * initialise program data (data struct)
  * @param data struct to hold the program's data
@@ -29,7 +30,7 @@ int free_data(t_data *data)
  */
 int	init_data(t_data *data, int argc, char **argv)
 {
-	data->no_of_philosophers = int_atoi(argv[1]);
+	data->no_of_philos = int_atoi(argv[1]);
 	data->time_to_die_ms = int_atoi(argv[2]);
 	data->time_to_eat_ms = int_atoi(argv[3]);
 	data->thread_start_delay_ms = data->time_to_eat_ms / 8;

@@ -6,15 +6,15 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 00:16:13 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 01:22:16 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_data data;
+	t_data	data;
 
 	if (is_valid_input(argv, argc) == FALSE)
 		return (INVALID_INPUT);
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	create_philo_threads(&data);
 	create_monitor(&data);
 	if (DEBUG)
-		printf(YELLOW "RUN TIME: %lld ms.\n" RESET, get_simulation_runtime_ms(&data));
+		printf(YELLOW"RUN TIME: %lld ms.\n"RST, get_sim_runtime_ms(&data));
 	join_philo_threads(&data);
 	join_monitor_thread(&data);
 	free_data(&data);

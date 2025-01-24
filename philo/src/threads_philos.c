@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 00:21:22 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 01:50:09 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	philo_take_forks(t_data *data, t_philosopher *philo)
 	write_status(data, philo, THINKING);
 	mutex_operation(philo->fork_left, LOCK);
 	write_status(data, philo, TAKEN_LEFT_FORK);
-	if (data->no_of_philosophers == 1)
+	if (data->no_of_philos == 1)
 		return (1);
 	mutex_operation(philo->fork_right, LOCK);
 	write_status(data, philo, TAKEN_RIGHT_FORK);
@@ -34,7 +34,7 @@ void	philo_eat(t_data *data, t_philosopher *philo)
 {
 	write_status(data, philo, EATING);
 	mutex_operation(&data->data_access_mutex, LOCK);
-	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
+	philo->last_meal_time_ms = get_sim_runtime_ms(data);
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	msleep(data, data->time_to_eat_ms);
 	mutex_operation(&philo->philo_data_access_mutex, LOCK);
@@ -89,7 +89,7 @@ void	*philosopher_routine(void *arg)
 	if (philo->id % 2 == 0)
 		msleep(data, data->thread_start_delay_ms);
 	mutex_operation(&data->data_access_mutex, LOCK);
-	philo->last_meal_time_ms = get_simulation_runtime_ms(data);
+	philo->last_meal_time_ms = get_sim_runtime_ms(data);
 	mutex_operation(&data->data_access_mutex, UNLOCK);
 	while (1)
 	{
@@ -117,7 +117,7 @@ int	join_philo_threads(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->no_of_philosophers)
+	while (i < data->no_of_philos)
 	{
 		pthread_join(data->philo_threads[i], NULL);
 		i++;
@@ -133,11 +133,11 @@ int	create_philo_threads(t_data *data)
 	int	i;
 
 	i = 0;
-	data->philo_threads = malloc(sizeof(pthread_t) * data->no_of_philosophers);
+	data->philo_threads = malloc(sizeof(pthread_t) * data->no_of_philos);
 	if (!data->philo_threads)
 		return (MALLOC_FAIL);
 	mutex_operation(&data->data_access_mutex, LOCK);
-	while (i < data->no_of_philosophers)
+	while (i < data->no_of_philos)
 	{
 		pthread_create(&data->philo_threads[i], NULL, philosopher_routine, (void *)&data->philos[i]);
 		if (DEBUG)

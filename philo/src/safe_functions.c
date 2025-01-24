@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 00:45:35 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/23 22:35:04 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 01:34:41 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*safe_malloc(int size_bytes)
 	void	*ptr;
 	ptr = malloc(size_bytes);
 	if (!ptr)
-		print_error("Memory allocation failed!\n");
+		print_error("Memory allocation failed!\n", 0);
 	return (ptr);
 }
 void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
@@ -31,7 +31,7 @@ void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
 	else if (opcode == UNLOCK)
 		pthread_mutex_unlock(mutex);
 	else
-		print_error("Mutex operational code not recognized...\n");
+		print_error("Mutex operational code not recognized...\n", 0);
 }
 
 void	fork_mutex_operation(p_mtx *fork, t_opcode opcode)
@@ -49,5 +49,5 @@ void	fork_mutex_operation(p_mtx *fork, t_opcode opcode)
 		pthread_mutex_unlock(fork);
 	}
 	else
-		print_error("Mutex operational code not recognized...\n");
+		print_error("Mutex operational code not recognized...\n", 0);
 }

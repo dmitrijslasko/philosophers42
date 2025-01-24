@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:10:34 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/21 18:18:50 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 01:19:55 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ int	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+
 /**
  * Simplified atoi function. Transforms argument to int.
  * Assumes the incoming str to not have - or +.
  * @param str string argument
  * @return integer
  */
-int int_atoi(const char *str)
+int	int_atoi(const char *str)
 {
-	unsigned int    nb;
+	unsigned int	nb;
 
 	nb = 0;
 	while (*str)

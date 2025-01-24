@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/22 00:53:15 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/24 01:29:45 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@
 # define MAX_MEAL_COUNT		5000
 # define MAX_ARGUMENT_LEN	8
 
+# define THREAD_START_DELAY		8
 # define MONITOR_FREQ_US	    1
-// # define THREAD_START_DELAY_MS	50
 # define FORK_HUNT_DELAY_US	    1
 # define CUSTOM_SLEEP_PERIOD_US 10
+# define DEATH_MSG_TIMEOUT_US	5000
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
 // # define TOSTRING(x) STRINGIFY(x)
 
 // COLORS
-# define RESET	"\033[0m"
-# define RED	"\033[0;31m"
-# define GREEN	"\033[0;32m"
-# define YELLOW	"\033[0;33m"
-# define B_MAGENTA   "\033[1;35m"   // Bold Magenta
+# define RST			"\033[0m"
+# define RED			"\033[0;31m"
+# define GREEN			"\033[0;32m"
+# define YELLOW			"\033[0;33m"
+# define B_MAGENTA   	"\033[1;35m"   // Bold Magenta
 
 
 // MESSAGES
