@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/25 00:40:09 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/25 00:50:41 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	wait_for_all_threads(t_data *data)
 		mutex_operation(&data->data_access_mutex, UNLOCK);
 		if (can_continue)
 			break ;
-		usleep(1000);
+		usleep(100);
 	}
 	mutex_operation(&data->data_access_mutex, LOCK);
 	data->simulation_start_time_us = get_epoch_time_us();

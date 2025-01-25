@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 01:22:16 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/25 00:50:24 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char **argv)
 		printf(YELLOW"RUN TIME: %lld ms.\n"RST, get_sim_runtime_ms(&data));
 	join_philo_threads(&data);
 	join_monitor_thread(&data);
-	free_data(&data);
 	if (DEBUG)
 		print_stats(&data);
+	free_data(&data);
 	return (EXIT_SUCCESS);
 }
