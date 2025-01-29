@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 00:45:35 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 02:03:41 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/29 15:46:55 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void	*safe_malloc(int size_bytes)
 {
 	void	*ptr;
+
 	ptr = malloc(size_bytes);
 	if (!ptr)
 		print_error("Memory allocation failed!\n", 0);
 	return (ptr);
 }
+
 void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
 {
 	if (opcode == INIT)

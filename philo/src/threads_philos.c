@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/25 01:51:16 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/29 15:54:55 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	philo_sleep(t_data *data, t_philosopher *philo)
 
 void	wait_for_all_threads(t_data *data)
 {
-	int can_continue;
+	int	can_continue;
 
 	can_continue = 1;
 	while (1)
@@ -141,7 +141,8 @@ int	create_philo_threads(t_data *data)
 	mutex_operation(&data->data_access_mutex, LOCK);
 	while (i < data->no_of_philos)
 	{
-		pthread_create(&data->philo_threads[i], NULL, philosopher_routine, (void *)&data->philos[i]);
+		pthread_create(&data->philo_threads[i], \
+			NULL, philosopher_routine, (void *)&data->philos[i]);
 		if (DEBUG)
 			printf("Philo thread [%d] created!\n", data->philos[i].id);
 		i++;

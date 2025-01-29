@@ -17,10 +17,10 @@
  * @param *data table info
  * @param *philo philosopher
  */
-int philo_is_alive(t_data *data, t_philosopher *philo)
+int	philo_is_alive(t_data *data, t_philosopher *philo)
 {
 	int	last_meal_ms;
-	int response;
+	int	response;
 
 	response = 1;
 	mutex_operation(&data->data_access_mutex, LOCK);
@@ -31,10 +31,9 @@ int philo_is_alive(t_data *data, t_philosopher *philo)
 	return (response);
 }
 
-
-int all_philos_are_alive(t_data *data)
+int	all_philos_are_alive(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->no_of_philos)
@@ -51,9 +50,10 @@ int all_philos_are_alive(t_data *data)
 	}
 	return (TRUE);
 }
+
 int	philo_is_full(t_data *data, t_philosopher *philo)
 {
-	int response;
+	int	response;
 
 	response = 0;
 	mutex_operation(&philo->philo_data_access_mutex, LOCK);
@@ -63,9 +63,9 @@ int	philo_is_full(t_data *data, t_philosopher *philo)
 	return (response);
 }
 
-int all_philos_are_full(t_data *data)
+int	all_philos_are_full(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->no_of_philos)
@@ -80,19 +80,19 @@ int all_philos_are_full(t_data *data)
 /**
  * A monitor thread routine.
  */
-void *monitor_routine(void *arg)
+void	*monitor_routine(void *arg)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = arg;
 	wait_for_all_threads(data);
 	while (all_philos_are_alive(data)
-			&& (!all_philos_are_full(data) || data->no_of_meals_required == -1))
+		&& (!all_philos_are_full(data) || data->no_of_meals_required == -1))
 		usleep(MONITOR_FREQ_US);
 	mutex_operation(&data->data_access_mutex, LOCK);
 	data->simulation_is_on = 0;
 	mutex_operation(&data->data_access_mutex, UNLOCK);
-    return (NULL);
+	return (NULL);
 }
 
 /**
@@ -112,7 +112,7 @@ int	create_monitor(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-void join_monitor_thread(t_data *data)
+void	join_monitor_thread(t_data *data)
 {
 	pthread_join(data->monitor_thread, NULL);
 }

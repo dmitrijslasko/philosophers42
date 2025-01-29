@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/25 00:41:56 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/29 15:55:10 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  */
 long	get_epoch_time_s_part(void)
 {
-	struct timeval time_value;
+	struct timeval	time_value;
 
 	gettimeofday(&time_value, NULL);
 	return (time_value.tv_sec);
@@ -28,35 +28,36 @@ long	get_epoch_time_s_part(void)
  */
 long	get_epoch_time_us_part(void)
 {
-	struct timeval time_value;
+	struct timeval	time_value;
 
 	gettimeofday(&time_value, NULL);
 	return (time_value.tv_usec);
 }
+
 /**
  * get current time in ms
  */
-long long get_epoch_time_ms(void)
+long long	get_epoch_time_ms(void)
 {
 	return (get_epoch_time_s_part() * 1e3 + get_epoch_time_us_part() / 1e3);
 }
 
-long long get_epoch_time_us(void)
+long long	get_epoch_time_us(void)
 {
 	return (get_epoch_time_s_part() * 1e6 + get_epoch_time_us_part());
 }
 
-long long get_sim_runtime_ms(t_data *data)
+long long	get_sim_runtime_ms(t_data *data)
 {
-	long long runtime_ms;
+	long long	runtime_ms;
 
 	runtime_ms = get_epoch_time_ms() - data->simulation_start_time_ms;
 	return (runtime_ms);
 }
 
-long long get_sim_runtime_us(t_data *data)
+long long	get_sim_runtime_us(t_data *data)
 {
-	long long runtime_ms;
+	long long	runtime_ms;
 
 	runtime_ms = 0;
 	mutex_operation(&data->data_access_mutex, LOCK);

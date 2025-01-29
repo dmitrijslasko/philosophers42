@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/25 01:53:51 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/29 15:51:45 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,17 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 	else if (THINKING == status)
 		printf(YELLOW"%lld >> %lld [%d] is thinking\n"RST, runtime_us, runtime_ms, philo->id);
 	else if (DIED == status)
-		{
-			mutex_operation(&data->data_access_mutex, LOCK);
-			data->simulation_is_on = 0;
-			mutex_operation(&data->data_access_mutex, UNLOCK);
-			printf(RED"%lld >> %lld [%d] died\n"RST, runtime_us, runtime_ms, philo->id);
-		}
+	{
+		mutex_operation(&data->data_access_mutex, LOCK);
+		data->simulation_is_on = 0;
+		mutex_operation(&data->data_access_mutex, UNLOCK);
+		printf(RED"%lld >> %lld [%d] died\n"RST, runtime_us, runtime_ms, philo->id);
+	}
 }
 
-void write_status(t_data *data, t_philosopher *philo, t_status status)
+void	write_status(t_data *data, t_philosopher *philo, t_status status)
 {
-	long long runtime;
+	long long	runtime;
 
 	mutex_operation(&data->data_access_mutex, LOCK);
 	runtime = get_sim_runtime_ms(data);
