@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/25 00:33:37 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/29 16:25:34 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@
 # define MSG_TOO_MANY_PHILOS			"Too many philosophers, keep the count under 200.\n"
 # define MSG_ZERO_PHILOS				"0 philos... how do you think this will work?"
 # define MSG_ONE_OR_MORE_ARGS_WRONG 	"One or more arguments are wrong.\n"
+# define DEBUG_LEFT_FORK				"%lld >> %lld [%d] has taken a L fork\n"
+# define DEBUG_RIGHT_FORK				"%lld >> %lld [%d] has taken a R fork\n"
+# define DEBUG_EAT						"%lld >> %lld [%d] is eating\n"
+//# define DEBUG_SLEEP
+//# define DEBUG_DIED
+
 
 // ERROR CODES
 # define MALLOC_FAIL			1

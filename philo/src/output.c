@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/29 15:51:45 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/29 16:24:54 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 	if (!data->simulation_is_on)
 		return ;
 	if (TAKEN_LEFT_FORK == status)
-		printf("%lld >> %lld [%d] has taken a L fork\n", runtime_us, runtime_ms, philo->id);
+		printf(DEBUG_LEFT_FORK, runtime_us, runtime_ms, philo->id);
 	else if (TAKEN_RIGHT_FORK == status)
-		printf("%lld >> %lld [%d] has taken a R fork\n", runtime_us, runtime_ms, philo->id);
+		printf(DEBUG_RIGHT_FORK, runtime_us, runtime_ms, philo->id);
 	else if (EATING == status)
-		printf("%lld >> %lld [%d] is eating\n", runtime_us, runtime_ms, philo->id);
+		printf(DEBUG_EAT, runtime_us, runtime_ms, philo->id);
 	else if (SLEEPING == status)
 		printf(GREEN"%lld >> %lld [%d] is sleeping\t\tMeals count: %d\n"RST, runtime_us, runtime_ms, philo->id, philo->meals_count);
 	else if (THINKING == status)
