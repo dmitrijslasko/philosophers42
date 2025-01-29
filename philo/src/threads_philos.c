@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/25 00:50:41 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/25 01:51:16 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	philo_take_forks(t_data *data, t_philosopher *philo)
 	mutex_operation(&data->output_mutex, LOCK);
 	write_status(data, philo, THINKING);
 	mutex_operation(&data->output_mutex, UNLOCK);
-	mutex_operation(philo->fork_left, LOCK);
 	write_status(data, philo, TAKEN_LEFT_FORK);
 	if (data->no_of_philos == 1)
 		return (1);
-	mutex_operation(philo->fork_right, LOCK);
+	mutex_operation(philo->fork_left, LOCK);
 	write_status(data, philo, TAKEN_RIGHT_FORK);
+	mutex_operation(philo->fork_right, LOCK);
 	return (0);
 }
 
@@ -34,10 +34,10 @@ int	philo_take_forks(t_data *data, t_philosopher *philo)
  */
 void	philo_eat(t_data *data, t_philosopher *philo)
 {
-	write_status(data, philo, EATING);
 	mutex_operation(&data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
 	mutex_operation(&data->data_access_mutex, UNLOCK);
+	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
 	mutex_operation(&philo->philo_data_access_mutex, LOCK);
 	philo->meals_count++;
