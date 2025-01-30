@@ -8,9 +8,9 @@ NAME = philo
 # https://nafuka11.github.io/philosophers-visualizer/
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
 INC = ./inc
 
+CFLAGS = -Wall -Werror -Wextra
 DEBUGFLAGS = -Wall -Werror -Wextra -g -D DEBUG=1
 SANITIZE = -fsanitize=thread
 
@@ -25,7 +25,6 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "\n$(GREEN)$(NAME) got successfully compiled.$(RST)"
-
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)

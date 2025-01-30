@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/29 15:54:55 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/30 18:24:41 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,18 @@
  */
 int	philo_take_forks(t_data *data, t_philosopher *philo)
 {
-	mutex_operation(&data->output_mutex, LOCK);
 	write_status(data, philo, THINKING);
-	mutex_operation(&data->output_mutex, UNLOCK);
-	write_status(data, philo, TAKEN_LEFT_FORK);
+	if (philo->id % 2 == 0)
+		mutex_operation(philo->fork_left, LOCK);
+	else
+		mutex_operation(philo->fork_right, LOCK);
 	if (data->no_of_philos == 1)
 		return (1);
-	mutex_operation(philo->fork_left, LOCK);
-	write_status(data, philo, TAKEN_RIGHT_FORK);
-	mutex_operation(philo->fork_right, LOCK);
+	write_status(data, philo, TAKEN_LEFT_FORK);
+	if (philo->id % 2 == 0)
+		mutex_operation(philo->fork_right, LOCK);
+	else
+		mutex_operation(philo->fork_left, LOCK);
 	return (0);
 }
 
@@ -138,7 +141,6 @@ int	create_philo_threads(t_data *data)
 	data->philo_threads = malloc(sizeof(pthread_t) * data->no_of_philos);
 	if (!data->philo_threads)
 		return (MALLOC_FAIL);
-	mutex_operation(&data->data_access_mutex, LOCK);
 	while (i < data->no_of_philos)
 	{
 		pthread_create(&data->philo_threads[i], \
@@ -147,6 +149,5 @@ int	create_philo_threads(t_data *data)
 			printf("Philo thread [%d] created!\n", data->philos[i].id);
 		i++;
 	}
-	mutex_operation(&data->data_access_mutex, UNLOCK);
 	return (EXIT_SUCCESS);
 }
