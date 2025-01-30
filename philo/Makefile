@@ -39,6 +39,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@echo "$(GREEN)fclean complete\n$(RST)\c"
+	@rm -rf ./logs/
 
 re: fclean all
 
@@ -58,7 +59,7 @@ unit_tests:
 	rm unit_tests
 
 # Helgrind launch
-HELGRIND = valgrind --tool=helgrind --log-file=helgrind.log
+HELGRIND = valgrind --tool=helgrind
 
 # Argument sets (last argument is expected outcome: 1 = should die, 0 = should not die)
 ARGS_LIST = 	"1 800 200 200 10 1"	\
@@ -90,69 +91,76 @@ ARGS_LIST = 	"1 800 200 200 10 1"	\
 				"500 1500 200 200 10 0"
 
 define run_test
-	> test_log.log; \
-	echo "\nTesting with ARGS: $(1)" | tee -a test_log.log; \
+	LOGFILE=logs/test_`printf "%02d" $$COUNT`.log; \
+	> $$LOGFILE; \
+	echo "\nTesting #$$COUNT with ARGS: $(1)" | tee -a $$LOGFILE; \
 	ARGS=$$(echo $(1) | awk '{print $$1, $$2, $$3, $$4, $$5}'); \
 	EXPECTED_OUTCOME=$$(echo $(1) | awk '{print $$NF}'); \
-	./$(NAME) $$ARGS >> test_log.log 2>&1; \
+	./$(NAME) $$ARGS >> $$LOGFILE 2>&1; \
 	\
-	if grep -iq "died" test_log.log; then \
-		echo "❌ Philo died..." | tee -a test_log.log; \
+	if grep -iq "died" $$LOGFILE; then \
+		echo "❌ Philo died..." | tee -a $$LOGFILE; \
 		if [ "$$EXPECTED_OUTCOME" = "1" ]; then \
-			echo "✅ Expected outcome: PASS" | tee -a test_log.log; \
+			echo "✅ Expected outcome: PASS" | tee -a $$LOGFILE; \
 		else \
-			echo "❌ Unexpected outcome: FAIL" | tee -a test_log.log; \
+			echo "❌ Unexpected outcome: FAIL" | tee -a $$LOGFILE; \
 		fi; \
 	else \
-		echo "✅ No philos died!" | tee -a test_log.log; \
+		echo "✅ No philos died!" | tee -a $$LOGFILE; \
 		if [ "$$EXPECTED_OUTCOME" = "0" ]; then \
-			echo "✅ Expected outcome: PASS" | tee -a test_log.log; \
+			echo "✅ Expected outcome: PASS" | tee -a $$LOGFILE; \
 		else \
-			echo "❌ Unexpected outcome: FAIL" | tee -a test_log.log; \
+			echo "❌ Unexpected outcome: FAIL" | tee -a $$LOGFILE; \
 		fi; \
 	fi; \
-	echo "-----------------------------------------------------" | tee -a test_log.log
+	echo "-----------------------------------------------------" | tee -a $$LOGFILE
 endef
 
-# Run Helgrind test and save full output
+# Run Helgrind test and save full output in a numbered file
 define run_helgrind_test
-	echo "\nTesting with ARGS: $(1)" | tee -a helgrind.log; \
-	$(HELGRIND) ./$(NAME) $(1) >> helgrind.log 2>&1; \
-	echo "-----------------------------------------------------" | tee -a helgrind.log; \
-	grep -i "possible data race" helgrind.log && echo "❌ Data Race Detected!" || echo "✅ No data race found"; \
-	grep -i "lock order violation" helgrind.log && echo "❌ Lock Order Violation Detected!" || echo "✅ No lock order violations"; \
-	grep -i "potential deadlock" helgrind.log && echo "❌ Potential Deadlock Detected!" || echo "✅ No deadlocks detected"; \
-	grep -i "mutex" helgrind.log && echo "❌ Mutex Misuse Detected!" || echo "✅ Mutexes handled properly"; \
-	grep -i "died" helgrind.log && echo "❌ Philo died..." || echo "✅ No philos died!"; \
-	echo "-----------------------------------------------------" | tee -a helgrind.log
+	LOGFILE=logs/helgrind_`printf "%02d" $$COUNT`.log; \
+	echo "\nTesting #$$COUNT with ARGS: $(1)" | tee -a $$LOGFILE; \
+	ARGS=$$(echo $(1) | awk '{print $$1, $$2, $$3, $$4, $$5}'); \
+	$(HELGRIND) --log-file=$$LOGFILE ./$(NAME) $$ARGS >> $$LOGFILE 2>&1; \
+	echo "-----------------------------------------------------" | tee -a $$LOGFILE; \
+	grep -i "possible data race" $$LOGFILE && echo "❌ Data Race Detected!" || echo "✅ No data race found"; \
+	grep -i "lock order violation" $$LOGFILE && echo "❌ Lock Order Violation Detected!" || echo "✅ No lock order violations"; \
+	grep -i "potential deadlock" $$LOGFILE && echo "❌ Potential Deadlock Detected!" || echo "✅ No deadlocks detected"; \
+	grep -i "mutex" $$LOGFILE && echo "❌ Mutex Misuse Detected!" || echo "✅ Mutexes handled properly"; \
+	echo "-----------------------------------------------------" | tee -a $$LOGFILE
 endef
+
 
 tests: re
-	@echo "Running Tests..." > helgrind.log; \
+	mkdir -p logs
+	@echo "Running Tests..." > logs/test_summary.log; \
 	SUCCESS=0; FAIL=0; COUNT=0; \
 	for args in $(ARGS_LIST); do \
 		COUNT=$$((COUNT+1)); \
-		echo "\nRunning test $$COUNT: ARGS=$$args" | tee -a helgrind.log; \
 		$(call run_test, $$args); \
 		\
-		if tail -n 5 test_log.log | grep -iq "Unexpected outcome: FAIL"; then \
+		if tail -n 5 logs/test_`printf "%02d" $$COUNT`.log | grep -iq "Unexpected outcome: FAIL"; then \
 			FAIL=$$((FAIL+1)); \
 		else \
 			SUCCESS=$$((SUCCESS+1)); \
 		fi; \
 	done; \
-	echo "\n==== TEST SUMMARY ====" | tee -a helgrind.log; \
-	echo "Total Tests: $$TOTAL" | tee -a helgrind.log; \
-	echo "✅ Success: $$SUCCESS" | tee -a helgrind.log; \
-	echo "❌ Failed: $$FAIL" | tee -a helgrind.log; \
-	echo "======================" | tee -a helgrind.log
+	echo "\n==== TEST SUMMARY ====" | tee -a logs/test_summary.log; \
+	echo "Total Tests: $$COUNT" | tee -a logs/test_summary.log; \
+	echo "✅ Success: $$SUCCESS" | tee -a logs/test_summary.log; \
+	echo "❌ Failed: $$FAIL" | tee -a logs/test_summary.log; \
+	echo "======================" | tee -a logs/test_summary.log
 
 
 helgrind_tests: re
-	@echo "Running Helgrind Tests..." > helgrind.log; \
+	mkdir -p logs
+	@echo "Running Helgrind Tests..." > logs/helgrind_summary.log; \
+	COUNT=0; \
 	for args in $(ARGS_LIST); do \
+		COUNT=$$((COUNT+1)); \
 		$(call run_helgrind_test, $$args); \
 	done
+
 
 
 .PHONY: all clean fclean re debug sanitize unit_tests tests helgrind_tests

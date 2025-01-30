@@ -15,6 +15,7 @@
 int	free_data(t_data *data)
 {
 	mutex_operation(&data->data_access_mutex, DESTROY);
+	mutex_operation(&data->print_mutex, DESTROY);
 	free(data->forks);
 	free(data->philos);
 	free(data->philo_threads);

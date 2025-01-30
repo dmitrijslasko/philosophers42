@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/30 20:02:19 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/30 20:30:17 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@
 # define MAX_MEAL_COUNT		5000
 # define MAX_ARGUMENT_LEN	8
 
-# define THREAD_START_DELAY		2
+# define THREAD_START_DELAY		2		// 1/n of the eat time
 # define MONITOR_FREQ_US	    1
 # define FORK_HUNT_DELAY_US	    1
 # define CUSTOM_SLEEP_PERIOD_US 100
-# define DEATH_MSG_TIMEOUT_US	5000
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
@@ -51,8 +50,9 @@
 # define DEBUG_LEFT_FORK				"%lld >> %lld [%d] has taken a L fork\n"
 # define DEBUG_RIGHT_FORK				"%lld >> %lld [%d] has taken a R fork\n"
 # define DEBUG_EAT						"%lld >> %lld [%d] is eating\n"
-//# define DEBUG_SLEEP
-//# define DEBUG_DIED
+# define DEBUG_SLEEP					GREEN"%lld >> %lld [%d] is sleeping\t\tMeals count: %d\n" RST
+# define DEBUG_THINK					YELLOW"%lld >> %lld [%d] is thinking\n" RST
+# define DEBUG_DIED						RED"%lld >> %lld [%d] died\n" RST
 
 
 // ERROR CODES
