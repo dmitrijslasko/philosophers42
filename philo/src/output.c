@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/29 16:24:54 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/30 18:44:44 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 
 	runtime_us = get_sim_runtime_us(data);
 	runtime_ms = get_sim_runtime_ms(data);
+	mutex_operation(&data->print_mutex, LOCK);
 	if (!data->simulation_is_on)
 		return ;
 	if (TAKEN_LEFT_FORK == status)
@@ -44,6 +45,7 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 		mutex_operation(&data->data_access_mutex, UNLOCK);
 		printf(RED"%lld >> %lld [%d] died\n"RST, runtime_us, runtime_ms, philo->id);
 	}
+	mutex_operation(&data->print_mutex, UNLOCK);
 }
 
 void	write_status(t_data *data, t_philosopher *philo, t_status status)
@@ -63,6 +65,7 @@ void	write_status(t_data *data, t_philosopher *philo, t_status status)
 		write_status_debug(data, philo, status);
 		return ;
 	}
+	mutex_operation(&data->print_mutex, LOCK);
 	if (TAKEN_LEFT_FORK == status || TAKEN_RIGHT_FORK == status)
 		printf("%lld %d has taken a fork\n", runtime, philo->id);
 	else if (EATING == status)
@@ -79,4 +82,5 @@ void	write_status(t_data *data, t_philosopher *philo, t_status status)
 		usleep(DEATH_MSG_TIMEOUT_US);
 		printf("%lld %d died\n", runtime, philo->id);
 	}
+	mutex_operation(&data->print_mutex, UNLOCK);
 }

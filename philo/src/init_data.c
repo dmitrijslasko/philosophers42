@@ -46,5 +46,6 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->philos = NULL;
 	data->philo_threads = NULL;
 	mutex_operation(&data->data_access_mutex, INIT);
+	mutex_operation(&data->print_mutex, INIT);
 	return (EXIT_SUCCESS);
 }

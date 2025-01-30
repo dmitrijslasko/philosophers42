@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/30 18:21:49 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/30 20:02:19 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 
 // SETITNGS AND LIMITS
-# define MAX_PHILOS			200
+# define MAX_PHILOS			500
 # define MAX_TIME_TO_DIE_MS	5000
 # define MAX_EAT_TIME_MS	5000
 # define MAX_SLEEP_TIME_MS	5000
