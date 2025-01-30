@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/29 15:55:10 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/30 14:55:34 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,21 @@ long	get_epoch_time_us_part(void)
 	return (time_value.tv_usec);
 }
 
+long long	get_epoch_time_us(void)
+{
+	return (get_epoch_time_s_part() * 1e6 + get_epoch_time_us_part());
+}
+
 /**
  * get current time in ms
  */
 long long	get_epoch_time_ms(void)
 {
-	return (get_epoch_time_s_part() * 1e3 + get_epoch_time_us_part() / 1e3);
+	return (get_epoch_time_us() / 1e3);
+	// return (get_epoch_time_s_part() * 1e3 + get_epoch_time_us_part() / 1e3);
 }
 
-long long	get_epoch_time_us(void)
-{
-	return (get_epoch_time_s_part() * 1e6 + get_epoch_time_us_part());
-}
+
 
 long long	get_sim_runtime_ms(t_data *data)
 {
@@ -57,11 +60,11 @@ long long	get_sim_runtime_ms(t_data *data)
 
 long long	get_sim_runtime_us(t_data *data)
 {
-	long long	runtime_ms;
+	long long	runtime_us;
 
-	runtime_ms = 0;
+	runtime_us = 0;
 	mutex_operation(&data->data_access_mutex, LOCK);
-	runtime_ms = get_epoch_time_us() - data->simulation_start_time_us;
+	runtime_us = get_epoch_time_us() - data->simulation_start_time_us;
 	mutex_operation(&data->data_access_mutex, UNLOCK);
-	return (runtime_ms);
+	return (runtime_us);
 }
