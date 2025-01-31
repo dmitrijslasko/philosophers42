@@ -1,14 +1,6 @@
-# philosophers42
-
-<!-- TODO -->
-# transform all incoming inputs to long, to only allow <= INT_MAX values
-
-# add the function to sync threads
-
-# function for one philo case
+# Philosophers - 42
 
 ### ALLOWED FUNCTIONS:
-
 
 (1) memset
 memset(void *b, int c, size_t len);
