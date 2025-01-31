@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 00:10:49 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 13:02:53 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	wait_for_all_threads(t_data *data)
 		if (data->all_threads_created)
 		{
 			mutex_operation(data->data_access_mutex, UNLOCK);
-			break;
+			break ;
 		}
 		mutex_operation(data->data_access_mutex, UNLOCK);
 		usleep(100);

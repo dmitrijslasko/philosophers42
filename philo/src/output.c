@@ -6,11 +6,22 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 00:05:44 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 12:59:50 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	get_simulation_status(t_data *data)
+{
+	int	simulation_status;
+
+	simulation_status = 0;
+	mutex_operation(data->data_access_mutex, LOCK);
+	simulation_status = data->simulation_is_on;
+	mutex_operation(data->data_access_mutex, UNLOCK);
+	return (simulation_status);
+}
 
 int	print_error(char *str, int error_code)
 {
@@ -23,8 +34,8 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 	long long	runtime_us;
 	long long	runtime_ms;
 
-	runtime_us = get_sim_runtime_us(data);
 	runtime_ms = get_sim_runtime_ms(data);
+	runtime_us = get_sim_runtime_us(data);
 	mutex_operation(data->print_mutex, LOCK);
 	if (data->simulation_is_on)
 	{
@@ -52,23 +63,17 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 void	write_status(t_data *data, t_philosopher *philo, t_status status)
 {
 	long long	runtime;
-
-	mutex_operation(data->data_access_mutex, LOCK);
-	runtime = get_sim_runtime_ms(data);
-	if (!data->simulation_is_on)
-	{
-		mutex_operation(data->data_access_mutex, UNLOCK);
-		return ;
-	}
-	mutex_operation(data->data_access_mutex, UNLOCK);
 	if (DEBUG)
 	{
 		write_status_debug(data, philo, status);
 		return ;
 	}
-	mutex_operation(data->print_mutex, LOCK);
-	if (data->simulation_is_on)
+	if (!get_simulation_status(data))
+		return ;
+	else
 	{
+		runtime = get_sim_runtime_ms(data);
+		mutex_operation(data->print_mutex, LOCK);
 		if (TAKEN_LEFT_FORK == status || TAKEN_RIGHT_FORK == status)
 			printf("%lld %d has taken a fork\n", runtime, philo->id);
 		else if (EATING == status)
@@ -84,6 +89,6 @@ void	write_status(t_data *data, t_philosopher *philo, t_status status)
 			mutex_operation(data->data_access_mutex, UNLOCK);
 			printf("%lld %d died\n", runtime, philo->id);
 		}
+		mutex_operation(data->print_mutex, UNLOCK);
 	}
-	mutex_operation(data->print_mutex, UNLOCK);
 }

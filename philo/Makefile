@@ -152,7 +152,7 @@ tests: re
 	echo "======================" | tee -a logs/test_summary.log
 
 
-helgrind_tests: re
+tests_helgrind: re
 	mkdir -p logs
 	@echo "Running Helgrind Tests..." > logs/helgrind_summary.log; \
 	COUNT=0; \
