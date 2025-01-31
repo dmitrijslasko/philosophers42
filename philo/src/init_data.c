@@ -14,8 +14,10 @@
 
 int	free_data(t_data *data)
 {
-	mutex_operation(&data->data_access_mutex, DESTROY);
-	mutex_operation(&data->print_mutex, DESTROY);
+	mutex_operation(data->data_access_mutex, DESTROY);
+	mutex_operation(data->print_mutex, DESTROY);
+	free(data->data_access_mutex);
+	free(data->print_mutex);
 	free(data->forks);
 	free(data->philos);
 	free(data->philo_threads);
@@ -31,6 +33,10 @@ int	free_data(t_data *data)
  */
 int	init_data(t_data *data, int argc, char **argv)
 {
+	data->data_access_mutex = safe_malloc(sizeof(p_mtx));
+	mutex_operation(data->data_access_mutex, INIT);
+	data->print_mutex = safe_malloc(sizeof(p_mtx));
+	mutex_operation(data->print_mutex, INIT);
 	data->no_of_philos = int_atoi(argv[1]);
 	data->time_to_die_ms = int_atoi(argv[2]);
 	data->time_to_eat_ms = int_atoi(argv[3]);
@@ -40,13 +46,11 @@ int	init_data(t_data *data, int argc, char **argv)
 	if (argc == 6)
 		data->no_of_meals_required = int_atoi(argv[5]);
 	data->simulation_is_on = 0;
-	data->simulation_start_time_ms = get_epoch_time_ms();
-	data->simulation_start_time_us = get_epoch_time_us();
+	data->simulation_start_time_ms = 0;
+	data->simulation_start_time_us = 0;
 	data->all_threads_created = 0;
 	data->forks = NULL;
 	data->philos = NULL;
 	data->philo_threads = NULL;
-	mutex_operation(&data->data_access_mutex, INIT);
-	mutex_operation(&data->print_mutex, INIT);
 	return (EXIT_SUCCESS);
 }

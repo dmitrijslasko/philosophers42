@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/30 18:49:54 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 00:10:49 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	philo_take_forks(t_data *data, t_philosopher *philo)
  */
 void	philo_eat(t_data *data, t_philosopher *philo)
 {
-	mutex_operation(&data->data_access_mutex, LOCK);
+	mutex_operation(data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
-	mutex_operation(&data->data_access_mutex, UNLOCK);
+	mutex_operation(data->data_access_mutex, UNLOCK);
 	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
 	mutex_operation(&philo->philo_data_access_mutex, LOCK);
@@ -63,22 +63,23 @@ void	philo_sleep(t_data *data, t_philosopher *philo)
 
 void	wait_for_all_threads(t_data *data)
 {
-	int	can_continue;
-
-	can_continue = 1;
 	while (1)
 	{
-		mutex_operation(&data->data_access_mutex, LOCK);
-		can_continue = data->all_threads_created;
-		mutex_operation(&data->data_access_mutex, UNLOCK);
-		if (can_continue)
-			break ;
+		mutex_operation(data->data_access_mutex, LOCK);
+		if (data->all_threads_created)
+		{
+			mutex_operation(data->data_access_mutex, UNLOCK);
+			break;
+		}
+		mutex_operation(data->data_access_mutex, UNLOCK);
 		usleep(100);
 	}
-	mutex_operation(&data->data_access_mutex, LOCK);
-	data->simulation_start_time_us = get_epoch_time_us();
-	data->simulation_start_time_ms = get_epoch_time_ms();
-	mutex_operation(&data->data_access_mutex, UNLOCK);
+	mutex_operation(data->data_access_mutex, LOCK);
+	if (data->simulation_start_time_us == 0)
+		data->simulation_start_time_us = get_epoch_time_us();
+	if (data->simulation_start_time_ms == 0)
+		data->simulation_start_time_ms = get_epoch_time_ms();
+	mutex_operation(data->data_access_mutex, UNLOCK);
 }
 
 /**
@@ -96,23 +97,20 @@ void	*philosopher_routine(void *arg)
 	wait_for_all_threads(data);
 	if (philo->id % 2 == 0)
 		msleep(data, data->thread_start_delay_ms);
-	mutex_operation(&data->data_access_mutex, LOCK);
+	mutex_operation(data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
-	mutex_operation(&data->data_access_mutex, UNLOCK);
+	mutex_operation(data->data_access_mutex, UNLOCK);
 	while (1)
 	{
-		mutex_operation(&data->data_access_mutex, LOCK);
+		mutex_operation(data->data_access_mutex, LOCK);
 		simulation_is_on = data->simulation_is_on;
-		mutex_operation(&data->data_access_mutex, UNLOCK);
-		if (simulation_is_on)
-		{
-			if (philo_take_forks(data, philo) == 1)
-				return (NULL);
-			philo_eat(data, philo);
-			philo_sleep(data, philo);
-		}
-		else
+		mutex_operation(data->data_access_mutex, UNLOCK);
+		if (!simulation_is_on)
 			break ;
+		if (philo_take_forks(data, philo) == 1)
+			return (NULL);
+		philo_eat(data, philo);
+		philo_sleep(data, philo);
 	}
 	return (NULL);
 }

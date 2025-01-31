@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/30 17:53:56 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/30 23:59:44 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ long long	get_epoch_time_us(void)
  */
 long long	get_epoch_time_ms(void)
 {
-	return (get_epoch_time_us() / 1e3);
-	// return (get_epoch_time_s_part() * 1e3 + get_epoch_time_us_part() / 1e3);
+	// return (get_epoch_time_us() / 1e3);
+	return (get_epoch_time_s_part() * 1e3 + get_epoch_time_us_part() / 1e3);
 }
 
 
@@ -63,8 +63,8 @@ long long	get_sim_runtime_us(t_data *data)
 	long long	runtime_us;
 
 	runtime_us = 0;
-	mutex_operation(&data->data_access_mutex, LOCK);
+	mutex_operation(data->data_access_mutex, LOCK);
 	runtime_us = get_epoch_time_us() - data->simulation_start_time_us;
-	mutex_operation(&data->data_access_mutex, UNLOCK);
+	mutex_operation(data->data_access_mutex, UNLOCK);
 	return (runtime_us);
 }
