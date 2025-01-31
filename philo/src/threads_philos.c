@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 13:02:53 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 17:43:27 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	wait_for_all_threads(t_data *data)
 	while (1)
 	{
 		mutex_operation(data->data_access_mutex, LOCK);
-		if (data->all_threads_created)
+		if (data->simulation_status == 1)
 		{
 			mutex_operation(data->data_access_mutex, UNLOCK);
 			break ;
@@ -89,9 +89,9 @@ void	*philosopher_routine(void *arg)
 {
 	t_philosopher	*philo;
 	t_data			*data;
-	int				simulation_is_on;
+	//int				simulation_status;
 
-	simulation_is_on = 1;
+	//simulation_status = 1;
 	philo = (t_philosopher *)arg;
 	data = philo->data;
 	wait_for_all_threads(data);
@@ -100,12 +100,10 @@ void	*philosopher_routine(void *arg)
 	mutex_operation(data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
 	mutex_operation(data->data_access_mutex, UNLOCK);
+
 	while (1)
 	{
-		mutex_operation(data->data_access_mutex, LOCK);
-		simulation_is_on = data->simulation_is_on;
-		mutex_operation(data->data_access_mutex, UNLOCK);
-		if (!simulation_is_on)
+		if (get_protected_value(data, &data->simulation_status) == 0)
 			break ;
 		if (philo_take_forks(data, philo) == 1)
 			return (NULL);

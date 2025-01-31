@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 00:45:35 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/29 15:46:55 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 17:43:57 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,23 @@ void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
 		pthread_mutex_unlock(mutex);
 	else
 		print_error("Mutex operational code not recognized...\n", 0);
+}
+
+long long	get_protected_value(t_data *data, void *ptr)
+{
+	long long result;
+
+	result = 0;
+	mutex_operation(data->data_access_mutex, LOCK);
+	result = *(long long *)ptr;
+
+	mutex_operation(data->data_access_mutex, UNLOCK);
+	return (result);
+}
+
+void	set_protected_value(t_data *data, void *ptr, long long value)
+{
+	mutex_operation(data->data_access_mutex, LOCK);
+	*(long long *)ptr = value;
+	mutex_operation(data->data_access_mutex, UNLOCK);
 }

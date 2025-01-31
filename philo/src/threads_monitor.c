@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_threads_monitor.c                                  :+:      :+:    :+:   */
+/*   threads_monitor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/08 17:59:09 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/11 14:49:59 by dmlasko          ###   ########.fr       */
+/*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
+/*   Updated: 2025/01/31 17:57:43 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ int	all_philos_are_alive(t_data *data)
 		if (philo_is_alive(data, &data->philos[i]) == 0)
 		{
 			write_status(data, &data->philos[i], DIED);
-			mutex_operation(data->data_access_mutex, LOCK);
-			data->simulation_is_on = 0;
-			mutex_operation(data->data_access_mutex, UNLOCK);
 			return (FALSE);
 		}
 		i++;
@@ -74,6 +71,7 @@ int	all_philos_are_full(t_data *data)
 			return (FALSE);
 		i++;
 	}
+	set_protected_value(data, &data->simulation_status, 0);
 	return (TRUE);
 }
 
@@ -89,9 +87,6 @@ void	*monitor_routine(void *arg)
 	while (all_philos_are_alive(data)
 		&& (!all_philos_are_full(data) || data->no_of_meals_required == -1))
 		usleep(MONITOR_FREQ_US);
-	mutex_operation(data->data_access_mutex, LOCK);
-	data->simulation_is_on = 0;
-	mutex_operation(data->data_access_mutex, UNLOCK);
 	return (NULL);
 }
 
@@ -103,10 +98,7 @@ int	create_monitor(t_data *data)
 	pthread_create(&data->monitor_thread, NULL, monitor_routine, (void *)data);
 	if (DEBUG)
 		printf(B_MAGENTA">>>>>>>>>>>>>> MONITOR THREAD CREATED\n"RST);
-	mutex_operation(data->data_access_mutex, LOCK);
-	data->all_threads_created = 1;
-	data->simulation_is_on = 1;
-	mutex_operation(data->data_access_mutex, UNLOCK);
+	set_protected_value(data, &data->simulation_status, 1);
 	return (EXIT_SUCCESS);
 }
 

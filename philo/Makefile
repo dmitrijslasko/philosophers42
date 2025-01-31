@@ -40,6 +40,7 @@ fclean: clean
 	@rm -f $(NAME)
 	@echo "$(GREEN)fclean complete\n$(RST)\c"
 	@rm -rf ./logs/
+	@rm -rf ./logs_helgrind/
 
 re: fclean all
 
@@ -62,11 +63,14 @@ unit_tests:
 HELGRIND = valgrind --tool=helgrind
 
 # Argument sets (last argument is expected outcome: 1 = should die, 0 = should not die)
-ARGS_LIST = 	"1 800 200 200 10 1"	\
+ARGS_LIST =								\
+				"1 800 200 200 10 1"	\
+				"1 800 100 100 10 1"	\
+				"1 199 100 100 10 1"	\
 \
-				"2 80 20 20 10 0"	\
-				"4 80 20 20 10 0"	\
-				"5 80 20 20 10 0"	\
+				"2 120 50 50 10 0"		\
+				"4 80 30 30 10 0"		\
+				"5 160 40 40 10 0"		\
 \
 				"2 800 200 200 10 0"	\
 				"4 800 200 200 10 0"	\
@@ -74,6 +78,7 @@ ARGS_LIST = 	"1 800 200 200 10 1"	\
 				"10 800 200 200 10 0"	\
 				"20 800 200 200 10 0"	\
 				"50 800 200 200 10 0"	\
+\
 				"100 800 200 200 10 0"	\
 				"200 800 200 200 10 0"	\
 				"500 800 200 200 10 0"	\
@@ -81,11 +86,11 @@ ARGS_LIST = 	"1 800 200 200 10 1"	\
 				"2 399 200 200 10 1"	\
 				"5 599 200 200 10 1"	\
 				"10 210 100 100 5 0"	\
-				"5 150 60 60 5 1"	\
-				"4 120 50 50 3 0"	\
-				"3 120 60 60 3 1"	\
-				"10 100 40 40 5 0"	\
-				"10 80 30 30 5 0"	\
+				"5 150 60 60 5 1"		\
+				"4 120 50 50 3 0"		\
+				"3 120 60 60 3 1"		\
+				"10 100 40 40 5 0"		\
+				"10 80 30 30 5 0"		\
 				"300 1000 100 100 10 0"	\
 				"400 1200 200 200 10 0"	\
 				"500 1500 200 200 10 0"
@@ -118,7 +123,7 @@ endef
 
 # Run Helgrind test and save full output in a numbered file
 define run_helgrind_test
-	LOGFILE=logs/helgrind_`printf "%02d" $$COUNT`.log; \
+	LOGFILE=logs_helgrind/helgrind_`printf "%02d" $$COUNT`.log; \
 	echo "\nTesting #$$COUNT with ARGS: $(1)" | tee -a $$LOGFILE; \
 	ARGS=$$(echo $(1) | awk '{print $$1, $$2, $$3, $$4, $$5}'); \
 	$(HELGRIND) --log-file=$$LOGFILE ./$(NAME) $$ARGS >> $$LOGFILE 2>&1; \
@@ -131,9 +136,9 @@ define run_helgrind_test
 endef
 
 
-tests: re
+tests:
 	mkdir -p logs
-	@echo "Running Tests..." > logs/test_summary.log; \
+	@echo "Running Tests..." >> logs/test_summary.log; \
 	SUCCESS=0; FAIL=0; COUNT=0; \
 	for args in $(ARGS_LIST); do \
 		COUNT=$$((COUNT+1)); \
@@ -152,15 +157,13 @@ tests: re
 	echo "======================" | tee -a logs/test_summary.log
 
 
-tests_helgrind: re
+tests_helgrind:
 	mkdir -p logs_helgrind
-	@echo "Running Helgrind Tests..." > logs/helgrind_summary.log; \
+	@echo "Running Helgrind Tests..." >> logs_helgrind/helgrind_summary.log; \
 	COUNT=0; \
 	for args in $(ARGS_LIST); do \
 		COUNT=$$((COUNT+1)); \
 		$(call run_helgrind_test, $$args); \
 	done
-
-
 
 .PHONY: all clean fclean re debug sanitize unit_tests tests helgrind_tests

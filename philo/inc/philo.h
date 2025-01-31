@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/30 23:52:50 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 16:53:31 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ typedef struct s_data
 	long long		simulation_start_time_ms;
 	long long		simulation_start_time_us;
 	long long		simulation_runtime_ms;
-	int				simulation_is_on;
-	int				all_threads_created;
+	int				simulation_status;
 	p_mtx			*forks;
 	t_philosopher 	*philos;
 	pthread_t 		*philo_threads;
@@ -145,5 +144,8 @@ void    print_meal_count(t_data *data);
 void	print_stats(t_data *data);
 
 int		free_data(t_data *data);
+
+void		set_protected_value(t_data *data, void *ptr, long long value);
+long long	get_protected_value(t_data *data, void *ptr);
 
 #endif

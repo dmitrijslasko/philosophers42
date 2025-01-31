@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/30 20:30:17 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 17:16:27 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define MONITOR_FREQ_US	    1
 # define FORK_HUNT_DELAY_US	    1
 # define CUSTOM_SLEEP_PERIOD_US 100
+# define DEATH_MSG_DELAY_MS		2
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
@@ -47,12 +48,20 @@
 # define MSG_TOO_MANY_PHILOS			"Too many philosophers, keep the count under 200.\n"
 # define MSG_ZERO_PHILOS				"0 philos... how do you think this will work?"
 # define MSG_ONE_OR_MORE_ARGS_WRONG 	"One or more arguments are wrong.\n"
-# define DEBUG_LEFT_FORK				"%lld >> %lld [%d] has taken a L fork\n"
-# define DEBUG_RIGHT_FORK				"%lld >> %lld [%d] has taken a R fork\n"
-# define DEBUG_EAT						"%lld >> %lld [%d] is eating\n"
-# define DEBUG_SLEEP					GREEN"%lld >> %lld [%d] is sleeping\t\tMeals count: %d\n" RST
-# define DEBUG_THINK					YELLOW"%lld >> %lld [%d] is thinking\n" RST
-# define DEBUG_DIED						RED"%lld >> %lld [%d] died\n" RST
+
+# define MSG_DEBUG_LEFT_FORK			"%lld >> %lld [%d] has taken a L fork\n"
+# define MSG_DEBUG_RIGHT_FORK			"%lld >> %lld [%d] has taken a R fork\n"
+# define MSG_DEBUG_EAT					"%lld >> %lld [%d] is eating\n"
+# define MSG_DEBUG_SLEEP				GREEN"%lld >> %lld [%d] is sleeping\t\tMeals count: %d\n" RST
+# define MSG_DEBUG_THINK				YELLOW"%lld >> %lld [%d] is thinking\n" RST
+# define MSG_DEBUG_DIED					RED"%lld >> %lld [%d] died\n" RST
+
+# define MSG_LEFT_FORK					"%lld %d has taken a fork\n"
+# define MSG_RIGHT_FORK					"%lld %d has taken a fork\n"
+# define MSG_EAT						"%lld %d is eating\n"
+# define MSG_SLEEP						"%lld %d is sleeping\n"
+# define MSG_THINK						"%lld %d is thinking\n"
+# define MSG_DIED						"%lld %d died\n"
 
 
 // ERROR CODES
