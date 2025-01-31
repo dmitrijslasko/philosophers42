@@ -153,7 +153,7 @@ tests: re
 
 
 tests_helgrind: re
-	mkdir -p logs
+	mkdir -p logs_helgrind
 	@echo "Running Helgrind Tests..." > logs/helgrind_summary.log; \
 	COUNT=0; \
 	for args in $(ARGS_LIST); do \

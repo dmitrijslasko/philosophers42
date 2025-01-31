@@ -1,0 +1,210 @@
+==69585== Helgrind, a thread error detector
+==69585== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==69585== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==69585== Command: ./philo 5 800 200 200 10
+==69585== Parent PID: 69262
+==69585== 
+==69585== 
+==69585== Use --history-level=approx or =none to gain increased speed, at
+==69585== the cost of reduced accuracy of conflicting-access information
+==69585== For lists of detected and suppressed errors, rerun with: -s
+==69585== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 612164 from 102)
+has taken a fork
+406 2 has taken a fork
+407 2 is eating
+407 4 is sleeping
+407 3 is thinking
+407 3 has taken a fork
+407 5 is eating
+606 1 is thinking
+607 5 is sleeping
+607 2 is sleeping
+607 4 is thinking
+607 1 has taken a fork
+607 1 is eating
+607 3 is eating
+807 1 is sleeping
+807 2 is thinking
+807 2 has taken a fork
+807 5 is thinking
+807 5 has taken a fork
+807 5 is eating
+808 2 is eating
+808 3 is sleeping
+808 4 has taken a fork
+1007 1 is thinking
+1007 5 is sleeping
+1007 4 is eating
+1008 3 is thinking
+1008 2 is sleeping
+1008 1 has taken a fork
+1008 1 is eating
+1207 5 is thinking
+1207 4 is sleeping
+1207 3 has taken a fork
+1207 3 is eating
+1208 1 is sleeping
+1208 5 has taken a fork
+1208 5 is eating
+1208 2 is thinking
+1208 2 has taken a fork
+1407 4 is thinking
+1407 3 is sleeping
+1407 4 has taken a fork
+1408 2 is eating
+1408 1 is thinking
+1408 5 is sleeping
+1408 4 is eating
+1607 3 is thinking
+1608 4 is sleeping
+1608 5 is thinking
+1608 5 has taken a fork
+1608 5 is eating
+1608 3 has taken a fork
+1609 2 is sleeping
+1609 1 has taken a fork
+1609 3 is eating
+1808 5 is sleeping
+1808 4 is thinking
+1808 1 is eating
+1809 2 is thinking
+1809 3 is sleeping
+1809 4 has taken a fork
+1809 4 is eating
+2008 1 is sleeping
+2008 5 is thinking
+2008 5 has taken a fork
+2008 2 has taken a fork
+2008 2 is eating
+2009 3 is thinking
+2009 4 is sleeping
+2009 3 has taken a fork
+2009 5 is eating
+2208 1 is thinking
+2208 1 has taken a fork
+2208 2 is sleeping
+2208 3 is eating
+2209 4 is thinking
+2209 5 is sleeping
+2209 1 is eating
+2408 3 is sleeping
+2408 2 is thinking
+2408 4 has taken a fork
+2408 4 is eating
+2409 1 is sleeping
+2409 5 is thinking
+2409 5 has taken a fork
+2409 2 has taken a fork
+2409 2 is eating
+2608 3 is thinking
+2608 4 is sleeping
+2608 3 has taken a fork
+2608 5 is eating
+2609 1 is thinking
+2609 2 is sleeping
+2609 1 has taken a fork
+2609 3 is eating
+2808 5 is sleeping
+2808 4 is thinking
+2808 1 is eating
+2809 3 is sleeping
+2809 2 is thinking
+2809 4 has taken a fork
+2809 4 is eating
+3008 5 is thinking
+3008 5 has taken a fork
+3008 1 is sleeping
+3009 2 has taken a fork
+3009 2 is eating
+3009 4 is sleeping
+3009 3 is thinking
+3009 3 has taken a fork
+3009 5 is eating
+3209 4 is thinking
+3209 1 is thinking
+3209 2 is sleeping
+3209 5 is sleeping
+3209 3 is eating
+3209 1 has taken a fork
+3209 1 is eating
+3409 3 is sleeping
+3409 1 is sleeping
+3409 5 is thinking
+3409 5 has taken a fork
+3409 5 is eating
+3409 4 has taken a fork
+3410 2 is thinking
+3410 2 has taken a fork
+3410 2 is eating
+3609 1 is thinking
+3609 3 is thinking
+3609 5 is sleeping
+3609 4 is eating
+3610 2 is sleeping
+3610 1 has taken a fork
+3610 1 is eating
+3809 4 is sleeping
+3809 5 is thinking
+3809 3 has taken a fork
+3809 3 is eating
+3810 2 is thinking
+3810 1 is sleeping
+3810 5 has taken a fork
+3810 5 is eating
+3810 2 has taken a fork
+4009 4 is thinking
+4009 3 is sleeping
+4009 2 is eating
+4009 4 has taken a fork
+4010 1 is thinking
+4010 5 is sleeping
+4010 4 is eating
+4209 3 is thinking
+4209 2 is sleeping
+4209 1 has taken a fork
+4209 1 is eating
+4210 5 is thinking
+4210 4 is sleeping
+4210 3 has taken a fork
+4210 3 is eating
+4409 2 is thinking
+4409 5 has taken a fork
+4409 5 is eating
+4409 1 is sleeping
+4409 2 has taken a fork
+4410 4 is thinking
+4410 3 is sleeping
+4410 2 is eating
+4410 4 has taken a fork
+4609 1 is thinking
+4609 5 is sleeping
+4609 4 is eating
+4610 3 is thinking
+4610 2 is sleeping
+4610 1 has taken a fork
+4610 1 is eating
+4809 5 is thinking
+4809 4 is sleeping
+4809 3 has taken a fork
+4809 3 is eating
+4810 2 is thinking
+4810 1 is sleeping
+4810 5 has taken a fork
+4811 5 is eating
+4811 2 has taken a fork
+5009 4 is thinking
+5009 3 is sleeping
+5009 2 is eating
+5009 4 has taken a fork
+5010 1 is thinking
+5011 5 is sleeping
+5011 4 is eating
+5209 3 is thinking
+5209 2 is sleeping
+5209 1 has taken a fork
+5209 1 is eating
+5211 4 is sleeping
+5211 3 has taken a fork
+5211 3 is eating
+-----------------------------------------------------
+-----------------------------------------------------
