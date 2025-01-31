@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 16:53:31 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:15:37 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,14 @@ int		free_data(t_data *data);
 
 void		set_protected_value(t_data *data, void *ptr, long long value);
 long long	get_protected_value(t_data *data, void *ptr);
+
+int		philo_is_alive(t_data *data, t_philosopher *philo);
+int		all_philos_are_alive(t_data *data);
+int		philo_is_full(t_data *data, t_philosopher *philo);
+int		all_philos_are_full(t_data *data);
+
+long long	get_sim_runtime_us(t_data *data);
+
+void	*philosopher_routine(void *arg);
 
 #endif

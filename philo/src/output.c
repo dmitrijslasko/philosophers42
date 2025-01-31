@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 17:56:54 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:09:00 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 	runtime_us = get_sim_runtime_us(data);
 	mutex_operation(data->print_mutex, LOCK);
 	if (get_protected_value(data, &data->simulation_status) == 0)
-	{
-		mutex_operation(data->print_mutex, UNLOCK);
-		return ;
-	}
+		return (mutex_operation(data->print_mutex, UNLOCK));
 	if (TAKEN_LEFT_FORK == status)
 		printf(MSG_DEBUG_LEFT_FORK, runtime_us, runtime_ms, philo->id);
 	else if (TAKEN_RIGHT_FORK == status)
@@ -59,10 +56,7 @@ void	write_status(t_data *data, t_philosopher *philo, t_status status)
 	runtime = get_sim_runtime_ms(data);
 	mutex_operation(data->print_mutex, LOCK);
 	if (get_protected_value(data, &data->simulation_status) == 0)
-	{
-		mutex_operation(data->print_mutex, UNLOCK);
-		return ;
-	}
+		return (mutex_operation(data->print_mutex, UNLOCK));
 	if (TAKEN_LEFT_FORK == status)
 		printf(MSG_LEFT_FORK, runtime, philo->id);
 	else if (TAKEN_RIGHT_FORK == status)

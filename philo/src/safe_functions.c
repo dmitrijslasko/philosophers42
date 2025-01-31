@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 00:45:35 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 17:43:57 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:07:10 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,11 @@ void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
 
 long long	get_protected_value(t_data *data, void *ptr)
 {
-	long long result;
+	long long	result;
 
 	result = 0;
 	mutex_operation(data->data_access_mutex, LOCK);
 	result = *(long long *)ptr;
-
 	mutex_operation(data->data_access_mutex, UNLOCK);
 	return (result);
 }

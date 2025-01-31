@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   threads_philos.c                                   :+:      :+:    :+:   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 17:43:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:15:17 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,7 @@ void	*philosopher_routine(void *arg)
 {
 	t_philosopher	*philo;
 	t_data			*data;
-	//int				simulation_status;
 
-	//simulation_status = 1;
 	philo = (t_philosopher *)arg;
 	data = philo->data;
 	wait_for_all_threads(data);
@@ -100,7 +98,6 @@ void	*philosopher_routine(void *arg)
 	mutex_operation(data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
 	mutex_operation(data->data_access_mutex, UNLOCK);
-
 	while (1)
 	{
 		if (get_protected_value(data, &data->simulation_status) == 0)
@@ -111,42 +108,4 @@ void	*philosopher_routine(void *arg)
 		philo_sleep(data, philo);
 	}
 	return (NULL);
-}
-
-/**
- * Wrapper for pthread_join() function.
- */
-int	join_philo_threads(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->no_of_philos)
-	{
-		pthread_join(data->philo_threads[i], NULL);
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-/**
- * Wrapper for pthread_create() function.
- */
-int	create_philo_threads(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->philo_threads = malloc(sizeof(pthread_t) * data->no_of_philos);
-	if (!data->philo_threads)
-		return (MALLOC_FAIL);
-	while (i < data->no_of_philos)
-	{
-		pthread_create(&data->philo_threads[i], \
-			NULL, philosopher_routine, (void *)&data->philos[i]);
-		if (DEBUG)
-			printf("Philo thread [%d] created!\n", data->philos[i].id);
-		i++;
-	}
-	return (EXIT_SUCCESS);
 }
