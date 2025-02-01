@@ -60,9 +60,6 @@ unit_tests:
 	@cc tests/tests_parsing.c $(shell find src -name '*.c' ! -name 'main.c') -I $(INC) -o unit_tests && ./unit_tests
 	rm ./unit_tests
 
-# Helgrind launch
-HELGRIND = valgrind --tool=helgrind
-
 # Argument sets (last argument is expected outcome: 1 = should die, 0 = should not die)
 ARGS_LIST = 	"1 800 200 200 10 1"	\
 \
@@ -118,6 +115,21 @@ define run_test
 	echo "-----------------------------------------------------" | tee -a $$LOGFILE
 endef
 
+# Valgrind / Helgrind launch
+VALGRIND = valgrind
+HELGRIND = valgrind --tool=helgrind
+
+# Run Valgrind test and save full output in a numbered file
+define run_valgrind_test
+	LOGFILE=logs/valgrind_`printf "%02d" $$COUNT`.log; \
+	echo "\nTesting #$$COUNT with ARGS: $(1)" | tee -a $$LOGFILE; \
+	ARGS=$$(echo $(1) | awk '{print $$1, $$2, $$3, $$4, $$5}'); \
+	$(VALGRIND) --log-file=$$LOGFILE ./$(NAME) $$ARGS >> $$LOGFILE 2>&1; \
+	echo "-----------------------------------------------------" | tee -a $$LOGFILE; \
+	grep -i "lost" $$LOGFILE && echo "❌ Memory leaks!" || echo "✅ No memory leaks found"; \
+	echo "-----------------------------------------------------" | tee -a $$LOGFILE
+endef
+
 # Run Helgrind test and save full output in a numbered file
 define run_helgrind_test
 	LOGFILE=logs/helgrind_`printf "%02d" $$COUNT`.log; \
@@ -153,8 +165,16 @@ tests: re
 	echo "❌ Failed: $$FAIL" | tee -a logs/test_summary.log; \
 	echo "======================" | tee -a logs/test_summary.log
 
+tests_valgrind: re
+	mkdir -p logs
+	@echo "Running Valgrind Tests..." > logs/valgrind_summary.log; \
+	COUNT=0; \
+	for args in $(ARGS_LIST); do \
+		COUNT=$$((COUNT+1)); \
+		$(call run_valgrind_test, $$args); \
+	done
 
-helgrind_tests: re
+tests_helgrind: re
 	mkdir -p logs
 	@echo "Running Helgrind Tests..." > logs/helgrind_summary.log; \
 	COUNT=0; \
@@ -163,5 +183,5 @@ helgrind_tests: re
 		$(call run_helgrind_test, $$args); \
 	done
 
-
+tests_all: tests tests_valgrind tests_helgrind
 .PHONY: all clean fclean re debug sanitize unit_tests tests helgrind_tests

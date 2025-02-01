@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   threads_monitor_func.c                             :+:      :+:    :+:   */
+/*   monitor_func.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 18:09:45 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 17:01:37 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * This function сhecks and announces philo's death if it happens.
- * @param *data table info
- * @param *philo philosopher
+ * Checks if a philospher is still alive.
  */
 int	philo_is_alive(t_data *data, t_philosopher *philo)
 {
@@ -31,6 +29,9 @@ int	philo_is_alive(t_data *data, t_philosopher *philo)
 	return (response);
 }
 
+/**
+ * Checks if all philosphers are still alive.
+ */
 int	all_philos_are_alive(t_data *data)
 {
 	int	i;
@@ -48,6 +49,9 @@ int	all_philos_are_alive(t_data *data)
 	return (TRUE);
 }
 
+/**
+ * Checks if a philospher is full (has has enough food).
+ */
 int	philo_is_full(t_data *data, t_philosopher *philo)
 {
 	int	response;
@@ -60,6 +64,9 @@ int	philo_is_full(t_data *data, t_philosopher *philo)
 	return (response);
 }
 
+/**
+ * Checks if all philosphers are full (have had enough food).
+ */
 int	all_philos_are_full(t_data *data)
 {
 	int	i;

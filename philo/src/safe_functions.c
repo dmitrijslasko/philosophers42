@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 00:45:35 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 18:07:10 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 17:42:10 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*safe_malloc(int size_bytes)
 	return (ptr);
 }
 
-void	mutex_operation(p_mtx	*mutex, t_opcode opcode)
+void	mutex_operation(t_mtx	*mutex, t_opcode opcode)
 {
 	if (opcode == INIT)
 		pthread_mutex_init(mutex, NULL);

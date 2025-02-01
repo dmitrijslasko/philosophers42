@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 18:13:31 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 17:06:50 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,4 @@ long long	get_epoch_time_us(void)
 long long	get_epoch_time_ms(void)
 {
 	return (get_epoch_time_s_part() * 1e3 + get_epoch_time_us_part() / 1e3);
-}
-
-long long	get_sim_runtime_ms(t_data *data)
-{
-	long long	runtime_ms;
-
-	runtime_ms = get_epoch_time_ms() - data->simulation_start_time_ms;
-	return (runtime_ms);
 }

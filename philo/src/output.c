@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 18:09:00 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 17:34:43 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 	else if (TAKEN_RIGHT_FORK == status)
 		printf(MSG_DEBUG_RIGHT_FORK, runtime_us, runtime_ms, philo->id);
 	else if (EATING == status)
-		printf(MSG_DEBUG_EAT, runtime_us, runtime_ms, philo->id);
+		printf(GREEN MSG_DEBUG_EAT RST, runtime_us, runtime_ms, philo->id, \
+					philo->meals_count);
 	else if (SLEEPING == status)
-		printf(MSG_DEBUG_SLEEP, runtime_us, runtime_ms, \
-			philo->id, philo->meals_count);
+		printf(YELLOW MSG_DEBUG_SLEEP RST, runtime_us, runtime_ms, philo->id);
 	else if (THINKING == status)
 		printf(MSG_DEBUG_THINK, runtime_us, runtime_ms, philo->id);
 	else if (DIED == status)
 	{
 		set_protected_value(data, &data->simulation_status, 0);
-		printf(MSG_DEBUG_DIED, runtime_us, runtime_ms, philo->id);
+		printf(RED MSG_DEBUG_DIED RST, runtime_us, runtime_ms, philo->id);
 	}
 	mutex_operation(data->print_mutex, UNLOCK);
 }

@@ -6,14 +6,14 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 18:15:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 16:36:52 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /**
- * Wrapper for pthread_join() function.
+ * Wrapper for pthread_join() function - specifically for philo threads.
  */
 int	join_philo_threads(t_data *data)
 {
@@ -29,7 +29,7 @@ int	join_philo_threads(t_data *data)
 }
 
 /**
- * Wrapper for pthread_create() function.
+ * Wrapper for pthread_create() function - specifically for philo threads.
  */
 int	create_philo_threads(t_data *data)
 {

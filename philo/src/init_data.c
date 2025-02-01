@@ -33,9 +33,9 @@ int	free_data(t_data *data)
  */
 int	init_data(t_data *data, int argc, char **argv)
 {
-	data->data_access_mutex = safe_malloc(sizeof(p_mtx));
+	data->data_access_mutex = safe_malloc(sizeof(t_mtx));
 	mutex_operation(data->data_access_mutex, INIT);
-	data->print_mutex = safe_malloc(sizeof(p_mtx));
+	data->print_mutex = safe_malloc(sizeof(t_mtx));
 	mutex_operation(data->print_mutex, INIT);
 	data->no_of_philos = int_atoi(argv[1]);
 	data->time_to_die_ms = int_atoi(argv[2]);

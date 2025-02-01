@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   threads_monitor.c                                  :+:      :+:    :+:   */
+/*   monitor_threads.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/31 18:10:02 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 16:37:13 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	*monitor_routine(void *arg)
 }
 
 /**
- * Wrapper for pthread_create() function.
+ * Wrapper for pthread_create() function - specifically for the monitor thread.
  */
 int	create_monitor(t_data *data)
 {
@@ -39,6 +39,9 @@ int	create_monitor(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * Wrapper for pthread_join() function - specifically for the monitor thread.
+ */
 void	join_monitor_thread(t_data *data)
 {
 	pthread_join(data->monitor_thread, NULL);
