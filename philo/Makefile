@@ -1,48 +1,4 @@
-# Regular Colors
-BLACK  = \033[0;30m
-RED    = \033[0;31m
-GREEN  = \033[0;32m
-YELLOW = \033[0;33m
-BLUE   = \033[0;34m
-MAGENTA = \033[0;35m
-CYAN   = \033[0;36m
-WHITE  = \033[0;37m
-
-# Bold Colors
-B_BLACK  = \033[1;30m
-B_RED    = \033[1;31m
-B_GREEN  = \033[1;32m
-B_YELLOW = \033[1;33m
-B_BLUE   = \033[1;34m
-B_MAGENTA = \033[1;35m
-B_CYAN   = \033[1;36m
-B_WHITE  = \033[1;37m
-
-# Underline Colors
-U_BLACK  = \033[4;30m
-U_RED    = \033[4;31m
-U_GREEN  = \033[4;32m
-U_YELLOW = \033[4;33m
-U_BLUE   = \033[4;34m
-U_MAGENTA = \033[4;35m
-U_CYAN   = \033[4;36m
-U_WHITE  = \033[4;37m
-
-# Background Colors
-BG_BLACK  = \033[40m
-BG_RED    = \033[41m
-BG_GREEN  = \033[42m
-BG_YELLOW = \033[43m
-BG_BLUE   = \033[44m
-BG_MAGENTA = \033[45m
-BG_CYAN   = \033[46m
-BG_WHITE  = \033[47m
-
-# Reset
-RST = \033[0m
-
-# Reset
-HEADER_FILE = header.generated
+include config.mk
 
 NAME = philo
 
@@ -62,9 +18,11 @@ OBJ_DIR = ./obj/
 SRC = $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR)**/*.c)
 OBJ = $(patsubst $(SRC_DIR)%, $(OBJ_DIR)%, $(SRC:.c=.o))
 
-all: $(NAME)
+.DEFAULT_GOAL := all
 
-$(NAME): $(HEADER_FILE) $(OBJ)
+all: $(NAME) $(HEADER_FILE)
+
+$(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "\n$(GREEN)$(NAME) got successfully compiled.$(RST)"
 
@@ -85,14 +43,16 @@ fclean: clean
 
 re: fclean all
 
-# special modes
+# SPECIAL MODES
+# extended output for debugging
 debug:
 	$(CC) $(DEBUGFLAGS) -I $(INC) $(SRC) -o $(NAME)
 
+# launches with Thread Sanitizer
 sanitize:
 	$(CC) $(CFLAGS) $(SANITIZE) -I $(INC) $(SRC) -o $(NAME)
 
-
+# runs some unit tests
 unit_tests:
 	@echo "---------------------------------------------------------------"
 	@echo "*                          UNIT TESTS                         *"
@@ -204,23 +164,4 @@ helgrind_tests: re
 	done
 
 
-.PHONY: all clean fclean re debug sanitize unit_tests tests helgrind_tests header
-
-INFO1 = $(CYAN)42 Berlin Core Curriculum – dmlasko$(RST)
-INFO2 = $(MAGENTA)Mandatory part – Evaluation \#1$(RST)
-
-# Header will be generated ONLY when $(NAME) needs to be rebuilt
-$(HEADER_FILE): $(OBJ)
-	@touch $(HEADER_FILE)
-	@echo
-	@echo " _____                                                             _____ "
-	@echo "( ___ )           $(INFO1)             ( ___ )"
-	@echo " |   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|   | "
-	@echo " |   |  ____  _     _ _                       _                    |   | "
-	@echo " |   | |  _ \| |__ (_) | ___  ___  ___  _ __ | |__   ___ _ __ ___  |   | "
-	@echo " |   | | |_) | '_ \| | |/ _ \/ __|/ _ \| '_ \| '_ \ / _ \ '__/ __| |   | "
-	@echo " |   | |  __/| | | | | | (_) \__ \ (_) | |_) | | | |  __/ |  \__ \ |   | "
-	@echo " |   | |_|   |_| |_|_|_|\___/|___/\___/| .__/|_| |_|\___|_|  |___/ |   | "
-	@echo " |   |                                 |_|                         |   | "
-	@echo " |___|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|___| "
-	@echo "(_____)              $(INFO2)               (_____)"
+.PHONY: all clean fclean re debug sanitize unit_tests tests helgrind_tests
