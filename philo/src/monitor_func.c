@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 17:01:37 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:49:44 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	philo_is_full(t_data *data, t_philosopher *philo)
 
 	response = 0;
 	mutex_operation(&philo->philo_data_access_mutex, LOCK);
-	if (philo->meals_count >= data->no_of_meals_required)
+	if (philo->meals_count >= data->no_of_meals_required && \
+				data->no_of_meals_required > 0)
 		response = 1;
 	mutex_operation(&philo->philo_data_access_mutex, UNLOCK);
 	return (response);

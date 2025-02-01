@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 18:42:57 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:46:59 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 		printf(MSG_DEBUG_RIGHT_FORK, runtime_us, runtime_ms, philo->id);
 	else if (EATING == status)
 		printf(GREEN MSG_DEBUG_EAT RST, runtime_us, runtime_ms, philo->id, \
-					philo->meals_count);
+					philo->meals_count + 1);
 	else if (SLEEPING == status)
 		printf(YELLOW MSG_DEBUG_SLEEP RST, runtime_us, runtime_ms, philo->id);
 	else if (THINKING == status)
