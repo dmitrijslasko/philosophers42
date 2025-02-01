@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 17:33:31 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:40:04 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@
 # define MAX_ARGUMENT_LEN	8
 
 # define THREAD_START_DELAY		2		// 1/n of the eat time
+# define START_DELAY_US			900
 # define MONITOR_FREQ_US	    1
 # define FORK_HUNT_DELAY_US	    1
 # define CUSTOM_SLEEP_PERIOD_US 100
 # define DEATH_MSG_DELAY_MS		2
+
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
@@ -51,22 +53,22 @@
 # define MSG_ONE_OR_MORE_ARGS_WRONG 	"One or more arguments are wrong.\n"
 
 // MESAGES - DEBUG
-# define MSG_DEBUG_LEFT_FORK			"%lld >> %lld [%d] has taken a L fork\n"
-# define MSG_DEBUG_RIGHT_FORK			"%lld >> %lld [%d] has taken a R fork\n"
+# define MSG_DEBUG_LEFT_FORK			"%ld >> %ld [%d] has taken a L fork\n"
+# define MSG_DEBUG_RIGHT_FORK			"%ld >> %ld [%d] has taken a R fork\n"
 # define MSG_DEBUG_EAT					\
-				"%lld >> %lld [%d] is eating\t\tMeals count: %d\n"
+				"%ld >> %ld [%d] is eating\t\tMeals count: %d\n"
 # define MSG_DEBUG_SLEEP				\
-				"%lld >> %lld [%d] is sleeping\n"
+				"%ld >> %ld [%d] is sleeping\n"
 # define MSG_DEBUG_THINK				\
-				"%lld >> %lld [%d] is thinking\n"
-# define MSG_DEBUG_DIED					"%lld >> %lld [%d] died\n"
+				"%ld >> %ld [%d] is thinking\n"
+# define MSG_DEBUG_DIED					"%ld >> %ld [%d] died\n"
 // MESSAGES - CLEAN
-# define MSG_LEFT_FORK					"%lld %d has taken a fork\n"
-# define MSG_RIGHT_FORK					"%lld %d has taken a fork\n"
-# define MSG_EAT						"%lld %d is eating\n"
-# define MSG_SLEEP						"%lld %d is sleeping\n"
-# define MSG_THINK						"%lld %d is thinking\n"
-# define MSG_DIED						"%lld %d died\n"
+# define MSG_LEFT_FORK					"%ld %d has taken a fork\n"
+# define MSG_RIGHT_FORK					"%ld %d has taken a fork\n"
+# define MSG_EAT						"%ld %d is eating\n"
+# define MSG_SLEEP						"%ld %d is sleeping\n"
+# define MSG_THINK						"%ld %d is thinking\n"
+# define MSG_DIED						"%ld %d died\n"
 
 // ERROR CODES
 # define MALLOC_FAIL			1

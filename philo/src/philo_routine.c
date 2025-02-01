@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 17:13:18 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:38:28 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	*philosopher_routine(void *arg)
 	data = philo->data;
 	wait_for_all_threads(data);
 	if (philo->id % 2 == 0)
-		msleep(data, data->thread_start_delay_ms);
+		//msleep(data, data->thread_start_delay_ms);
+		usleep(START_DELAY_US);
 	mutex_operation(data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
 	mutex_operation(data->data_access_mutex, UNLOCK);

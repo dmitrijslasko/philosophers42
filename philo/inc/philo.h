@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 17:52:23 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:27:09 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ typedef struct s_data
 	int				time_to_sleep_ms;
 	int				no_of_meals_required;
 	int				thread_start_delay_ms;
-	long long		simulation_start_time_ms;
-	long long		simulation_start_time_us;
-	long long		simulation_runtime_ms;
+	long			simulation_start_time_ms;
+	long			simulation_start_time_us;
+	long			simulation_runtime_ms;
 	int				simulation_status;
 	t_mtx			*forks;
 	t_philosopher	*philos;
@@ -134,8 +134,8 @@ int		create_philo_threads(t_data *data);
 // safe_functions.c
 void	*safe_malloc(int size_bytes);
 void	mutex_operation(t_mtx *mutex, t_opcode opcode);
-void	set_protected_value(t_data *data, void *ptr, long long value);
-long long	get_protected_value(t_data *data, void *ptr);
+void	set_protected_value(t_data *data, void *ptr, long value);
+long	get_protected_value(t_data *data, void *ptr);
 
 // sleep.c
 void	msleep(t_data *data, unsigned int sleep_time_ms);
@@ -146,11 +146,11 @@ void	print_stats(t_data *data);
 // time.c
 long	get_epoch_time_s_part(void);
 long	get_epoch_time_us_part(void);
-long long	get_epoch_time_us(void);
-long long	get_epoch_time_ms(void);
+long	get_epoch_time_us(void);
+long	get_epoch_time_ms(void);
 
 // time2.c
-long long	get_sim_runtime_ms(t_data *data);
-long long	get_sim_runtime_us(t_data *data);
+long	get_sim_runtime_ms(t_data *data);
+long	get_sim_runtime_us(t_data *data);
 
 #endif

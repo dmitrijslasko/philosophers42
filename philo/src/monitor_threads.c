@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 16:37:13 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:33:58 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	*monitor_routine(void *arg)
 
 	data = arg;
 	wait_for_all_threads(data);
-	while (all_philos_are_alive(data)
-		&& (!all_philos_are_full(data) || data->no_of_meals_required == -1))
+	while (all_philos_are_alive(data) && \
+			(all_philos_are_full(data) == 0))
 		usleep(MONITOR_FREQ_US);
 	return (NULL);
 }

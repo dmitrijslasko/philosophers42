@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 11:45:51 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 17:45:25 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:13:47 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_meal_count(t_data *data)
 void	print_total_runtime(t_data *data)
 {
 	mutex_operation(data->print_mutex, LOCK);
-	printf(YELLOW "TOTAL RUN TIME: %lld ms.\n" RST, get_sim_runtime_ms(data));
+	printf(YELLOW "TOTAL RUN TIME: %ld ms.\n" RST, get_sim_runtime_ms(data));
 	mutex_operation(data->print_mutex, UNLOCK);
 }
 

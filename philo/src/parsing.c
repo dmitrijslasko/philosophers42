@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/01/24 22:42:46 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:46:40 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	is_valid_input(char **argv, int argc)
 	i = 1;
 	if (int_atoi(argv[i]) > MAX_PHILOS)
 		return (print_error(MSG_TOO_MANY_PHILOS, FALSE));
-	else if (int_atoi(argv[i]) == 0)
+	if (int_atoi(argv[i]) == 0)
 		return (print_error(MSG_ZERO_PHILOS, FALSE));
 	i++;
 	while (argv[i])

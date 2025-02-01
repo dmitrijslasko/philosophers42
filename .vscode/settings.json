@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "philo.h": "c"
-    }
+		"philo.h": "c",
+		"settings.h": "c"
+	},
+	"functionHeaderExtension.headerFilePath": "/home/dmlasko/_cursus/philo/philo/inc/philo.h"
 }

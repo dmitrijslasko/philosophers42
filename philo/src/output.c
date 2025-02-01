@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 17:34:43 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:42:57 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	print_error(char *str, int error_code)
 
 void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 {
-	long long	runtime_us;
-	long long	runtime_ms;
+	long	runtime_us;
+	long	runtime_ms;
 
 	runtime_ms = get_sim_runtime_ms(data);
 	runtime_us = get_sim_runtime_us(data);
@@ -49,7 +49,7 @@ void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
 
 void	write_status(t_data *data, t_philosopher *philo, t_status status)
 {
-	long long	runtime;
+	long	runtime;
 
 	if (DEBUG)
 		return (write_status_debug(data, philo, status));
