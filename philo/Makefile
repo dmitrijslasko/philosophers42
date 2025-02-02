@@ -184,4 +184,5 @@ tests_helgrind: re
 	done
 
 tests_all: tests tests_valgrind tests_helgrind
+
 .PHONY: all clean fclean re debug sanitize unit_tests tests helgrind_tests
