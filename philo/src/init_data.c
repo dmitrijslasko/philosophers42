@@ -33,23 +33,24 @@ int	free_data(t_data *data)
  */
 int	init_data(t_data *data, int argc, char **argv)
 {
-	data->data_access_mutex = safe_malloc(sizeof(t_mtx));
-	mutex_operation(data->data_access_mutex, INIT);
-	data->print_mutex = safe_malloc(sizeof(t_mtx));
-	mutex_operation(data->print_mutex, INIT);
 	data->no_of_philos = int_atoi(argv[1]);
 	data->time_to_die_ms = int_atoi(argv[2]);
 	data->time_to_eat_ms = int_atoi(argv[3]);
-	data->thread_start_delay_ms = data->time_to_eat_ms / THREAD_START_DELAY;
 	data->time_to_sleep_ms = int_atoi(argv[4]);
 	data->no_of_meals_required = -1;
 	if (argc == 6)
 		data->no_of_meals_required = int_atoi(argv[5]);
-	data->simulation_status = 0;
+	data->thread_start_delay_ms = data->time_to_eat_ms / THREAD_START_DELAY;
 	data->simulation_start_time_ms = 0;
 	data->simulation_start_time_us = 0;
+	data->simulation_status = 0;
 	data->forks = NULL;
 	data->philos = NULL;
 	data->philo_threads = NULL;
+	data->monitor_thread = NULL;
+	data->data_access_mutex = safe_malloc(sizeof(t_mtx));
+	mutex_operation(data->data_access_mutex, INIT);
+	data->print_mutex = safe_malloc(sizeof(t_mtx));
+	mutex_operation(data->print_mutex, INIT);
 	return (EXIT_SUCCESS);
 }

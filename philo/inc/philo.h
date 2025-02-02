@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/02 22:31:25 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/03 00:52:39 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <limits.h>
+# include <string.h>
 
 # include "settings.h"
 
@@ -54,13 +55,11 @@ typedef enum e_status
 typedef struct s_philosopher
 {
 	int				id;
-	int				is_full;
 	long			last_meal_time_ms;
 	int				meals_count;
 	t_mtx			*fork_left;
 	t_mtx			*fork_right;
 	t_data			*data;
-	t_mtx			philo_data_access_mutex;
 }					t_philosopher;
 
 typedef struct s_data
@@ -73,7 +72,6 @@ typedef struct s_data
 	int				thread_start_delay_ms;
 	long			simulation_start_time_ms;
 	long			simulation_start_time_us;
-	long			simulation_runtime_ms;
 	int				simulation_status;
 	t_mtx			*forks;
 	t_philosopher	*philos;
@@ -102,7 +100,6 @@ int		init_forks(t_data *data);
 int		destroy_forks(t_data *data);
 
 // init_philos.c
-int		destroy_philo_mutexes(t_data *data);
 int		init_philos(t_data *data);
 
 // monitor_func.c

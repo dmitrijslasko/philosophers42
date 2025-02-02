@@ -6,24 +6,11 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 21:27:59 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/03 00:40:21 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	destroy_philo_mutexes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->no_of_philos)
-	{
-		mutex_operation(&data->philos[i].philo_data_access_mutex, DESTROY);
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
 
 /**
  * Initializes philosophers.
@@ -46,7 +33,6 @@ int	init_philos(t_data *data)
 		if (DEBUG)
 			printf(GREEN "Philo [%d] initialized.\n" RST, data->philos[i].id);
 		data->philos[i].data = data;
-		mutex_operation(&data->philos[i].philo_data_access_mutex, INIT);
 		i++;
 	}
 	return (EXIT_SUCCESS);
