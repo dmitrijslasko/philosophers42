@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/01 19:44:37 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/03 00:31:52 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 	create_philo_threads(&data);
 	create_monitor(&data);
 	if (DEBUG)
-		printf(YELLOW"START TIMESTAMP: %ld ms.\n"RST, get_sim_runtime_ms(&data));
+		printf(YELLOW"START TIME: %ld ms.\n"RST, get_sim_runtime_ms(&data));
 	join_philo_threads(&data);
 	join_monitor_thread(&data);
 	if (DEBUG)

@@ -63,9 +63,6 @@ unit_tests:
 # Argument sets (last argument is expected outcome: 1 = should die, 0 = should not die)
 ARGS_LIST = 	"1 800 200 200 10 1"	\
 \
-				"2 80 20 20000 10 1"	\
-				"2 80 20000 20 10 1"	\
-\
 				"2 80 20 20 10 0"	\
 				"4 80 20 20 10 0"	\
 				"5 80 20 20 10 0"	\

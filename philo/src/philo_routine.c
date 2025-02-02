@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/02 19:29:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/03 00:24:26 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	philo_eat(t_data *data, t_philosopher *philo)
 	mutex_operation(data->data_access_mutex, UNLOCK);
 	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
-	mutex_operation(&philo->philo_data_access_mutex, LOCK);
+	mutex_operation(data->data_access_mutex, LOCK);
 	philo->meals_count++;
-	mutex_operation(&philo->philo_data_access_mutex, UNLOCK);
+	mutex_operation(data->data_access_mutex, UNLOCK);
 	mutex_operation(philo->fork_left, UNLOCK);
 	mutex_operation(philo->fork_right, UNLOCK);
 }
@@ -63,16 +63,19 @@ void	philo_sleep(t_data *data, t_philosopher *philo)
 
 void	wait_for_all_threads(t_data *data)
 {
-	while (1)
+	if (SYNC_THREADS)
 	{
-		mutex_operation(data->data_access_mutex, LOCK);
-		if (data->simulation_status == 1)
+		while (1)
 		{
+			mutex_operation(data->data_access_mutex, LOCK);
+			if (data->simulation_status == 1)
+			{
+				mutex_operation(data->data_access_mutex, UNLOCK);
+				break ;
+			}
 			mutex_operation(data->data_access_mutex, UNLOCK);
-			break ;
+			usleep(100);
 		}
-		mutex_operation(data->data_access_mutex, UNLOCK);
-		usleep(100);
 	}
 	mutex_operation(data->data_access_mutex, LOCK);
 	if (data->simulation_start_time_us == 0)
