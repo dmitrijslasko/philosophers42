@@ -1,5 +1,6 @@
 # Philosophers, the concurrency project (School 42 project)
-A classic problem in concurrency and multithreading, inspired by Edsger Dijkstra's Dining Philosophers problem. The project is designed to learn about thread synchronization, race conditions, mutexes, and deadlocks.
+A classic problem in concurrency and multithreading, inspired by Edsger Dijkstra's Dining Philosophers problem.
+The project is designed to learn about thread synchronization, race conditions, mutexes, and deadlocks.
 
 **Problem description**
 N philosophers are sitting around a circular table.
@@ -37,26 +38,30 @@ To be added
 
 ## Installation and launch 🚀
 TBA
-<!--**1. Clone the repo:**
+**1. Clone the repo:**
 ```bash
-git clone https://github.com/dmitrijslasko/fdf42.git
+git clone https://github.com/dmitrijslasko/philosopher42.git
 ```
 **2. Go into the folder:**
 ```bash
-cd fdf42
+Mandatory part: cd philosophers42/philo
+Bonus part:	cd philosophers42/philo_bonus
 ```
 **3. Build the program:**
 ```bash
 make
 ```
-**4. Launch the program with the selected map:**
+**4. Launch the program with the selected parameters:**
 ```bash
 ./fdf ./maps/42.fdf
 ```
-Other maps are stored in the ./maps/ folder.-->
 
 ## Implemented functionality 🤖
-TBA
+1. Debug mode. Compile with:
+```bash
+make debug
+```
+MORE TO BE ADDED
 <!--![fdf-demo](https://github.com/dmitrijslasko/42-assets/blob/d9ae0a69c1fc9aea10fa920e7ee1ba405123e805/fdf/dmlasko-fdf-demo-v2.gif?raw=true)
 1. Welcome screen (not allowed by the project's subject, but using it via a workaround in the Makefile)
 1. Mouse / keyboard rotation and zoom
