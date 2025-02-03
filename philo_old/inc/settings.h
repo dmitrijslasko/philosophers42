@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/02 19:44:11 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/03 16:51:09 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define MAX_MEAL_COUNT		5000
 # define MAX_ARGUMENT_LEN	8
 
-# define THREAD_START_DELAY		2		// 1/n of the eat time
+# define THREAD_START_DELAY		4		// 1/n of the eat time
 # define START_DELAY_US			2000
 # define MONITOR_FREQ_US	    1
 # define FORK_HUNT_DELAY_US	    1

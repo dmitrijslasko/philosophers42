@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/02 19:29:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/03 16:56:19 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	philo_take_forks(t_data *data, t_philosopher *philo)
  */
 void	philo_eat(t_data *data, t_philosopher *philo)
 {
-	mutex_operation(data->data_access_mutex, LOCK);
+	mutex_operation(&philo->philo_data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
-	mutex_operation(data->data_access_mutex, UNLOCK);
+	mutex_operation(&philo->philo_data_access_mutex, UNLOCK);
 	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
 	mutex_operation(&philo->philo_data_access_mutex, LOCK);
@@ -94,7 +94,7 @@ void	*philosopher_routine(void *arg)
 	data = philo->data;
 	wait_for_all_threads(data);
 	if (philo->id % 2 == 0)
-		usleep(START_DELAY_US);
+		msleep(data, data->thread_start_delay_ms);
 	mutex_operation(data->data_access_mutex, LOCK);
 	philo->last_meal_time_ms = get_sim_runtime_ms(data);
 	mutex_operation(data->data_access_mutex, UNLOCK);
