@@ -14,32 +14,26 @@ Each philosopher follows a simple routine:
 
 The challenge arises because if all philosophers pick up one fork at the same time, they will deadlock (waiting forever for the second fork).
 
-**Goals of the Project**
-Implement a simulation of this problem using threads.
-**Ensure that:**
+**Goal of the Project**
+**Mandatory part**
+Use C language, implement a simulation of this problem using threads (POSIX threads, pthread library).
 No philosopher starves (i.e., they eventually eat).
 The program avoids deadlocks.
 The output logs each philosopher’s actions (thinking, eating, sleeping).
 **This is done by using mutexes or other synchronization techniques to prevent race conditions.**
 
-**Project Requirements**
-
-Use C language.
-Implement the solution using pthread library (POSIX threads).
-**Handle edge cases:**
-1. One philosopher (who can never eat because they need two forks).
-1. Minimum and maximum philosophers.
-1. Proper cleanup of resources (threads and mutexes).
+**Bonus part part**
+To be added
 
 **Common Issues & Debugging**
-Race conditions: If multiple threads modify shared data without proper locking.
-Deadlocks: If all philosophers pick up one fork and wait for the second.
-Starvation: If some philosophers get to eat repeatedly while others never do.
+1. Race conditions: If multiple threads modify shared data without proper locking.
+1. Deadlocks: If all philosophers pick up one fork and wait for the second.
+1. Starvation: If some philosophers get to eat repeatedly while others never do.
 
 ## Score:
 ✅ TBA (with bonus)
 
-![42.fdf map](./_img/fdf-header-image-min.png)
+<!--![42.fdf map](./_img/fdf-header-image-min.png)-->
 
 ## Installation and launch 🚀
 TBA
