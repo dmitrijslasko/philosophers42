@@ -3,10 +3,10 @@ A classic problem in concurrency and multithreading, inspired by Edsger Dijkstra
 
 **N philosophers are sitting around a circular table. Each philosopher follows a simple routine:**
 
-    Think 🤔
-    Pick up two forks (one on the left, one on the right) to eat 🍽️
-    Eat for a while 😋
-    Put the forks down and go back to thinking 🔄
+Think 🤔
+Pick up two forks (one on the left, one on the right) to eat 🍽️
+Eat for a while 😋
+Put the forks down and go back to thinking 🔄
 
 **The challenge arises because:**
 
