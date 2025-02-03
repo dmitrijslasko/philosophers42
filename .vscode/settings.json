@@ -1,7 +1,8 @@
 {
     "files.associations": {
 		"philo.h": "c",
-		"settings.h": "c"
+		"settings.h": "c",
+		"stat.h": "c"
 	},
 	"functionHeaderExtension.headerFilePath": "/home/dmlasko/_cursus/philo/philo/inc/philo.h"
 }
