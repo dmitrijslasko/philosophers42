@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/03 00:31:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/03 14:10:13 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # endif
 
 // SETITNGS AND LIMITS
-# define MAX_PHILOS			500
+# define MAX_PHILOS			300
 # define MAX_TIME_TO_DIE_MS	5000
 # define MAX_EAT_TIME_MS	5000
 # define MAX_SLEEP_TIME_MS	5000
@@ -26,8 +26,8 @@
 # define MAX_ARGUMENT_LEN	8
 
 # define SYNC_THREADS			FALSE
-# define THREAD_START_DELAY		2		// 1/n of the eat time
 # define START_DELAY_US			100
+# define THREAD_START_DELAY		2		// 1/n of the eat time
 # define MONITOR_FREQ_US	    1
 # define CUSTOM_SLEEP_PERIOD_US 100
 # define DEATH_MSG_DELAY_MS		2
@@ -46,7 +46,7 @@
 // MESSAGES
 # define MSG_WRONG_ARGUMENT_COUNT		"Please provide 4-5 arguments.\n"
 # define MSG_TOO_MANY_PHILOS			\
-				"Too many philos, keep the count under 200.\n"
+				"Too many philos, keep the count under 300.\n"
 # define MSG_ZERO_PHILOS				\
 				"0 philos... how do you think this will work?"
 # define MSG_ONE_OR_MORE_ARGS_WRONG 	"One or more arguments are wrong.\n"
@@ -61,6 +61,7 @@
 # define MSG_DEBUG_THINK				\
 				"%ld >> %ld [%d] is thinking\n"
 # define MSG_DEBUG_DIED					"%ld >> %ld [%d] died\n"
+
 // MESSAGES - CLEAN
 # define MSG_LEFT_FORK					"%ld %d has taken a fork\n"
 # define MSG_RIGHT_FORK					"%ld %d has taken a fork\n"

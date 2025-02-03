@@ -47,7 +47,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->forks = NULL;
 	data->philos = NULL;
 	data->philo_threads = NULL;
-	data->monitor_thread = NULL;
+	data->monitor_thread = (pthread_t) NULL;
 	data->data_access_mutex = safe_malloc(sizeof(t_mtx));
 	mutex_operation(data->data_access_mutex, INIT);
 	data->print_mutex = safe_malloc(sizeof(t_mtx));
