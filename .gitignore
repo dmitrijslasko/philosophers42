@@ -7,8 +7,9 @@
 # Ignore test logs
 */logs*
 
-# Ignore VSCode hidden files
+# Ignore VSCode config files
 */.vscode
 
 # Ignore MacOS related files
 */.DS_Store
+*/philo.dSYM
