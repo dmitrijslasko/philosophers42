@@ -1,0 +1,14 @@
+# Ignore compiled object files
+*.o
+
+# Ignore binaries
+*./philo
+
+# Ignore test logs
+*/logs*
+
+# Ignore VSCode hidden files
+*/.vscode
+
+# Ignore MacOS related files
+*/.DS_Store
