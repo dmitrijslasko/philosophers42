@@ -1,42 +1,40 @@
 # Philosophers, the concurrency project (School 42 project)
 A classic problem in concurrency and multithreading, inspired by Edsger Dijkstra's Dining Philosophers problem. The project is designed to learn about thread synchronization, race conditions, mutexes, and deadlocks.
 
-**N philosophers are sitting around a circular table. Each philosopher follows a simple routine:**
+**Problem description**
+N philosophers are sitting around a circular table.
+Each philosopher has only one fork on their left and one on their right.
+There are exactly N forks for N philosophers.
 
-Think 🤔
-Pick up two forks (one on the left, one on the right) to eat 🍽️
-Eat for a while 😋
-Put the forks down and go back to thinking 🔄
+Each philosopher follows a simple routine:
+1. Think 🤔
+1. Pick up two forks (one on the left, one on the right) to eat 🍽️
+1. Eat for a while 😋
+1. Put the forks down and go back to thinking 🔄
 
-**The challenge arises because:**
-
-    Each philosopher has only one fork on their left and one on their right.
-    There are exactly N forks for N philosophers.
-    If all philosophers pick up one fork at the same time, they will deadlock (waiting forever for the second fork).
+The challenge arises because if all philosophers pick up one fork at the same time, they will deadlock (waiting forever for the second fork).
 
 **Goals of the Project**
-
-    Implement a simulation of this problem using threads.
-    Ensure that:
-        No philosopher starves (i.e., they eventually eat).
-        The program avoids deadlocks.
-        The output logs each philosopher’s actions (thinking, eating, sleeping).
-    Use mutexes or other synchronization techniques to prevent race conditions.
+Implement a simulation of this problem using threads.
+**Ensure that:**
+No philosopher starves (i.e., they eventually eat).
+The program avoids deadlocks.
+The output logs each philosopher’s actions (thinking, eating, sleeping).
+**This is done by using mutexes or other synchronization techniques to prevent race conditions.**
 
 **Project Requirements**
 
-    Use C language.
-    Implement the solution using pthread library (POSIX threads).
-    Handle edge cases:
-        One philosopher (who can never eat because they need two forks).
-        Minimum and maximum philosophers.
-        Proper cleanup of resources (threads and mutexes).
+Use C language.
+Implement the solution using pthread library (POSIX threads).
+**Handle edge cases:**
+1. One philosopher (who can never eat because they need two forks).
+1. Minimum and maximum philosophers.
+1. Proper cleanup of resources (threads and mutexes).
 
 **Common Issues & Debugging**
-
-    Race conditions: If multiple threads modify shared data without proper locking.
-    Deadlocks: If all philosophers pick up one fork and wait for the second.
-    Starvation: If some philosophers get to eat repeatedly while others never do.
+Race conditions: If multiple threads modify shared data without proper locking.
+Deadlocks: If all philosophers pick up one fork and wait for the second.
+Starvation: If some philosophers get to eat repeatedly while others never do.
 
 ## Score:
 ✅ TBA (with bonus)
