@@ -51,9 +51,9 @@ Bonus part:	cd philosophers42/philo_bonus
 ```bash
 make
 ```
-**4. Launch the program with the selected parameters:**
+**4. Launch the program with your parameters, e.g.:**
 ```bash
-./fdf ./maps/42.fdf
+./philo 10 800 200 200 10
 ```
 
 ## Implemented functionality 🤖
