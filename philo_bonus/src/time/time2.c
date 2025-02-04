@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 20:32:44 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/03 20:06:05 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/04 17:55:30 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ long	get_sim_runtime_us(t_data *data)
 	long	runtime_us;
 
 	runtime_us = 0;
-	mutex_operation(data->data_access_mutex, LOCK);
+	//mutex_operation(data->data_access_mutex, LOCK);
 	runtime_us = get_epoch_time_us() - data->simulation_start_time_us;
-	mutex_operation(data->data_access_mutex, UNLOCK);
+	//mutex_operation(data->data_access_mutex, UNLOCK);
 	return (runtime_us);
 }

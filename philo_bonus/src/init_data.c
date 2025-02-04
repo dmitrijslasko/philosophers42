@@ -14,13 +14,13 @@
 
 int	free_data(t_data *data)
 {
-	mutex_operation(data->data_access_mutex, DESTROY);
-	mutex_operation(data->print_mutex, DESTROY);
-	free(data->data_access_mutex);
-	free(data->print_mutex);
-	free(data->forks);
+	//mutex_operation(data->data_access_mutex, DESTROY);
+	//mutex_operation(data->print_mutex, DESTROY);
+	//free(data->data_access_mutex);
+	//free(data->print_mutex);
+	//free(data->forks);
 	free(data->philos);
-	free(data->philo_threads);
+	//free(data->philo_threads);
 	return (EXIT_SUCCESS);
 }
 
@@ -41,16 +41,20 @@ int	init_data(t_data *data, int argc, char **argv)
 	if (argc == 6)
 		data->no_of_meals_required = int_atoi(argv[5]);
 	data->thread_start_delay_ms = data->time_to_eat_ms / THREAD_START_DELAY;
-	data->simulation_start_time_ms = 0;
-	data->simulation_start_time_us = 0;
+	data->simulation_start_time_ms = get_epoch_time_ms();
+	data->simulation_start_time_us = get_epoch_time_us();
 	data->simulation_status = 0;
 	//data->forks = NULL;
 	data->philos = NULL;
 	//data->philo_threads = NULL;
-	data->monitor_thread = (pthread_t) NULL;
-	data->data_access_mutex = safe_malloc(sizeof(t_mtx));
-	mutex_operation(data->data_access_mutex, INIT);
-	data->print_mutex = safe_malloc(sizeof(t_mtx));
-	mutex_operation(data->print_mutex, INIT);
+	//data->monitor_thread = (pthread_t) NULL;
+	//data->data_access_mutex = safe_malloc(sizeof(t_mtx));
+	//mutex_operation(data->data_access_mutex, INIT);
+	//data->print_mutex = safe_malloc(sizeof(t_mtx));
+	//mutex_operation(data->print_mutex, INIT);
+	data->sem_forks = NULL;
+	data->sem_data_access = NULL;
+	data->sem_print = NULL;
+	data->process_pids = safe_malloc(sizeof(int) * data->no_of_philos);
 	return (EXIT_SUCCESS);
 }

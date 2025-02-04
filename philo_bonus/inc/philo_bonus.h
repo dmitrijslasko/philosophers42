@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/03 20:06:43 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:14:28 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <semaphore.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 # include "settings.h"
 
@@ -60,8 +62,8 @@ typedef struct s_philosopher
 	int				id;
 	long			last_meal_time_ms;
 	int				meals_count;
-	t_mtx			*fork_left;
-	t_mtx			*fork_right;
+	int				is_alive;
+	int				is_full;
 	t_data			*data;
 }					t_philosopher;
 
@@ -76,12 +78,16 @@ typedef struct s_data
 	long			simulation_start_time_ms;
 	long			simulation_start_time_us;
 	int				simulation_status;
-	t_mtx			*forks;
+	//t_mtx			*forks;
 	t_philosopher	*philos;
-	pthread_t		*philo_threads;
+	int				*process_pids;
+	sem_t			*sem_forks;
+	sem_t			*sem_data_access;
+	sem_t			*sem_print;
+	//pthread_t		*philo_threads;
 	pthread_t		monitor_thread;
-	t_mtx			*data_access_mutex;
-	t_mtx			*print_mutex;
+	//t_mtx			*data_access_mutex;
+	//t_mtx			*print_mutex;
 }					t_data;
 
 // FUNCTIONS
@@ -125,7 +131,7 @@ int		is_valid_input(char **argv, int argc);
 
 // philo_routine.c
 void	wait_for_all_threads(t_data *data);
-void	*philosopher_routine(void *arg);
+void	*philosopher_routine(t_data *data);
 
 // philo_threads.c
 int		join_philo_threads(t_data *data);
@@ -152,5 +158,8 @@ long	get_epoch_time_ms(void);
 // time2.c
 long	get_sim_runtime_ms(t_data *data);
 long	get_sim_runtime_us(t_data *data);
+
+
+int	kill_all(t_data *data);
 
 #endif

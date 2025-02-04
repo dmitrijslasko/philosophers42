@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/03 20:06:22 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:47:39 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,45 +18,14 @@ int	print_error(char *str, int error_code)
 	return (error_code);
 }
 
-void	write_status_debug(t_data *data, t_philosopher *philo, t_status status)
-{
-	long	runtime_us;
-	long	runtime_ms;
-
-	runtime_ms = get_sim_runtime_ms(data);
-	runtime_us = get_sim_runtime_us(data);
-	mutex_operation(data->print_mutex, LOCK);
-	if (get_protected_value(data, &data->simulation_status) == 0)
-		return (mutex_operation(data->print_mutex, UNLOCK));
-	if (TAKEN_LEFT_FORK == status)
-		printf(MSG_DEBUG_LEFT_FORK, runtime_us, runtime_ms, philo->id);
-	else if (TAKEN_RIGHT_FORK == status)
-		printf(MSG_DEBUG_RIGHT_FORK, runtime_us, runtime_ms, philo->id);
-	else if (EATING == status)
-		printf(GREEN MSG_DEBUG_EAT RST, runtime_us, runtime_ms, philo->id, \
-					philo->meals_count + 1);
-	else if (SLEEPING == status)
-		printf(YELLOW MSG_DEBUG_SLEEP RST, runtime_us, runtime_ms, philo->id);
-	else if (THINKING == status)
-		printf(MSG_DEBUG_THINK, runtime_us, runtime_ms, philo->id);
-	else if (DIED == status)
-	{
-		set_protected_value(data, &data->simulation_status, 0);
-		printf(RED MSG_DEBUG_DIED RST, runtime_us, runtime_ms, philo->id);
-	}
-	mutex_operation(data->print_mutex, UNLOCK);
-}
-
 void	write_status(t_data *data, t_philosopher *philo, t_status status)
 {
 	long	runtime;
 
+	sem_wait(data->sem_print);
 	if (DEBUG)
 		return (write_status_debug(data, philo, status));
 	runtime = get_sim_runtime_ms(data);
-	mutex_operation(data->print_mutex, LOCK);
-	if (get_protected_value(data, &data->simulation_status) == 0)
-		return (mutex_operation(data->print_mutex, UNLOCK));
 	if (TAKEN_LEFT_FORK == status)
 		printf(MSG_LEFT_FORK, runtime, philo->id);
 	else if (TAKEN_RIGHT_FORK == status)
@@ -70,7 +39,8 @@ void	write_status(t_data *data, t_philosopher *philo, t_status status)
 	else if (DIED == status)
 	{
 		printf(MSG_DIED, runtime, philo->id);
-		set_protected_value(data, &data->simulation_status, 0);
+		kill_all(data);
+		exit (0);
 	}
-	mutex_operation(data->print_mutex, UNLOCK);
+	sem_post(data->sem_print);
 }

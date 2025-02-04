@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/03 20:08:17 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/04 21:14:43 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,12 @@
  */
 int	init_philos(t_data *data)
 {
-	int	i;
-
-	//data->philos = safe_malloc(data->no_of_philos * sizeof(t_philosopher));
-	//if (data->philos == NULL)
-	//	return (MALLOC_FAIL);
-	i = 0;
-	while (i < data->no_of_philos)
-	{
-		memset(&data->philos[i], 0, sizeof(t_philosopher));
-		data->philos[i].id = i + 1;
-		data->philos[i].fork_left = &data->forks[i];
-		data->philos[i].fork_right = &data->forks[(i + 1) % data->no_of_philos];
-		if (DEBUG)
-			printf(GREEN "Philo [%d] initialized.\n" RST, data->philos[i].id);
-		data->philos[i].data = data;
-		i++;
-	}
+	data->philos = safe_malloc(sizeof(t_philosopher));
+	data->philos->id = 0;
+	data->philos->last_meal_time_ms = 0;
+	data->philos->meals_count = 0;
+	data->philos->is_alive = 1;
+	data->philos->is_full = 0;
+	data->philos->data = data;
 	return (EXIT_SUCCESS);
 }
