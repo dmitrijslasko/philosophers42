@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/05 17:29:34 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 18:15:46 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_data
 	long			simulation_start_time_us;
 	int				simulation_status;
 	//t_mtx			*forks;
-	t_philosopher	*philos;
+	t_philosopher	philos;
 	int				*process_pids;
 	sem_t			*sem_forks;
 	sem_t			*sem_data_access;
@@ -132,7 +132,7 @@ int		is_valid_input(char **argv, int argc);
 
 // philo_routine.c
 void	wait_for_all_threads(t_data *data);
-void	*philosopher_routine(t_data *data, int i);
+void	*philosopher_routine(t_data *data);
 
 // philo_threads.c
 int		join_philo_threads(t_data *data);

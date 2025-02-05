@@ -15,8 +15,9 @@
 int	free_data(t_data *data)
 {
 	printf("PROCESS PID: %d\n", getpid());
-	free(data->philos);
 	free(data->process_pids);
+	sem_close(data->sem_forks);
+	sem_close(data->sem_print);
 	sem_unlink("/forks");
 	sem_unlink("/print");
 	//free(data->philo_threads);

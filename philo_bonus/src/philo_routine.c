@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/05 17:52:18 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 20:15:30 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int check_philo_status(t_data *data)
 {
-	data->philos->is_alive = philo_is_alive(data, data->philos);
-	data->philos->is_full = philo_is_full(data, data->philos);
-	if (data->philos->is_alive == 0)
+	data->philos.is_alive = philo_is_alive(data, &data->philos);
+	data->philos.is_full = philo_is_full(data, &data->philos);
+	if (data->philos.is_alive == 0)
 	{
-		write_status(data, data->philos, DIED);
+		write_status(data, &data->philos, DIED);
 		exit(0);
 	}
 	return (0);
@@ -41,10 +41,10 @@ int	philo_take_forks(t_data *data, t_philosopher *philo)
  */
 void	philo_eat(t_data *data, t_philosopher *philo)
 {
-	philo->last_meal_time_ms = get_sim_runtime_ms(data);
+	data->philos.last_meal_time_ms = get_sim_runtime_ms(data);
 	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
-	philo->meals_count++;
+	data->philos.meals_count++;
 	sem_post(data->sem_forks);
 	sem_post(data->sem_forks);
 }
@@ -58,44 +58,20 @@ void	philo_sleep(t_data *data, t_philosopher *philo)
 	msleep(data, data->time_to_sleep_ms);
 }
 
-void	wait_for_all_threads(t_data *data)
-{
-	//if (SYNC_THREADS)
-	//{
-	//	while (1)
-	//	{
-	//		sem_wait(data->sem_data_access);
-	//		if (data->simulation_status == 1)
-	//		{
-	//			sem_post(data->sem_data_access);
-	//			break ;
-	//		}
-	//		sem_post(data->sem_data_access);
-	//		usleep(100);
-	//	}
-	//}
-	sem_wait(data->sem_data_access);
-	if (data->simulation_start_time_us == 0)
-		data->simulation_start_time_us = get_epoch_time_us();
-	if (data->simulation_start_time_ms == 0)
-		data->simulation_start_time_ms = get_epoch_time_ms();
-	sem_post(data->sem_data_access);
-}
-
 /**
  * A philosopher's routine.
  */
-void	*philosopher_routine(t_data *data, int i)
+void	*philosopher_routine(t_data *data)
 {
-	if (data->philos[i].id % 2 == 0)
+	if (data->philos.id % 2 == 0)
 		usleep(START_DELAY_US);
-	data->philos[i].last_meal_time_ms = get_sim_runtime_ms(data);
+	data->philos.last_meal_time_ms = get_sim_runtime_ms(data);
 	while (1)
 	{
-		if (philo_take_forks(data, &data->philos[i]) == 1)
+		if (philo_take_forks(data, &data->philos) == 1)
 			return (NULL);
-		philo_eat(data, &data->philos[i]);
-		philo_sleep(data, &data->philos[i]);
+		philo_eat(data, &data->philos);
+		philo_sleep(data, &data->philos);
 	}
 	return (NULL);
 }

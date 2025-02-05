@@ -6,11 +6,21 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/05 17:39:51 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 20:30:15 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+int	join_philo_threads(t_data *data)
+{
+	int	status;
+
+	waitpid(-1, &status, 0);
+	//kill_all(data);
+
+	return (EXIT_SUCCESS);
+}
 
 
 /**
@@ -21,7 +31,7 @@ int	join_philo_threads(t_data *data)
 	int	status;
 
 	waitpid(-1, &status, 0);
-	kill_all(data);
+	//kill_all(data);
 
 	return (EXIT_SUCCESS);
 }
@@ -55,7 +65,8 @@ int	create_philo_threads(t_data *data)
 		pid = fork();
 		if (pid == 0)		// child process
 		{
-			philosopher_routine(data, i);
+			data->philos.id = i + 1;
+ 			philosopher_routine(data);
 		}
 		else				// main process
 			data->process_pids[i] = pid;
