@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/04 21:14:28 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 17:29:34 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 # include "settings.h"
 
@@ -131,7 +132,7 @@ int		is_valid_input(char **argv, int argc);
 
 // philo_routine.c
 void	wait_for_all_threads(t_data *data);
-void	*philosopher_routine(t_data *data);
+void	*philosopher_routine(t_data *data, int i);
 
 // philo_threads.c
 int		join_philo_threads(t_data *data);
@@ -161,5 +162,6 @@ long	get_sim_runtime_us(t_data *data);
 
 
 int	kill_all(t_data *data);
+int check_philo_status(t_data *data);
 
 #endif

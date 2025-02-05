@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:21:32 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/04 21:14:05 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 17:21:43 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,10 @@ void	msleep(t_data *data, unsigned int sleep_time_ms)
 		else
 			usleep(10);
 		remaining_time = get_remaining_time(sleep_time_ms, sleep_start_time_ms);
+		if (philo_is_alive(data, data->philos) == 0)
+		{
+			write_status(data, data->philos, DIED);
+			exit (0);
+		}
 	}
 }

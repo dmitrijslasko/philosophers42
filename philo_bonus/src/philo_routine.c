@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/04 21:47:08 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 17:52:18 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int check_philo_status(t_data *data)
 	if (data->philos->is_alive == 0)
 	{
 		write_status(data, data->philos, DIED);
+		exit(0);
 	}
 	return (0);
 }
@@ -84,22 +85,17 @@ void	wait_for_all_threads(t_data *data)
 /**
  * A philosopher's routine.
  */
-void	*philosopher_routine(t_data *data)
+void	*philosopher_routine(t_data *data, int i)
 {
-	//puts("Philo routine started!");
-	if (data->philos->id % 2 == 0)
+	if (data->philos[i].id % 2 == 0)
 		usleep(START_DELAY_US);
-	data->philos->last_meal_time_ms = get_sim_runtime_ms(data);
+	data->philos[i].last_meal_time_ms = get_sim_runtime_ms(data);
 	while (1)
 	{
-		check_philo_status(data);
-		if (philo_take_forks(data, data->philos) == 1)
+		if (philo_take_forks(data, &data->philos[i]) == 1)
 			return (NULL);
-		check_philo_status(data);
-		philo_eat(data, data->philos);
-		check_philo_status(data);
-		philo_sleep(data, data->philos);
+		philo_eat(data, &data->philos[i]);
+		philo_sleep(data, &data->philos[i]);
 	}
-	sem_close(data->sem_forks);
 	return (NULL);
 }

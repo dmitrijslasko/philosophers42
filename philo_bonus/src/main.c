@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/04 21:34:17 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 17:46:46 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,24 @@ int	main(int argc, char **argv)
 	sem_unlink("/print");
 	data.sem_forks = sem_open("/forks", O_CREAT, 0666, data.no_of_philos);
 	data.sem_print = sem_open("/print", O_CREAT, 0666, 1);
+	puts("Semaphores created");
 	if (init_philos(&data))
 		return (EXIT_FAILURE);
-	puts("Philos initialized");
-	printf("TIME TO EAT: %d\n", data.time_to_eat_ms);
-	printf("TIME TO SLEEP: %d\n", data.time_to_sleep_ms);
+	puts("All philos initialized");
 	if (data.sem_forks == SEM_FAILED)
 	{
 		perror("sem_open failed");
 		return (EXIT_FAILURE);
 	}
-	printf("Created a semaphore with value of: %d\n", data.no_of_philos);
+	printf(B_MAGENTA ">>>>>>>>>>>>>>>>>>> Created a semaphore with value of: %d\n" RST, data.no_of_philos);
 	create_philo_threads(&data);
-	if (DEBUG)
-		printf(YELLOW"START TIME: %ld ms.\n"RST, get_sim_runtime_ms(&data));
+	//if (DEBUG)
+	//	printf(YELLOW"START TIME: %ld ms.\n"RST, get_sim_runtime_ms(&data));
 	join_philo_threads(&data);
 	if (DEBUG)
 		print_stats(&data);
+	puts("Freeing data...");
 	free_data(&data);
-	//sem_unlink("/forks");
-	//sem_unlink("/print");
+
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:33:15 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/04 21:47:39 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:47:59 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	write_status(t_data *data, t_philosopher *philo, t_status status)
 	else if (DIED == status)
 	{
 		printf(MSG_DIED, runtime, philo->id);
-		kill_all(data);
 		exit (0);
 	}
 	sem_post(data->sem_print);

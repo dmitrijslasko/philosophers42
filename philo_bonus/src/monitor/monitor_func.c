@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/04 19:05:01 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/05 15:46:10 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	philo_is_alive(t_data *data, t_philosopher *philo)
 	last_meal_ms = philo->last_meal_time_ms;
 	if (get_sim_runtime_ms(data) - last_meal_ms > data->time_to_die_ms)
 		response = 0;
-	//mutex_operation(data->data_access_mutex, UNLOCK)
 	return (response);
 }
 

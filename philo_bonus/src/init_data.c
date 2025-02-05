@@ -14,12 +14,11 @@
 
 int	free_data(t_data *data)
 {
-	//mutex_operation(data->data_access_mutex, DESTROY);
-	//mutex_operation(data->print_mutex, DESTROY);
-	//free(data->data_access_mutex);
-	//free(data->print_mutex);
-	//free(data->forks);
+	printf("PROCESS PID: %d\n", getpid());
 	free(data->philos);
+	free(data->process_pids);
+	sem_unlink("/forks");
+	sem_unlink("/print");
 	//free(data->philo_threads);
 	return (EXIT_SUCCESS);
 }
@@ -45,7 +44,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->simulation_start_time_us = get_epoch_time_us();
 	data->simulation_status = 0;
 	//data->forks = NULL;
-	data->philos = NULL;
+	//data->philos = NULL;
 	//data->philo_threads = NULL;
 	//data->monitor_thread = (pthread_t) NULL;
 	//data->data_access_mutex = safe_malloc(sizeof(t_mtx));
@@ -55,6 +54,6 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->sem_forks = NULL;
 	data->sem_data_access = NULL;
 	data->sem_print = NULL;
-	data->process_pids = safe_malloc(sizeof(int) * data->no_of_philos);
+	data->process_pids = NULL;
 	return (EXIT_SUCCESS);
 }
