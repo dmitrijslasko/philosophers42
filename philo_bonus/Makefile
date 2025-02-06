@@ -8,7 +8,7 @@ NAME = philo
 CC = cc
 INC = ./inc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 DEBUGFLAGS = -Wall -Werror -Wextra -g -D DEBUG=1
 SANITIZE = -fsanitize=thread
 

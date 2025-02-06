@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 17:38:51 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 18:44:24 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	kill_all_philos(t_data *data)
 }
 
 /**
- * Wrapper for pthread_create() function.
+ * Forking all day long.
  */
 int	create_philo_processes(t_data *data)
 {
@@ -58,14 +58,17 @@ int	create_philo_processes(t_data *data)
 		pid = fork();
 		if (pid == 0)		// child process
 		{
-			//free(data->process_pids);
-			data->philos.id = i + 1;
+			data->philos = &data->philos[i];
 			create_monitor(data);
-			pthread_detach(data->monitor_thread);
+			//pthread_detach(data->monitor_thread);
+			pthread_join(data->monitor_thread, NULL);
  			philosopher_routine(data);
+			exit (EXIT_SUCCESS);
 		}
 		else				// main process
+		{
 			data->process_pids[i] = pid;
+		}
 		i++;
 	}
 	return (EXIT_SUCCESS);

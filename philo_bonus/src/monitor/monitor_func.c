@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 15:42:24 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:48:17 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	philo_is_alive(t_data *data, t_philosopher *philo)
 
 	(void)philo;
 	response = 1;
-	last_meal_ms = data->philos.last_meal_time_ms;
+	last_meal_ms = data->philos->last_meal_time_ms;
 	if (get_sim_runtime_ms(data) - last_meal_ms > data->time_to_die_ms)
 		response = 0;
 	return (response);

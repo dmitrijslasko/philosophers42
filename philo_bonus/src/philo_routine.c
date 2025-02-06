@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 17:40:34 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 18:44:35 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	*check_philo_status(void *args)
 	t_data *data;
 
 	data = (t_data *)args;
-	while (data->philos.is_alive && data->philos.is_full == 0)
+	while (data->philos->is_alive && data->philos->is_full == 0)
 	{
-		data->philos.is_alive = philo_is_alive(data, &data->philos);
-		data->philos.is_full = philo_is_full(data, &data->philos);
+		data->philos->is_alive = philo_is_alive(data, data->philos);
+		data->philos->is_full = philo_is_full(data, data->philos);
 		usleep(100);
 	}
+	free(data->process_pids);
 	sem_close(data->sem_forks);
 	sem_close(data->sem_print);
-	free(data->process_pids);
-	free(data->philos);
+	free(data);
 	exit (0);
 }
 /**
@@ -47,10 +47,10 @@ int	philo_take_forks(t_data *data, t_philosopher *philo)
  */
 void	philo_eat(t_data *data, t_philosopher *philo)
 {
-	data->philos.last_meal_time_ms = get_sim_runtime_ms(data);
+	data->philos->last_meal_time_ms = get_sim_runtime_ms(data);
 	write_status(data, philo, EATING);
 	msleep(data, data->time_to_eat_ms);
-	data->philos.meals_count++;
+	data->philos->meals_count++;
 	sem_post(data->sem_forks);
 	sem_post(data->sem_forks);
 }
@@ -69,15 +69,16 @@ void	philo_sleep(t_data *data, t_philosopher *philo)
  */
 void	*philosopher_routine(t_data *data)
 {
-	if (data->philos.id % 2 == 0)
+	printf("I am philosopher [%d]\n", data->philos->id);
+	if (data->philos->id % 2 == 0)
 		usleep(START_DELAY_US);
-	data->philos.last_meal_time_ms = get_sim_runtime_ms(data);
+	data->philos->last_meal_time_ms = get_sim_runtime_ms(data);
 	while (1)
 	{
-		if (philo_take_forks(data, &data->philos) == 1)
+		if (philo_take_forks(data, data->philos) == 1)
 			return (NULL);
-		philo_eat(data, &data->philos);
-		philo_sleep(data, &data->philos);
+		philo_eat(data, data->philos);
+		philo_sleep(data, data->philos);
 	}
 	return (NULL);
 }

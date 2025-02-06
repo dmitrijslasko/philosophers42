@@ -16,10 +16,13 @@ int	free_data(t_data *data)
 {
 	printf("PROCESS PID: %d\n", getpid());
 	free(data->process_pids);
+	free(data->philos);
 	sem_close(data->sem_forks);
 	sem_close(data->sem_print);
+	printf("Semaphores closed...\n");
 	sem_unlink("/forks");
 	sem_unlink("/print");
+	printf("Semaphores unlinked...\n");
 	return (EXIT_SUCCESS);
 }
 
