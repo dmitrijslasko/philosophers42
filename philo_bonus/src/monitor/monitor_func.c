@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 17:48:17 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 18:56:49 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	philo_is_full(t_data *data, t_philosopher *philo)
 //			return (FALSE);
 //		i++;
 //	}
-//	//set_protected_value(data, &data->simulation_status, 0);
-//	data->simulation_status = 0;
+//	//set_protected_value(data, &data->philo_index, 0);
+//	data->philo_index = 0;
 //	return (TRUE);
 //}

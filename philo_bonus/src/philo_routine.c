@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 18:44:35 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 19:08:15 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ void	*check_philo_status(void *args)
 		data->philos->is_full = philo_is_full(data, data->philos);
 		usleep(100);
 	}
-	free(data->process_pids);
-	sem_close(data->sem_forks);
-	sem_close(data->sem_print);
-	free(data);
-	exit (0);
+	return NULL;
 }
 /**
  * Part of the philosopher's routine – taking the LEFT fork.
@@ -69,16 +65,21 @@ void	philo_sleep(t_data *data, t_philosopher *philo)
  */
 void	*philosopher_routine(t_data *data)
 {
-	printf("I am philosopher [%d]\n", data->philos->id);
-	if (data->philos->id % 2 == 0)
+	t_philosopher *philos;
+
+	philos = &data->philos[data->philo_index];
+	printf("I am philosopher [%d]\n", philos->id);
+	if (philos->id % 2 == 0)
 		usleep(START_DELAY_US);
-	data->philos->last_meal_time_ms = get_sim_runtime_ms(data);
+	philos->last_meal_time_ms = get_sim_runtime_ms(data);
 	while (1)
 	{
-		if (philo_take_forks(data, data->philos) == 1)
+		if (philo_take_forks(data, philos) == 1)
 			return (NULL);
-		philo_eat(data, data->philos);
-		philo_sleep(data, data->philos);
+		philo_eat(data, philos);
+		philo_sleep(data, philos);
+		if (check_philo_status(data) == NULL)
+			break ;
 	}
 	return (NULL);
 }

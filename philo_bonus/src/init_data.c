@@ -45,7 +45,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->thread_start_delay_ms = data->time_to_eat_ms / THREAD_START_DELAY;
 	data->simulation_start_time_ms = get_epoch_time_ms();
 	data->simulation_start_time_us = get_epoch_time_us();
-	data->simulation_status = 0;
+	data->philo_index = 0;
 	//data->forks = NULL;
 	//data->philos = NULL;
 	//data->philo_threads = NULL;
