@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 19:08:15 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:05:16 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ void	*check_philo_status(void *args)
 		data->philos->is_full = philo_is_full(data, data->philos);
 		usleep(100);
 	}
-	return NULL;
+	free(data->process_pids);
+	sem_close(data->sem_forks);
+	sem_close(data->sem_print);
+	free(data->philos);
+	exit (EXIT_SUCCESS);
+	//return NULL;
 }
 /**
  * Part of the philosopher's routine – taking the LEFT fork.
@@ -68,7 +73,6 @@ void	*philosopher_routine(t_data *data)
 	t_philosopher *philos;
 
 	philos = &data->philos[data->philo_index];
-	printf("I am philosopher [%d]\n", philos->id);
 	if (philos->id % 2 == 0)
 		usleep(START_DELAY_US);
 	philos->last_meal_time_ms = get_sim_runtime_ms(data);
@@ -78,8 +82,6 @@ void	*philosopher_routine(t_data *data)
 			return (NULL);
 		philo_eat(data, philos);
 		philo_sleep(data, philos);
-		if (check_philo_status(data) == NULL)
-			break ;
 	}
 	return (NULL);
 }
