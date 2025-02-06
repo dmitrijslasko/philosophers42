@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/05 18:10:53 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:40:00 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_philos(t_data *data)
 {
 	int i;
 
-	//data->philos = safe_malloc(data->no_of_philos * sizeof(t_philosopher));
+	data->philos = safe_malloc(data->no_of_philos * sizeof(t_philosopher));
 	i = 0;
 	while (i < data->no_of_philos)
 	{

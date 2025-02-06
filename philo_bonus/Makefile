@@ -18,7 +18,10 @@ OBJ_DIR = ./obj/
 SRC = $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR)**/*.c)
 OBJ = $(patsubst $(SRC_DIR)%, $(OBJ_DIR)%, $(SRC:.c=.o))
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := test
+
+test:
+	./$(NAME) 10 800 200 200 10
 
 all: $(NAME) $(HEADER_FILE)
 

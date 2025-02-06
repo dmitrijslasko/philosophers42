@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/05 18:15:46 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:40:25 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,10 @@ typedef struct s_data
 	long			simulation_start_time_us;
 	int				simulation_status;
 	//t_mtx			*forks;
-	t_philosopher	philos;
+	t_philosopher	*philos;
 	int				*process_pids;
 	sem_t			*sem_forks;
-	sem_t			*sem_data_access;
 	sem_t			*sem_print;
-	//pthread_t		*philo_threads;
 	pthread_t		monitor_thread;
 	//t_mtx			*data_access_mutex;
 	//t_mtx			*print_mutex;
@@ -135,8 +133,8 @@ void	wait_for_all_threads(t_data *data);
 void	*philosopher_routine(t_data *data);
 
 // philo_threads.c
-int		join_philo_threads(t_data *data);
-int		create_philo_threads(t_data *data);
+int		wait_for_all_philos(t_data *data);
+int		create_philo_processes(t_data *data);
 
 // safe_functions.c
 void	*safe_malloc(int size_bytes);
@@ -161,7 +159,7 @@ long	get_sim_runtime_ms(t_data *data);
 long	get_sim_runtime_us(t_data *data);
 
 
-int	kill_all(t_data *data);
-int check_philo_status(t_data *data);
+int	kill_all_philos(t_data *data);
+void *check_philo_status(void *args);
 
 #endif

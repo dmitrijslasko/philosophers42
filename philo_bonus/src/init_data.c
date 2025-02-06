@@ -20,7 +20,6 @@ int	free_data(t_data *data)
 	sem_close(data->sem_print);
 	sem_unlink("/forks");
 	sem_unlink("/print");
-	//free(data->philo_threads);
 	return (EXIT_SUCCESS);
 }
 
@@ -53,7 +52,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	//data->print_mutex = safe_malloc(sizeof(t_mtx));
 	//mutex_operation(data->print_mutex, INIT);
 	data->sem_forks = NULL;
-	data->sem_data_access = NULL;
+	//data->sem_data_access = NULL;
 	data->sem_print = NULL;
 	data->process_pids = NULL;
 	return (EXIT_SUCCESS);

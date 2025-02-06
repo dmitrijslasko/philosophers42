@@ -6,22 +6,28 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/05 20:15:30 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/06 17:40:34 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int check_philo_status(t_data *data)
+void	*check_philo_status(void *args)
 {
-	data->philos.is_alive = philo_is_alive(data, &data->philos);
-	data->philos.is_full = philo_is_full(data, &data->philos);
-	if (data->philos.is_alive == 0)
+	t_data *data;
+
+	data = (t_data *)args;
+	while (data->philos.is_alive && data->philos.is_full == 0)
 	{
-		write_status(data, &data->philos, DIED);
-		exit(0);
+		data->philos.is_alive = philo_is_alive(data, &data->philos);
+		data->philos.is_full = philo_is_full(data, &data->philos);
+		usleep(100);
 	}
-	return (0);
+	sem_close(data->sem_forks);
+	sem_close(data->sem_print);
+	free(data->process_pids);
+	free(data->philos);
+	exit (0);
 }
 /**
  * Part of the philosopher's routine – taking the LEFT fork.
