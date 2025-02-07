@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 19:06:40 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/07 11:44:32 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	printf("All philos initialized\n");
 	create_philo_processes(&data);
-	wait_for_all_philos(&data);
-	printf("Freeing &data...\n");
+	// sleep(2);
+	kill_all_philos(&data);
+	// printf("Freeing &data...\n");
 	free_data(&data);
 	return (EXIT_SUCCESS);
 }

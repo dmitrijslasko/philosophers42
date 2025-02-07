@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 20:05:16 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/07 11:46:45 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,22 @@
 void	*check_philo_status(void *args)
 {
 	t_data *data;
+	int i;
 
 	data = (t_data *)args;
-	while (data->philos->is_alive && data->philos->is_full == 0)
+	i = data->philo_index;
+	while (data->philos[i].is_alive && data->philos[i].is_full == 0)
 	{
-		data->philos->is_alive = philo_is_alive(data, data->philos);
-		data->philos->is_full = philo_is_full(data, data->philos);
+		data->philos[i].is_alive = philo_is_alive(data, &data->philos[i]);
+		if (data->philos[i].is_alive == 0)
+		{
+			write_status(data, &data->philos[i], DIED);
+			data->simulation_is_on = 0;
+		}
+		data->philos[i].is_full = philo_is_full(data, &data->philos[i]);
 		usleep(100);
 	}
-	free(data->process_pids);
-	sem_close(data->sem_forks);
-	sem_close(data->sem_print);
-	free(data->philos);
-	exit (EXIT_SUCCESS);
-	//return NULL;
+	return (NULL);
 }
 /**
  * Part of the philosopher's routine – taking the LEFT fork.
@@ -82,6 +84,14 @@ void	*philosopher_routine(t_data *data)
 			return (NULL);
 		philo_eat(data, philos);
 		philo_sleep(data, philos);
+		if (data->simulation_is_on == 0)
+		{
+			free(data->process_pids);
+			free(data->philos);
+			sem_close(data->sem_forks);
+			sem_close(data->sem_print);
+			exit(1);
+		}
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 18:56:49 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/07 02:21:49 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_data
 	int				thread_start_delay_ms;
 	long			simulation_start_time_ms;
 	long			simulation_start_time_us;
+	int				simulation_is_on;
 	int				philo_index;
 	//t_mtx			*forks;
 	t_philosopher	*philos;
