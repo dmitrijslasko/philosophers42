@@ -6,30 +6,27 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/07 11:46:45 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/08 01:20:50 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	*check_philo_status(void *args)
+void	*monitor_philo_status(void *args)
 {
 	t_data *data;
 	int i;
 
 	data = (t_data *)args;
 	i = data->philo_index;
+
 	while (data->philos[i].is_alive && data->philos[i].is_full == 0)
 	{
 		data->philos[i].is_alive = philo_is_alive(data, &data->philos[i]);
-		if (data->philos[i].is_alive == 0)
-		{
-			write_status(data, &data->philos[i], DIED);
-			data->simulation_is_on = 0;
-		}
 		data->philos[i].is_full = philo_is_full(data, &data->philos[i]);
-		usleep(100);
+		usleep(10);
 	}
+	data->simulation_is_on = 0;
 	return (NULL);
 }
 /**
@@ -78,20 +75,18 @@ void	*philosopher_routine(t_data *data)
 	if (philos->id % 2 == 0)
 		usleep(START_DELAY_US);
 	philos->last_meal_time_ms = get_sim_runtime_ms(data);
-	while (1)
+	while (data->simulation_is_on)
 	{
 		if (philo_take_forks(data, philos) == 1)
 			return (NULL);
 		philo_eat(data, philos);
 		philo_sleep(data, philos);
-		if (data->simulation_is_on == 0)
-		{
-			free(data->process_pids);
-			free(data->philos);
-			sem_close(data->sem_forks);
-			sem_close(data->sem_print);
-			exit(1);
-		}
 	}
+	free(data->process_pids);
+	free(data->philos);
+	sem_close(data->sem_forks);
+	sem_close(data->sem_print);
+	// puts("Exiting...");
+	exit (0);
 	return (NULL);
 }

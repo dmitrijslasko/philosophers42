@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/07 02:23:41 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/08 01:06:50 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	kill_all_philos(t_data *data)
 	while (i < data->no_of_philos)
 	{
 		kill(data->process_pids[i], SIGTERM);
-		// printf("[%d] killed!\n", data->process_pids[i]);
+		printf("[%d] killed!\n", data->process_pids[i]);
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -62,8 +62,8 @@ int	create_philo_processes(t_data *data)
 			data->philo_index = i;
 			create_monitor(data);
 			pthread_detach(data->monitor_thread);
- 			philosopher_routine(data);
-			exit (0);
+			philosopher_routine(data);
+			break ;
 		}
 		else				// main process
 			data->process_pids[i] = pid;

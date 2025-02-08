@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/07 02:21:49 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/08 00:51:23 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,6 @@ long	get_sim_runtime_us(t_data *data);
 
 
 int	kill_all_philos(t_data *data);
-void *check_philo_status(void *args);
+void *monitor_philo_status(void *args);
 
 #endif
