@@ -18,10 +18,8 @@ int	free_data(t_data *data)
 	free(data->philos);
 	sem_close(data->sem_forks);
 	sem_close(data->sem_print);
-	// printf("Semaphores closed...\n");
 	sem_unlink("/forks");
 	sem_unlink("/print");
-	// printf("Semaphores unlinked...\n");
 	return (EXIT_SUCCESS);
 }
 
@@ -45,7 +43,8 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->simulation_start_time_ms = get_epoch_time_ms();
 	data->simulation_start_time_us = get_epoch_time_us();
 	data->simulation_is_on = 1;
-	data->philo_index = 0;
+	data->is_philo = 0;
+	data->philo_index = -1;
 	//data->forks = NULL;
 	//data->philos = NULL;
 	//data->philo_threads = NULL;

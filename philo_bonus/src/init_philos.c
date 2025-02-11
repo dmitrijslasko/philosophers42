@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 00:17:25 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 18:01:27 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:39:11 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	init_philos(t_data *data)
 		data->philos[i].meals_count = 0;
 		data->philos[i].is_alive = 1;
 		data->philos[i].is_full = 0;
-		printf("Philo [%d] created! ID: [%d]\n", i, data->philos[i].id);
+		if (DEBUG)
+			printf("Philo [%d] created! ID: [%d]\n", i, data->philos[i].id);
 		i++;
 	}
 	return (EXIT_SUCCESS);

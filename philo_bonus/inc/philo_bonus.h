@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/08 00:51:23 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/10 23:42:26 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,14 @@ typedef struct s_data
 	long			simulation_start_time_ms;
 	long			simulation_start_time_us;
 	int				simulation_is_on;
+	int				is_philo;
 	int				philo_index;
 	//t_mtx			*forks;
 	t_philosopher	*philos;
 	int				*process_pids;
 	sem_t			*sem_forks;
 	sem_t			*sem_print;
+	sem_t			*sem_sim_start;
 	pthread_t		monitor_thread;
 	//t_mtx			*data_access_mutex;
 	//t_mtx			*print_mutex;
@@ -162,5 +164,7 @@ long	get_sim_runtime_us(t_data *data);
 
 int	kill_all_philos(t_data *data);
 void *monitor_philo_status(void *args);
+
+void	free_philo_data(t_data *data);
 
 #endif

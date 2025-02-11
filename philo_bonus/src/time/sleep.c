@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:21:32 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/06 17:35:12 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/11 11:38:03 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,19 @@ static long	get_remaining_time(long sleep_time_ms, \
 void	msleep(t_data *data, unsigned int sleep_time_ms)
 {
 	long	sleep_start_time_ms;
-	long	remaining_time;
+	long	remaining_time_ms;
 
 	(void)data;
 	sleep_start_time_ms = get_epoch_time_ms();
-	remaining_time = get_remaining_time(sleep_time_ms, sleep_start_time_ms);
-	while (remaining_time > 0)
+	remaining_time_ms = get_remaining_time(sleep_time_ms, sleep_start_time_ms);
+	while (remaining_time_ms > 0)
 	{
-		if (remaining_time > 10)
+		if (remaining_time_ms > 10)
 			usleep(1000);
 		else
 			usleep(10);
-		remaining_time = get_remaining_time(sleep_time_ms, sleep_start_time_ms);
-		//if (philo_is_alive(data, &data->philos) == 0)
-		//{
-		//	write_status(data, &data->philos, DIED);
-		//	free(data->process_pids);
-		//	sem_close(data->sem_forks);
-		//	sem_close(data->sem_print);
-		//	exit (0);
-		//}
-		//else if (philo_is_full(data, &data->philos) == 1)
-		//{
-		//	free(data->process_pids);
-		//	sem_close(data->sem_forks);
-		//	sem_close(data->sem_print);
-		//	exit (0);
-		//}
+		remaining_time_ms = get_remaining_time(sleep_time_ms, sleep_start_time_ms);
+		if (philo_is_alive(data, &data->philos[data->philo_index]) == 0)
+			break ;
 	}
 }

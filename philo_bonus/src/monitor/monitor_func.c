@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 17:57:42 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/08 00:27:22 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/10 23:02:41 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,6 @@ int	philo_is_alive(t_data *data, t_philosopher *philo)
 	return (response);
 }
 
-///**
-// * Checks if all philosphers are still alive.
-// */
-//int	all_philos_are_alive(t_data *data)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (i < data->no_of_philos)
-//	{
-//		if (philo_is_alive(data, &data->philos[i]) == 0)
-//		{
-//			write_status(data, &data->philos[i], DIED);
-//			return (FALSE);
-//		}
-//		i++;
-//	}
-//	return (TRUE);
-//}
-
 /**
  * Checks if a philospher is full (has has enough food).
  */
@@ -61,21 +41,3 @@ int	philo_is_full(t_data *data, t_philosopher *philo)
 	return (response);
 }
 
-///**
-// * Checks if all philosphers are full (have had enough food).
-// */
-//int	all_philos_are_full(t_data *data)
-//{
-//	int	i;
-
-//	i = 0;
-//	while (i < data->no_of_philos)
-//	{
-//		if (philo_is_full(data, &data->philos[i]) != 1)
-//			return (FALSE);
-//		i++;
-//	}
-//	//set_protected_value(data, &data->philo_index, 0);
-//	data->philo_index = 0;
-//	return (TRUE);
-//}
