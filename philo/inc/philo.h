@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:49:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/04 20:48:42 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/02/11 14:18:10 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ typedef struct s_data
 	int				simulation_status;
 	t_mtx			*forks;
 	t_philosopher	*philos;
-	//pthread_t		*philo_threads;
+	pthread_t		*philo_threads;
 	pthread_t		monitor_thread;
-	//t_mtx			*data_access_mutex;
-	//t_mtx			*print_mutex;
+	t_mtx			*data_access_mutex;
+	t_mtx			*print_mutex;
 }					t_data;
 
 // FUNCTIONS
