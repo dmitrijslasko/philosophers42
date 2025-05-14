@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 21:46:02 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/03 16:59:55 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/05/14 13:53:33 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	wait_for_all_threads(t_data *data)
 				break ;
 			}
 			mutex_operation(data->data_access_mutex, UNLOCK);
-			usleep(100);
+			usleep(SYNC_WAITTIME_US);
 		}
 	}
 	mutex_operation(data->data_access_mutex, LOCK);

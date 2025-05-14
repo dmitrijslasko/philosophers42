@@ -6,17 +6,35 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/11 12:01:43 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/05/14 17:06:06 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+/**
+ * @brief This version of philosophers works with processes and semaphores.abort
+ * (Instead of threads and forks in the mandatory part).
+ * The flow of the program is this:
+ * 1) Check input for validity
+ * 2) Initialize [table] data
+ * 3) Unlink (delete) semaphores that might still be there from previous runs
+ * 4) Open new semaphores for the forks and the print output
+ * 5) Initialize philos
+ * 6) Create philo processes (and make them run the programmed routine)
+ * 7) Parent process wait for philos to start
+ * 8) Free philos' process memory
+ * 9) Free parent process memory
+ *
+ * Two main functions that control semaphores are sem_post (release) and sem_wait (take / wait for access).
+ * @param argc
+ * @param argv
+ * @return int
+ */
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	// int		parent_pid;
-	int	i;
+	int		i;
 
 	if (is_valid_input(argv, argc) == FALSE)
 		return (INVALID_INPUT);
@@ -44,9 +62,9 @@ int	main(int argc, char **argv)
 		free_philo_data(&data);
 		return (EXIT_SUCCESS);
 	}
-	i = 0;
 	if (data.is_philo == 0)
 	{
+		i = 0;
 		while (i < data.no_of_philos)
 			waitpid(data.process_pids[i++], NULL, 0);
 		free_data(&data);

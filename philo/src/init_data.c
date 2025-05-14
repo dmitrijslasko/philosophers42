@@ -40,7 +40,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->no_of_meals_required = -1;
 	if (argc == 6)
 		data->no_of_meals_required = int_atoi(argv[5]);
-	data->thread_start_delay_ms = data->time_to_eat_ms / THREAD_START_DELAY;
+	data->thread_start_delay_ms = data->time_to_eat_ms / THREAD_START_DELAY_COEF;
 	data->simulation_start_time_ms = 0;
 	data->simulation_start_time_us = 0;
 	data->simulation_status = 0;

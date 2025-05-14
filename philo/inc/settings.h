@@ -6,7 +6,7 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:54:23 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/02/03 17:03:01 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/05/14 13:54:46 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@
 # endif
 
 // SETITNGS AND LIMITS
-# define MAX_PHILOS			300
-# define MAX_TIME_TO_DIE_MS	5000
-# define MAX_EAT_TIME_MS	5000
-# define MAX_SLEEP_TIME_MS	5000
-# define MAX_MEAL_COUNT		5000
-# define MAX_ARGUMENT_LEN	8
+# define MAX_PHILOS					300
+# define MAX_TIME_TO_DIE_MS			5000
+# define MAX_EAT_TIME_MS			5000
+# define MAX_SLEEP_TIME_MS			5000
+# define MAX_MEAL_COUNT				5000
+# define MAX_ARGUMENT_LEN			8
 
-# define SYNC_THREADS			1
-# define START_DELAY_US			900
-# define THREAD_START_DELAY		2		// 1/n of the eat time
-# define MONITOR_FREQ_US	    1
-# define CUSTOM_SLEEP_PERIOD_US 100
-# define DEATH_MSG_DELAY_MS		2
+# define SYNC_THREADS				1
+# define SYNC_WAITTIME_US			100
+# define START_DELAY_US				900
+# define THREAD_START_DELAY_COEF	2		// 1/n of the eat time
+# define MONITOR_FREQ_US	    	1
+# define CUSTOM_SLEEP_PERIOD_US 	100
+# define DEATH_MSG_DELAY_MS			2
 
 // macros functions are forbidden in this case
 // # define STRINGIFY(x) #x
