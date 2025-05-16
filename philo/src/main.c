@@ -6,12 +6,22 @@
 /*   By: dmlasko <dmlasko@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 01:18:05 by dmlasko           #+#    #+#             */
-/*   Updated: 2025/05/14 15:10:50 by dmlasko          ###   ########.fr       */
+/*   Updated: 2025/05/16 10:45:41 by dmlasko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief main function
+ * 1) checks data validity
+ * 2) initializes data
+ * 3) initializes forks (mutexes) and philos
+ *
+ * @param argc
+ * @param argv
+ * @return int
+ */
 int	main(int argc, char **argv)
 {
 	t_data	data;
