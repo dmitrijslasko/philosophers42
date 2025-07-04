@@ -1,7 +1,7 @@
 # Philosophers, the concurrency project (School 42 project)
 A classic problem in concurrency and multithreading, inspired by Edsger Dijkstra's Dining Philosophers problem.
 The project is designed to learn about thread synchronization, race conditions, mutexes, and deadlocks.
-
+![Philosophers Project](https://raw.githubusercontent.com/yourusername/philo42/main/assets/philosophers.png)
 **Problem description**
 N philosophers are sitting around a circular table.
 Each philosopher has only one fork on their left and one on their right.
